@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+
+{% block title %}Экзамены{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold mb-2">Экзамены</h1>
+        <p class="text-blue-100">
+            Проверь свои знания и отслеживай прогресс
+        </p>
+    </div>
+</section>
+
+<!-- Exams -->
+<section class="max-w-7xl mx-auto px-4 py-16">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {% for exam in exams %}
+            <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6 flex flex-col">
+
+                <h3 class="text-xl font-semibold mb-2">
+                    {{ exam.title }}
+                </h3>
+
+                {% if exam.description %}
+                    <p class="text-gray-600 text-sm mb-4 flex-grow">
+                        {{ exam.description|truncatechars:120 }}
+                    </p>
+                {% endif %}
+
+                <div class="text-sm text-gray-500 mb-4">
+                    📝 Тестов: <span class="font-medium">{{ exam.tests_count }}</span>
+                </div>
+
+                <div class="mt-auto flex items-center justify-between">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'tests:exam_start' exam.id %}"
+                               class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                Начать
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}"
+                               class="inline-flex items-center text-sm text-white bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                                Войти
+                            </a>
+                        {% endif %}
+ <!--                   { endif }-->
+
+                </div>
+
+            </div>
+        {% empty %}
+            <p>Экзаменов пока нет.</p>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+<article style="max-width:800px; margin:auto;">
+
+    <h1>{{ article.title }}</h1>
+
+    <p style="color:#777;">
+        {{ article.published_at|date:"d.m.Y" }} · {{ article.author }}
+        {% if article.category %}
+            · <a href="{% url 'articles:article_list' %}?category={{ article.category.slug }}">
+                {{ article.category.name }}
+              </a>
+        {% endif %}
+    </p>
+
+    {% if article.image %}
+        <img src="{{ article.image.url }}" style="max-width:100%; margin:20px 0; border-radius:8px;">
+    {% endif %}
+
+    <div style="line-height:1.7; font-size:18px;">
+        {{ article.content|safe }}
+    </div>
+
+    {% if article.tags.all %}
+        <p style="margin-top:30px;">
+            {% for tag in article.tags.all %}
+                <a href="{% url 'articles:article_list' %}?tag={{ tag.slug }}">
+                    #{{ tag.name }}
+                </a>
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <hr>
+    <a href="{% url 'articles:article_list' %}">← Все статьи</a>
+
+</article>
+
+<hr>
+<h3>Комментарии</h3>
+
+{% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        <br>
+        <button type="submit">Отправить</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'accounts:login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+{% endif %}
+
+<br>
+
+{% for comment in comments %}
+    <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:5px;">
+        <strong>{{ comment.user }}</strong>
+        <span style="color:#777;">{{ comment.created_at|date:"d.m.Y H:i" }}</span>
+        <p>{{ comment.text }}</p>
+
+        {% if user.is_authenticated %}
+            <a href="#" onclick="replyForm({{ comment.id }}); return false;">Ответить</a>
+        {% endif %}
+
+        {% for reply in comment.replies.all %}
+            {% if reply.is_approved %}
+                <div style="margin-left:30px; margin-top:10px; padding:10px; border-left:2px solid #ccc;">
+                    <strong>{{ reply.user }}</strong>
+                    <span style="color:#777;">{{ reply.created_at|date:"d.m.Y H:i" }}</span>
+                    <p>{{ reply.text }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div id="reply-form-{{ comment.id }}" style="display:none; margin-top:10px;">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.text }}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <br>
+                <button type="submit">Ответить</button>
+            </form>
+        </div>
+    </div>
+{% empty %}
+    <p>Комментариев пока нет.</p>
+{% endfor %}
+
+<script>
+function replyForm(id) {
+    let el = document.getElementById('reply-form-' + id);
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+</script>

@@ -1,0 +1,13 @@
+<h1>Личный кабинет</h1>
+
+<p><strong>Пользователь:</strong> {{ request.user.username }}</p>
+<p><strong>Пройдено тестов:</strong> {{ total_tests }}</p>
+<p><strong>Средний результат:</strong> {{ avg_score }}%</p>
+
+<hr>
+
+<p>
+    <a href="{% url 'tests:exam_attempt_list' %}">
+        📘 Мои экзамены
+    </a>
+</p>

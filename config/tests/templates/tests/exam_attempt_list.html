@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="max-w-4xl mx-auto px-4 py-10">
+
+  <!-- Заголовок -->
+  <h1 class="text-2xl font-semibold mb-6">
+    Мои попытки
+  </h1>
+
+  {% if attempts %}
+    <div class="space-y-4">
+
+      {% for attempt in attempts %}
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5
+                    hover:shadow-md transition">
+
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+            <!-- Левая часть -->
+            <div>
+              <h2 class="text-lg font-medium text-gray-900">
+                {{ attempt.exam.title }}
+              </h2>
+              <p class="text-sm text-gray-500 mt-1">
+                {{ attempt.started_at|date:"d.m.Y H:i" }}
+              </p>
+            </div>
+
+            <!-- Правая часть -->
+            <div class="flex items-center gap-4">
+              <span class="inline-flex items-center justify-center
+                           px-3 py-1 rounded-full
+                           text-sm font-semibold
+                           bg-blue-100 text-blue-700">
+                {{ attempt.total_score }} / {{ attempt.total_questions }}
+              </span>
+
+              <a href="{% url 'tests:exam_result_detail' attempt.id %}"
+                 class="inline-flex items-center gap-1
+                        text-blue-600 hover:text-blue-800
+                        font-medium text-sm">
+                Подробнее
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  {% else %}
+    <div class="bg-blue-50 border border-blue-200 text-blue-700
+                rounded-lg p-4">
+      Вы ещё не проходили экзамены.
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

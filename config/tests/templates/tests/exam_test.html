@@ -1,0 +1,99 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ exam.title }}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- Exam info -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold mb-1">{{ exam.title }}</h1>
+        <p class="text-gray-600 text-sm">
+            {{ test.title }} · Вопрос {{ question_index|add:1 }} из {{ total_questions }}
+        </p>
+    </div>
+
+    <!-- Progress -->
+    <div class="w-full bg-gray-200 rounded-full h-2 mb-8">
+        <div class="bg-blue-600 h-2 rounded-full transition-all"
+             style="width: {{ progress_percent }}%">
+        </div>
+    </div>
+
+    <!-- Question card -->
+    <div class="bg-white rounded-2xl shadow p-6">
+
+        {% if question.description %}
+            <blockquote class="p-4 my-4 border-l-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+            <p class="text-base italic font-medium leading-relaxed text-gray-500 dark:text-white">
+                {{ question.description|safe }}
+            </p>
+            </blockquote>            
+        {% endif %}
+
+        {% if question.question_text %}
+            <blockquote class="p-4 my-4 border-l-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+            <p class="text-base italic font-medium leading-relaxed text-gray-500 dark:text-white">
+                {{ question.question_text.description|safe }}
+            </p>
+            </blockquote>            
+        {% endif %}
+
+        <h2 class="text-xl font-semibold mb-4">
+            {{ question.text }}
+        </h2>
+
+        {% if question.image %}
+            <img src="{{ question.image.url }}"
+                 class="rounded-lg mb-4 max-h-64 object-contain">
+        {% endif %}
+
+        {% if question.audio %}
+            <audio controls class="w-full mb-4">
+                <source src="{{ question.audio.url }}">
+            </audio>
+        {% endif %}
+
+        <form method="post" class="space-y-3">
+            {% csrf_token %}
+
+            {% if test.is_yes_no %}
+                <div class="d-grid gap-3">
+                    <button type="submit" name="yes_no" value="true"
+                            class="btn btn-success btn-lg">
+                    ✅ Да
+                    </button>
+                    <button type="submit" name="yes_no" value="false"
+                            class="btn btn-danger btn-lg">
+                    ❌ Нет
+                    </button>
+                </div>
+            {% else %}
+                {% for answer in question.answers.all %}
+                    <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                        <input type="radio" name="answer" value="{{ answer.id }}" class="mr-3" required>
+                        <div>
+                            {% if answer.title %}
+                                <h3 class="text-base font-semibold mb-4">
+                                    {{ answer.title }}
+                                </h3>   
+                            {% endif %}
+                            <span>{{ answer.text }}</span>
+                        </div>
+                    </label>
+                {% endfor %}
+            {% endif %}
+
+            <button type="submit"
+                    class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                Далее →
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

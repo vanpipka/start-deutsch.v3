@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% block title %}Результат экзамена{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-16 text-center">
+
+    <h1 class="text-3xl font-bold mb-4">
+        Экзамен завершён 🎉
+    </h1>
+
+    <p class="text-lg mb-6">
+        {{ exam.title }}
+    </p>
+
+    <div class="bg-white rounded-2xl shadow p-8 mb-8">
+        <p class="text-xl font-semibold">
+            Результат: {{ score }} / {{ total }}
+        </p>
+    </div>
+
+    <a href="{% url 'tests:exam_list' %}"
+       class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        К списку экзаменов
+    </a>
+
+</div>
+{% endblock %}

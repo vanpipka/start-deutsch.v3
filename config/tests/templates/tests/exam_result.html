@@ -1,0 +1,138 @@
+{% extends "core/base.html" %}
+{% load dict_extras %}
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-4 py-10">
+
+  <!-- Заголовок экзамена -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-semibold text-gray-900">
+      {{ attempt.exam.title }}
+    </h1>
+    <p class="text-sm text-gray-500 mt-1">
+      Результат экзамена · {{ attempt.started_at|date:"d.m.Y H:i" }}
+    </p>
+  </div>
+
+  <!-- Итог экзамена -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <p class="text-gray-500 text-sm">Итоговый результат</p>
+        <p class="text-2xl font-semibold text-gray-900">
+          {{ attempt.total_score }} / {{ attempt.total_questions }}
+        </p>
+      </div>
+
+      <div class="text-sm text-gray-500">
+        Завершён:
+        {{ attempt.finished_at|date:"d.m.Y H:i" }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Результаты по тестам -->
+  {% for test_result in attempt.test_results.all %}
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-8">
+
+      <!-- Заголовок теста -->
+      <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+        <h2 class="font-medium text-gray-900">
+          {{ test_result.test.title }}
+        </h2>
+        <span class="text-sm font-semibold text-blue-700 bg-blue-100 px-3 py-1 rounded-full">
+          {{ test_result.score }} / {{ test_result.total }}
+        </span>
+      </div>
+
+      <!-- Вопросы -->
+      <div class="p-6 space-y-6">
+        {% for ua in answers_by_test|get_item:test_result.test %}
+          <div>
+
+            <!-- Текст вопроса -->
+            <p class="font-medium text-gray-900 mb-2">
+              {{ ua.question.text }}
+            </p>
+
+            <!-- Картинка -->
+            {% if ua.question.image %}
+              <img src="{{ ua.question.image.url }}"
+                   class="rounded-lg mb-3 max-h-64">
+            {% endif %}
+
+            <!-- Аудио -->
+            {% if ua.question.audio %}
+              <audio controls class="w-full mb-3">
+                <source src="{{ ua.question.audio.url }}">
+              </audio>
+            {% endif %}
+
+            <!-- Ответ пользователя -->
+            <div class="text-sm mb-2">
+              <span class="text-gray-500">Ваш ответ:</span>
+
+              {% if ua.question.test.is_yes_no %}
+                {% if ua.yes_no_answer %}
+                  <span class="ml-2 inline-flex items-center px-2 py-1 rounded
+                               bg-blue-100 text-blue-700 font-medium">
+                    Да
+                  </span>
+                {% else %}
+                  <span class="ml-2 inline-flex items-center px-2 py-1 rounded
+                               bg-gray-100 text-gray-700 font-medium">
+                    Нет
+                  </span>
+                {% endif %}
+              {% else %}
+                <span class="ml-2 inline-flex items-center px-2 py-1 rounded
+                             bg-blue-100 text-blue-700 font-medium">
+                  {{ ua.selected_answer.text }}
+                </span>
+              {% endif %}
+            </div>
+
+            <!-- Результат -->
+            {% if ua.is_correct %}
+              <span class="inline-flex items-center gap-1
+                           text-green-700 bg-green-100
+                           px-3 py-1 rounded-full text-sm font-medium">
+                ✔ Верно
+              </span>
+            {% else %}
+              <span class="inline-flex items-center gap-1
+                           text-red-700 bg-red-100
+                           px-3 py-1 rounded-full text-sm font-medium">
+                ✘ Неверно
+              </span>
+
+              {% with correct=ua.question.get_correct_answer %}
+                <p class="mt-2 text-sm text-green-700">
+                  Правильный ответ:
+                  <strong>{{ correct.text }}</strong>
+                </p>
+              {% endwith %}
+            {% endif %}
+
+          </div>
+
+          <hr class="border-gray-100">
+        {% endfor %}
+      </div>
+
+    </div>
+  {% endfor %}
+
+  <!-- Кнопка назад -->
+  <div class="text-center mt-10">
+    <a href="{% url 'tests:exam_attempt_list' %}"
+       class="inline-flex items-center gap-2
+              text-blue-600 hover:text-blue-800
+              font-medium">
+      ← Мои попытки
+    </a>
+  </div>
+
+</div>
+
+{% endblock %}
