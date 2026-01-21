@@ -1,0 +1,2 @@
+# Create tailwind.css
+StartDeutsch_v3>npx tailwindcss -i ./config/article/static/src/tailwind.css -o ./config/article/static/dist/tailwind.css --minify
