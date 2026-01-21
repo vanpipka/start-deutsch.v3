@@ -163,6 +163,7 @@ else:
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
+# Authentication redirects
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "tests:exam_list"
 LOGOUT_REDIRECT_URL = "accounts:login"

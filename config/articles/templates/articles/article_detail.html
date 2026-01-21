@@ -1,92 +1,50 @@
-<article style="max-width:800px; margin:auto;">
+{% extends "core/base.html" %}
+{% load static %}
 
-    <h1>{{ article.title }}</h1>
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-    <p style="color:#777;">
-        {{ article.published_at|date:"d.m.Y" }} · {{ article.author }}
-        {% if article.category %}
-            · <a href="{% url 'articles:article_list' %}?category={{ article.category.slug }}">
-                {{ article.category.name }}
-              </a>
-        {% endif %}
-    </p>
-
+  <!-- Article Header -->
+  <div class="mb-8">
     {% if article.image %}
-        <img src="{{ article.image.url }}" style="max-width:100%; margin:20px 0; border-radius:8px;">
+      <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full rounded-lg shadow-md mb-4">
     {% endif %}
-
-    <div style="line-height:1.7; font-size:18px;">
-        {{ article.content|safe }}
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+      <div>
+        {% if article.category %}
+          <a href="" class="text-sm text-indigo-600 font-semibold uppercase tracking-wide hover:underline">
+            {{ article.category.name }}
+          </a>
+        {% endif %}
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-1">{{ article.title }}</h1>
+      </div>
+      <div class="text-gray-500 text-sm mt-2 sm:mt-0">
+        <p>By <span class="font-medium">{{ article.author.username }}</span></p>
+        <p>Published: {{ article.published_at|date:"F j, Y" }}</p>
+      </div>
     </div>
+    <p class="mt-4 text-gray-700 text-lg">{{ article.short_description }}</p>
 
     {% if article.tags.all %}
-        <p style="margin-top:30px;">
-            {% for tag in article.tags.all %}
-                <a href="{% url 'articles:article_list' %}?tag={{ tag.slug }}">
-                    #{{ tag.name }}
-                </a>
-            {% endfor %}
-        </p>
-    {% endif %}
-
-    <hr>
-    <a href="{% url 'articles:article_list' %}">← Все статьи</a>
-
-</article>
-
-<hr>
-<h3>Комментарии</h3>
-
-{% if user.is_authenticated %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.text }}
-        <br>
-        <button type="submit">Отправить</button>
-    </form>
-{% else %}
-    <p><a href="{% url 'accounts:login' %}">Войдите</a>, чтобы оставить комментарий.</p>
-{% endif %}
-
-<br>
-
-{% for comment in comments %}
-    <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:5px;">
-        <strong>{{ comment.user }}</strong>
-        <span style="color:#777;">{{ comment.created_at|date:"d.m.Y H:i" }}</span>
-        <p>{{ comment.text }}</p>
-
-        {% if user.is_authenticated %}
-            <a href="#" onclick="replyForm({{ comment.id }}); return false;">Ответить</a>
-        {% endif %}
-
-        {% for reply in comment.replies.all %}
-            {% if reply.is_approved %}
-                <div style="margin-left:30px; margin-top:10px; padding:10px; border-left:2px solid #ccc;">
-                    <strong>{{ reply.user }}</strong>
-                    <span style="color:#777;">{{ reply.created_at|date:"d.m.Y H:i" }}</span>
-                    <p>{{ reply.text }}</p>
-                </div>
-            {% endif %}
+      <div class="mt-4 flex flex-wrap gap-2">
+        {% for tag in article.tags.all %}
+          <a href="" class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded hover:bg-indigo-200">
+            #{{ tag.name }}
+          </a>
         {% endfor %}
+      </div>
+    {% endif %}
+  </div>
 
-        <div id="reply-form-{{ comment.id }}" style="display:none; margin-top:10px;">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.text }}
-                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                <br>
-                <button type="submit">Ответить</button>
-            </form>
-        </div>
-    </div>
-{% empty %}
-    <p>Комментариев пока нет.</p>
-{% endfor %}
+  <!-- Article Content -->
+  <div class="prose prose-lg max-w-full mb-12">
+    {{ article.content|safe }}
+  </div>
 
-<script>
-function replyForm(id) {
-    let el = document.getElementById('reply-form-' + id);
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-</script>
+  <!-- Comments Section -->
+  {% include "articles/comment_section.html" %}
+</div>
+{% endblock %}
+
+
+

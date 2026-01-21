@@ -36,14 +36,14 @@ def article_detail(request, slug):
 
     comments = article.comments.filter(parent__isnull=True, is_approved=True).select_related('user')
 
-    form = CommentForm()
+    comment_form = CommentForm()
 
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('login')
 
-        form = CommentForm(request.POST)
-        if form.is_valid():
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
             parent_id = request.POST.get('parent_id')
             parent = None
 
@@ -53,7 +53,7 @@ def article_detail(request, slug):
             Comment.objects.create(
                 article=article,
                 user=request.user,
-                text=form.cleaned_data['text'],
+                text=comment_form.cleaned_data['text'],
                 parent=parent
             )
             return redirect('articles:article_detail', slug=article.slug)
@@ -61,5 +61,5 @@ def article_detail(request, slug):
     return render(request, 'articles/article_detail.html', {
         'article': article,
         'comments': comments,
-        'form': form
+        'comment_form': comment_form
     })
