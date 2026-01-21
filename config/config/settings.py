@@ -157,7 +157,7 @@ MEDIA_ROOT = os.getenv('MEDIA_ROOT', BASE_DIR / 'media')
 if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / 'static',]
 else:
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'staticfiles')
 
 # CKEditor configuration
 CKEDITOR_UPLOAD_PATH = "uploads/"
