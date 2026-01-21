@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Платформа{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!--<script src="https://cdn.tailwindcss.com"></script>-->
+    <link rel="stylesheet" href="{% static 'dist/tailwind.css' %}">
 </head>
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 

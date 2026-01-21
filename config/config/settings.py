@@ -153,7 +153,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.getenv('MEDIA_ROOT', BASE_DIR / 'media')
-STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'static')
+STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'staticfiles')
+
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR / 'static', ]
 
 # CKEditor configuration
 CKEDITOR_UPLOAD_PATH = "uploads/"
