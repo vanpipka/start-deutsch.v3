@@ -1,17 +1,55 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.db.models import Avg, Count, F, FloatField, ExpressionWrapper
+
+from tests.models import ExamAttempt
 from .forms import LoginForm, RegisterForm
 
 
 @login_required
 def profile(request):
 
-    return render(request, 'accounts/profile.html', {
-        'results': [],
-        'total_tests': 0,
-        'avg_score': 0
-    })
+    user = request.user
+
+    # Все попытки пользователя
+    exam_attempts = (
+        ExamAttempt.objects
+        .filter(user=user)
+        .filter(finished_at__isnull=False)
+        .select_related("exam")
+        .order_by("-started_at")
+    )
+
+    # Общее количество попыток
+    attempts_count = exam_attempts.count()
+
+    # Средний процент (score / total * 100)
+    avg_score = (
+        exam_attempts
+        .annotate(
+            percent=ExpressionWrapper(
+                F("total_score") * 100.0 / F("total_questions"),
+                output_field=FloatField()
+            )
+        )
+        .aggregate(avg=Avg("percent"))
+        .get("avg")
+    )
+
+    avg_score = round(avg_score) if avg_score else 0
+
+    # Последние 5 попыток
+    recent_attempts = exam_attempts[:5]
+
+    context = {
+        "user": user,
+        "attempts_count": attempts_count,
+        "avg_score": avg_score,
+        "recent_attempts": recent_attempts,
+    }
+
+    return render(request, "accounts/profile.html", context)
     
     
 def login_view(request):

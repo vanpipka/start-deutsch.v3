@@ -1,13 +1,106 @@
-<h1>Личный кабинет</h1>
+{% extends "core/base.html" %}
+{% load static %}
 
-<p><strong>Пользователь:</strong> {{ request.user.username }}</p>
-<p><strong>Пройдено тестов:</strong> {{ total_tests }}</p>
-<p><strong>Средний результат:</strong> {{ avg_score }}%</p>
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-10">
 
-<hr>
+  <!-- HEADER -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+    <div class="flex items-center gap-4">
+      <div class="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
+        {{ user.username|first|upper }}
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">{{ user.username }}</h1>
+        <p class="text-gray-500">{{ user.email }}</p>
+        <p class="text-sm text-gray-400 mt-1">
+          Дата регистрации {{ user.date_joined|date:"d M Y" }}
+        </p>
+      </div>
+    </div>
 
-<p>
-    <a href="{% url 'tests:exam_attempt_list' %}">
-        📘 Мои экзамены
+    <a href="{% url 'accounts:logout' %}"
+       class="inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-gray-800 hover:bg-gray-900">
+      Выйти
     </a>
-</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Попытки</p>
+      <p class="text-3xl font-bold text-indigo-600">{{ attempts_count }}</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Средний балл</p>
+      <p class="text-3xl font-bold text-blue-600">{{ avg_score }}%</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Текущий уровень</p>
+      <p class="text-3xl font-bold text-purple-600">
+        {{ user.profile.level|default:"—" }}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="bg-white rounded-xl shadow p-6 mb-10">
+    <h2 class="text-xl font-semibold mb-4">Прогресс обучения</h2>
+    <div class="w-full bg-gray-200 rounded-full h-4">
+      <div class="bg-indigo-600 h-4 rounded-full"
+           style="width: {{ avg_score }}%"></div>
+    </div>
+    <p class="text-sm text-gray-500 mt-2">
+      Средний результат экзаменов
+    </p>
+  </div>
+
+  <!-- RECENT ATTEMPTS -->
+  <div class="bg-white rounded-xl shadow p-6 mb-10">
+    <h2 class="text-xl font-semibold mb-6">Последние экзамены</h2>
+
+    {% if recent_attempts %}
+      <ul class="divide-y">
+        {% for attempt in recent_attempts %}
+        <li class="py-4 flex items-center justify-between">
+          <div>
+            <p class="font-medium text-gray-900">{{ attempt.exam.title }}</p>
+            <p class="text-sm text-gray-500">
+              {{ attempt.created_at|date:"d M Y H:i" }}
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-semibold text-gray-700">
+              {{ attempt.score }} / {{ attempt.total }}
+            </span>
+            <a href="{% url 'tests:exam_result_detail' attempt.id %}"
+               class="text-indigo-600 hover:underline text-sm">
+              View
+            </a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-500">Нет попыток</p>
+    {% endif %}
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <a href="{% url 'tests:exam_list' %}"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl p-6 text-center font-semibold">
+      Начать новый экзамен
+    </a>
+    <a href="{% url 'tests:exam_attempt_list' %}"
+       class="bg-gray-800 hover:bg-gray-900 text-white rounded-xl p-6 text-center font-semibold">
+      История экзаменов
+    </a> 
+  </div>
+
+</div>
+{% endblock %}
