@@ -59,16 +59,18 @@
             {% csrf_token %}
 
             {% if test.is_yes_no %}
-                <div class="d-grid gap-3">
-                    <button type="submit" name="yes_no" value="true"
-                            class="btn btn-success btn-lg">
-                    ✅ Да
-                    </button>
-                    <button type="submit" name="yes_no" value="false"
-                            class="btn btn-danger btn-lg">
-                    ❌ Нет
-                    </button>
-                </div>
+                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                    <input type="radio" name="answer" value="true" class="mr-3" required>
+                    <div>
+                           <span>Richtig</span>
+                    </div>
+                </label>
+                <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                    <input type="radio" name="answer" value="false" class="mr-3" required>
+                    <div>
+                        <span>Falsch</span>
+                    </div>
+                </label>
             {% else %}
                 {% for answer in question.answers.all %}
                     <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">

@@ -179,7 +179,7 @@ def exam_test_view(request, exam_id, attempt_id, test_id, question_id):
 
     if request.method == "POST":
         if test.is_yes_no():
-            value = request.POST.get("yes_no")  # "true" / "false"
+            value = request.POST.get("answer")  # "true" / "false"
             yes_no_value = value == "true"
 
             UserAnswer.objects.create(
