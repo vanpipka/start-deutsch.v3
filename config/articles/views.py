@@ -8,7 +8,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = "articles/article_list.html"
     context_object_name = "articles"
-    paginate_by = 3
+    paginate_by = 12
 
     def get_queryset(self):
         qs = Article.objects.filter(status=Article.PUBLISHED).select_related("category", "author")
