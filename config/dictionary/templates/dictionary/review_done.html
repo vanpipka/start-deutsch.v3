@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="bg-white rounded-2xl shadow-xl p-10 max-w-md w-full text-center space-y-6">
+  <div class="text-6xl">🎉</div>
+
+  <h1 class="text-2xl font-bold text-gray-800">
+    Отличная работа!
+  </h1>
+
+  <p class="text-gray-600">
+    На сегодня слов для повторения больше нет.
+    Возвращайся завтра — мы всё запомним 😉
+  </p>
+
+  <div class="flex flex-col gap-3 pt-4">
+    <a href="{% url 'dictionary:review' %}"
+       class="bg-indigo-600 text-white py-3 rounded-xl hover:bg-indigo-700 transition">
+      Повторить ещё раз
+    </a>
+
+    <a href="{% url 'tests:exam_list' %}"
+       class="border border-gray-300 py-3 rounded-xl hover:bg-gray-50 transition">
+      Перейти к экзаменам
+    </a>
+
+    <a href="{% url 'accounts:profile' %}"
+       class="text-sm text-gray-500 hover:underline">
+      В профиль
+    </a>
+  </div>
+
+</div>
+{% endblock %}

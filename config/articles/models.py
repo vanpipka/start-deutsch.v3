@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Category(models.Model):
@@ -41,7 +42,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug")
 
     short_description = models.TextField(verbose_name="Краткое описание")
-    content = RichTextUploadingField(verbose_name="Текст статьи")
+    content = CKEditor5Field('Текст статьи', config_name='extends')    # RichTextUploadingField(verbose_name="Текст статьи")
 
     image = models.ImageField(upload_to='articles/', blank=True, null=True, verbose_name="Обложка")
 

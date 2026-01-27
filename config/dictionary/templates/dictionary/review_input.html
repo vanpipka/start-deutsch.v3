@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="text-xl font-semibold mb-4 text-center">
+  Введите перевод
+</h2>
+
+<div class="text-3xl text-center mb-6 font-bold">
+  {{ word.text }}
+</div>
+
+<form method="post" action="{% url 'dictionary:submit_answer' %}">
+  {% csrf_token %}
+  <input type="hidden" name="progress_id" value="{{ progress.id }}">
+  <input type="hidden" name="mode" value="input">
+
+  <input
+    type="text"
+    name="user_answer"
+    autofocus
+    class="w-full border px-4 py-3 rounded-lg mb-4"
+    placeholder="Введите перевод">
+
+  <button
+    name="success"
+    value="1"
+    class="w-full bg-blue-600 text-white py-3 rounded-lg">
+    Проверить
+  </button>
+</form>
+{% endblock %}

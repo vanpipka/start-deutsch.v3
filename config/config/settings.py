@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_admin_listfilter_dropdown',
+    'django_ckeditor_5',
     'ckeditor',
     'ckeditor_uploader',
     'tests',
     'accounts',
     'articles',
+    'dictionary',
 ]
 
 MIDDLEWARE = [
@@ -162,6 +164,20 @@ else:
 # CKEditor configuration
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload'],
+    },
+    'extends': {
+        'blockToolbar': ['paragraph', 'heading1', 'heading2', 'heading3'],
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough', 'code', 'subscript', 'superscript', 'highlight', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'outdent', 'indent', '|', 'blockQuote', 'imageUpload', 'insertTable', 'mediaEmbed', 'removeFormat', 'sourceEditing'],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight'],
+            'styles': ['alignLeft', 'alignCenter', 'alignRight']
+        }
+    }
+}
 
 # Authentication redirects
 LOGIN_URL = "accounts:login"

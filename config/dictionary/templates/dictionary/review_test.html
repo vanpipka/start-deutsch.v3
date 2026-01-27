@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="text-xl font-semibold mb-4 text-center">
+  Выберите перевод
+</h2>
+
+<div class="text-3xl text-center mb-6 font-bold">
+  {{ word.text }}
+</div>
+
+<form method="post" action="{% url 'dictionary:submit_answer' %}">
+  {% csrf_token %}
+  <input type="hidden" name="progress_id" value="{{ progress.id }}">
+  <input type="hidden" name="mode" value="test">
+
+  <div class="space-y-3">
+    {% for option in word.get_test_options %}
+      <button
+        name="selected"
+        value="{{ option }}"
+        class="w-full py-3 border rounded-lg hover:bg-slate-100">
+        {{ option }}
+      </button>
+    {% endfor %}
+  </div>
+
+  <input type="hidden" name="success" value="1">
+</form>
+{% endblock %}

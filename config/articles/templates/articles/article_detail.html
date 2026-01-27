@@ -38,7 +38,9 @@
 
   <!-- Article Content -->
   <div class="prose prose-lg max-w-full mb-12">
-    {{ article.content|safe }}
+    <div class="ck-content">
+      {{ article.content|safe }}
+    </div>
   </div>
 
   <!-- Comments Section -->

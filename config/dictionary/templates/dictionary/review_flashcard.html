@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="text-center space-y-6">
+
+  <div class="text-4xl font-bold">
+    {{ word.text }}
+  </div>
+
+  <div x-data="{show:false}">
+    <button @click="show=true"
+      class="text-blue-600 underline">
+      Показать перевод
+    </button>
+
+    <div x-show="show" class="mt-4 text-xl text-gray-700">
+      {{ word.translation }}
+    </div>
+  </div>
+
+  <form method="post" action="{% url 'dictionary:submit_answer' %}">
+    {% csrf_token %}
+    <input type="hidden" name="progress_id" value="{{ progress.id }}">
+    <input type="hidden" name="mode" value="flashcard">
+
+    <div class="flex justify-center gap-4 mt-6">
+      <button name="success" value="0"
+        class="px-6 py-2 bg-red-500 text-white rounded-lg">
+        Не знаю
+      </button>
+
+      <button name="success" value="1"
+        class="px-6 py-2 bg-green-500 text-white rounded-lg">
+        Знаю
+      </button>
+    </div>
+  </form>
+
+</div>
+{% endblock %}

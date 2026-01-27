@@ -25,7 +25,9 @@ urlpatterns = [
     path('tests/', include('tests.urls')),
     path('profile/', include('accounts.urls')),
     path('articles/', include('articles.urls')),    
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    #path('dictionary/', include('dictionary.urls')),
     path('', view.home, name='home'),
 ]
 
