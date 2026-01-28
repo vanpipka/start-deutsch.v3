@@ -23,6 +23,8 @@ class ArticleListView(ListView):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
         context["current_category"] = self.request.GET.get("category")
+        # context["seo_title"] = self.get_seo_title()
+        # context["seo_description"] = self.get_seo_description()
         return context
     
 
@@ -61,5 +63,7 @@ def article_detail(request, slug):
     return render(request, 'articles/article_detail.html', {
         'article': article,
         'comments': comments,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'seo_title': article.get_seo_title(),
+        'seo_description': article.get_seo_description()
     })

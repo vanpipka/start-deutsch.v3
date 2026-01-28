@@ -3,7 +3,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Платформа{% endblock %}</title>
+    <title>{% block title %}{{ seo_title|default:"Start Deutsch A1" }}{% endblock %}</title>
+    <meta name="description" content="{{ seo_description|default:'Подготовка к экзамену Deutsch A1, B1, B2.' }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="{{ seo_title }}">
+    <meta property="og:description" content="{{ seo_description }}">
+    <meta property="og:type" content="article">
+    
+    {% if seo_keywords %}
+        <meta name="keywords" content="{{ seo_keywords }}">
+    {% endif %}
+
+    {% block extra_meta %}{% endblock %}
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){

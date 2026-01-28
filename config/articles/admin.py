@@ -65,6 +65,9 @@ class ArticleAdmin(admin.ModelAdmin):
         ('Служебное', {
             'fields': ('author', 'created_at', 'updated_at')
         }),
+         ('SEO', {
+            'fields': ('seo_title', 'seo_description')
+        }),
     )
 
     def preview_image(self, obj):

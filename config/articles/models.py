@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from django_ckeditor_5.fields import CKEditor5Field
@@ -74,6 +75,19 @@ class Article(models.Model):
         default=DRAFT,
         verbose_name="Статус"
     )
+    
+    seo_title = models.CharField(
+        max_length=60,
+        blank=True,
+        help_text="До 60 символов",
+        default=""
+    )
+    seo_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="До 160 символов",
+        default=""
+    )
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлена")
@@ -81,6 +95,18 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_seo_title(self):
+        return self.seo_title or f"{self.title} – Start Deutsch A1"
+
+    def get_seo_description(self):
+        return (
+            self.seo_description
+            or f"Пример письма A1 по теме «{self.title}». Шаблон, перевод и разбор."
+        )
+        
+    def get_absolute_url(self):
+        return reverse('articles:article_detail', args=[self.slug])
     
     def save(self, *args, **kwargs):
         if not self.slug:
