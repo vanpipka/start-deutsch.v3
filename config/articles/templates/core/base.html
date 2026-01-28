@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
     <title>{% block title %}{{ seo_title|default:"Start Deutsch A1" }}{% endblock %}</title>
+    <meta charset="UTF-8">
     <meta name="description" content="{{ seo_description|default:'Подготовка к экзамену Deutsch A1, B1, B2.' }}">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <meta name="robots" content="index, follow">
@@ -14,6 +14,8 @@
     {% if seo_keywords %}
         <meta name="keywords" content="{{ seo_keywords }}">
     {% endif %}
+
+    <meta name="google-site-verification" content="Gx76CTNWJcE9j0bIqkLCRugmXg6muM19h_RxUWR_2_A" />
 
     {% block extra_meta %}{% endblock %}
     <!-- Yandex.Metrika counter -->
