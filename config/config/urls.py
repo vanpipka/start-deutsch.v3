@@ -23,7 +23,8 @@ from . import sitemaps
 from . import view
 
 sitemaps = {
-    'articles': sitemaps.ArticleSitemap
+    'articles': sitemaps.ArticleSitemap,
+    'exams': sitemaps.ExamSitemap
 }
 
 urlpatterns = [
