@@ -1,0 +1,50 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ exam.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-10">
+    <div class="bg-white shadow-lg rounded-2xl p-8">
+
+        <!-- Уровень -->
+        <div class="text-sm text-indigo-600 font-medium mb-2">
+            {{ exam.level }}
+        </div>
+
+        <!-- Название -->
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">
+            {{ exam.title }}
+        </h1>
+
+        <!-- Описание -->
+        {% if exam.description %}
+            <p class="text-gray-700 leading-relaxed mb-6">
+                {{ exam.description }}
+            </p>
+        {% else %}
+            <p class="text-gray-400 italic mb-6">
+                Описание отсутствует
+            </p>
+        {% endif %}
+            
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'tests:exam_start' exam.id %}"
+                class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                Начать
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                 </svg>
+            </a>
+        {% else %}
+            <p class="text-gray-600 mb-4">
+                Пожалуйста, войдите в систему, чтобы начать экзамен.
+            </p>
+            <a href="{% url 'accounts:login' %}"
+                class="inline-flex items-center text-sm text-white bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                    Войти
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

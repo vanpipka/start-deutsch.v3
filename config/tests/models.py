@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
@@ -32,9 +33,34 @@ class Exam(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название экзамена")
     description = models.TextField(blank=True, verbose_name="Описание экзамена")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    
+    seo_title = models.CharField(
+        max_length=60,
+        blank=True,
+        help_text="До 60 символов",
+        default=""
+    )
+    seo_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="До 160 символов",
+        default=""
+    )
 
     def __str__(self):
         return self.title
+    
+    def get_seo_title(self):
+        return self.seo_title or f"{self.title} – Exam Start Deutsch"
+
+    def get_seo_description(self):
+        return (
+            self.seo_description
+            or f"Пример экзамена «{self.title}». Шаблон, перевод и разбор."
+        )
+        
+    def get_absolute_url(self):
+        return reverse('tests:exam_detail', args=[self.id])
     
 
 class Test(models.Model):

@@ -12,6 +12,7 @@ urlpatterns = [
         views.exam_test_view,
         name="exam_test"
     ),
+    path('<int:pk>/', views.ExamDetailView.as_view(), name="exam_detail"),
     path(
         "finish/<int:attempt_id>/",
         views.exam_finish,

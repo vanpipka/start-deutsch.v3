@@ -33,7 +33,7 @@ def duplicate_objects(modeladmin, request, queryset):
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
+    list_display = ('title', 'seo_title', 'seo_description', 'created_at')
     inlines = [TestInline]
 
 

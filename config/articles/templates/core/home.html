@@ -108,21 +108,15 @@
                             </p>
                         {% endif %}
 
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'tests:exam_start' exam.id %}"
-                               class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                                Начать экзамен
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M9 5l7 7-7 7"/>
-                                </svg>
+                        <a href="{% url 'tests:exam_detail' exam.id %}"
+                            class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                            Начать экзамен
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7"/>
+                            </svg>
                             </a>
-                        {% else %}
-                            <a href="{% url 'accounts:login' %}"
-                               class="inline-flex items-center text-sm text-white bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-700 transition">
-                                Войти
-                            </a>
-                        {% endif %}
+                        
                     </div>
                 {% empty %}
                     <p>Экзаменов пока нет.</p>

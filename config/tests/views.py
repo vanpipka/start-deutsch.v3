@@ -1,11 +1,25 @@
 from django.http import HttpResponseForbidden
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
 from .models import ExamAttempt, Question, Test, Answer, Exam, TestResult, UserAnswer
 
+
+class ExamDetailView(DetailView):
+    model = Exam
+    template_name = "tests/exam_detail.html"
+    context_object_name = "exam"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        letter = self.object
+
+        context["seo_title"] = letter.get_seo_title()
+        context["seo_description"] = letter.get_seo_description()
+
+        return context
 
 @login_required
 def exam_start(request, exam_id):
