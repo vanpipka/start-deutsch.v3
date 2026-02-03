@@ -1,0 +1,180 @@
+<div class="mb-2 audio-player" data-audio-id="player1">
+    <audio id="player1-audio" preload="metadata">
+        <source src="{{ question.audio.url }}" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <div class="progress-wrapper">
+        <button class="play-btn" aria-label="Play / Pause">▶️</button>
+        <span class="current-time">0:00</span>
+        <input type="range" class="progress" value="0" min="0" step="0.1">
+        <span class="duration">0:00</span>
+    </div>
+
+    <div class="controls-bottom">
+        <div class="volume-wrapper">
+            🔊
+            <input type="range" class="volume" min="0" max="1" step="0.01" value="1">
+        </div>
+
+        <div class="speed-wrapper">
+            ⏩
+            <button data-speed="0.75">0.75×</button>
+            <button data-speed="1" class="active">1×</button>
+            <button data-speed="1.25">1.25×</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.querySelectorAll('.audio-player').forEach(player => {
+    const audio = player.querySelector('audio');
+    const playBtn = player.querySelector('.play-btn');
+    const progress = player.querySelector('.progress');
+    const volume = player.querySelector('.volume');
+    const currentTimeEl = player.querySelector('.current-time');
+    const durationEl = player.querySelector('.duration');
+    const speedButtons = player.querySelectorAll('.speed-wrapper button');
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    // ▶️ Play / Pause
+    playBtn.addEventListener('click', () => {
+        audio.paused ? audio.play() : audio.pause();
+    });
+
+    audio.addEventListener('play', () => playBtn.textContent = '⏸️');
+    audio.addEventListener('pause', () => playBtn.textContent = '▶️');
+
+    // ⏱️ Duration
+    audio.addEventListener('loadedmetadata', () => {
+        progress.max = audio.duration;
+        durationEl.textContent = formatTime(audio.duration);
+    });
+
+    // 🔁 Progress
+    audio.addEventListener('timeupdate', () => {
+        progress.value = audio.currentTime;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    progress.addEventListener('input', () => {
+        audio.currentTime = progress.value;
+    });
+
+    // 🔊 Volume
+    volume.addEventListener('input', () => {
+        audio.volume = volume.value;
+    });
+
+    // ⏩ Speed control
+    speedButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            audio.playbackRate = parseFloat(btn.dataset.speed);
+
+            speedButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+});
+</script>
+
+
+<style>
+    .audio-player {
+        min-width: 420px;
+        width: 100%;
+        background: #f6f7f8;
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-family: system-ui, sans-serif;
+    }
+
+    .play-btn {
+        font-size: 20px;
+        border: none;
+        background: #2b6cb0;
+        color: white;
+        border-radius: 8px;
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .progress-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+    }
+
+    .progress {
+        flex: 1;
+    }
+
+    .volume-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* 📱 Mobile */
+    @media (max-width: 480px) {
+        .audio-player {
+            padding: 10px;
+        }
+
+        .play-btn {
+            font-size: 18px;
+        }
+    }
+
+    .controls-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .speed-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .speed-wrapper button {
+        border: 1px solid #ccc;
+        background: white;
+        border-radius: 6px;
+        padding: 4px 6px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .speed-wrapper button.active {
+        background: #2b6cb0;
+        color: white;
+        border-color: #2b6cb0;
+    }
+
+    /* 📱 Mobile */
+    @media (max-width: 480px) {
+        .controls-bottom {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .speed-wrapper {
+            justify-content: center;
+        }
+    }
+
+</style>

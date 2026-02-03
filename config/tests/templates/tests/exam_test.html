@@ -50,9 +50,7 @@
         {% endif %}
 
         {% if question.audio %}
-            <audio controls class="w-full mb-4">
-                <source src="{{ question.audio.url }}">
-            </audio>
+            {% include "tests/includes/audio_player.html" %}
         {% endif %}
 
         <form method="post" class="space-y-3">
