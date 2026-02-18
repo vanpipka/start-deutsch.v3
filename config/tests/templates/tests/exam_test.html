@@ -58,13 +58,13 @@
 
             {% if test.is_yes_no %}
                 <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                    <input type="radio" name="answer" value="true" class="mr-3" required>
+                    <input type="radio" name="answer" value="true" class="mr-3" required {% if selected_value == "true" %}checked{% endif %}>
                     <div>
                            <span>Richtig</span>
                     </div>
                 </label>
                 <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                    <input type="radio" name="answer" value="false" class="mr-3" required>
+                    <input type="radio" name="answer" value="false" class="mr-3" required {% if selected_value == "false" %}checked{% endif %}>
                     <div>
                         <span>Falsch</span>
                     </div>
@@ -72,7 +72,7 @@
             {% else %}
                 {% for answer in question.answers.all %}
                     <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                        <input type="radio" name="answer" value="{{ answer.id }}" class="mr-3" required>
+                        <input type="radio" name="answer" value="{{ answer.id }}" class="mr-3" required {% if selected_value == answer.id%}checked{% endif %}>
                         <div>
                             {% if answer.title %}
                                 <h3 class="text-base font-semibold mb-4">
@@ -85,10 +85,17 @@
                 {% endfor %}
             {% endif %}
 
-            <button type="submit"
-                    class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-                Далее →
-            </button>
+            <div class="flex justify-between mt-6">
+                <button type="submit" name="action" value="back"
+                        class="mr-2 mt-6 w-full bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
+                    ← Назад
+                </button>
+
+                <button type="submit" name="action" value="next"
+                        class="ml-2 mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Далее →
+                </button>
+            </div>
 
         </form>
 
