@@ -4,47 +4,124 @@
 
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 py-10">
-    <div class="bg-white shadow-lg rounded-2xl p-8">
 
-        <!-- Уровень -->
-        <div class="text-sm text-indigo-600 font-medium mb-2">
-            {{ exam.level }}
+    <div class="bg-white shadow-md hover:shadow-xl transition-shadow rounded-2xl p-8">
+
+        <!-- ================= HEADER ================= -->
+        <div class="mb-6">
+
+            <!-- Уровень -->
+            <span class="inline-block bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">
+                {{ exam.level }}
+            </span>
+
+            <!-- Название -->
+            <h1 class="text-4xl font-bold text-gray-900 mt-3">
+                {{ exam.title }}
+            </h1>
+
+            <!-- Meta info -->
+            <div class="flex gap-6 text-sm text-gray-500 mt-4">
+                <div>🧪 {{ exam.tests.count }} тестов</div>
+                <div>⏱ ~15–20 минут</div>
+            </div>
         </div>
 
-        <!-- Название -->
-        <h1 class="text-3xl font-bold text-gray-900 mb-4">
-            {{ exam.title }}
-        </h1>
 
-        <!-- Описание -->
-        {% if exam.description %}
-            <p class="text-gray-700 leading-relaxed mb-6">
-                {{ exam.description }}
-            </p>
-        {% else %}
-            <p class="text-gray-400 italic mb-6">
-                Описание отсутствует
-            </p>
-        {% endif %}
-            
+        <!-- ================= DESCRIPTION ================= -->
+        <div class="border-t pt-6">
+            {% if exam.description %}
+                <p class="text-gray-700 leading-relaxed">
+                    {{ exam.description }}
+                </p>
+            {% else %}
+                <p class="text-gray-400 italic">
+                    Описание отсутствует
+                </p>
+            {% endif %}
+        </div>
 
+
+        <!-- ================= ACTIONS ================= -->
         {% if user.is_authenticated %}
-            <a href="{% url 'tests:exam_start' exam.id %}"
-                class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                Начать
-                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                 </svg>
+            <div class="mt-6 flex flex-wrap gap-3">
+
+                {% if active_attempt %}
+                    <!-- Primary action -->
+                    <a href="{% url 'tests:exam_continue' exam.id %}"
+                       class="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition shadow-sm">
+
+                        Продолжить экзамен
+
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+
+                {% else %}
+                    <!-- Start action -->
+                    <a href="{% url 'tests:exam_start' exam.id %}"
+                       class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition shadow-sm">
+
+                        Начать экзамен
+
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= RESULT PREVIEW ================= -->
+            {% if result_preview %}
+            <a href="{% url 'tests:exam_result_detail' result_preview.attempt.id %}"
+               class="text-indigo-600 hover:underline text-sm">
+                
+                <div class="mt-6">
+                    <p>
+                        Последний результат:
+                        {{ result_preview.score }} / {{ result_preview.total }}
+                        ({{ result_preview.percent }}%)
+                    </p>
+
+                    <div class="w-full bg-gray-200 h-2 rounded mt-2">
+                        <div class="bg-indigo-600 h-2 rounded"
+                            style="width: {{ result_preview.percent }}%">
+                        </div>
+                    </div>
+                </div>
             </a>
+            {% endif %}
+
+
         {% else %}
-            <p class="text-gray-600 mb-4">
-                Пожалуйста, войдите в систему, чтобы начать экзамен.
-            </p>
-            <a href="{% url 'accounts:login' %}"
-                class="inline-flex items-center text-sm text-white bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+
+            <!-- ================= LOGIN BLOCK ================= -->
+            <div class="mt-8 bg-gray-50 border rounded-xl p-6 text-center">
+
+                <p class="text-gray-700 mb-4">
+                    Войдите, чтобы начать прохождение экзамена
+                </p>
+
+                <a href="{% url 'accounts:login' %}"
+                   class="inline-flex items-center bg-blue-800 text-white px-5 py-2.5 rounded-lg hover:bg-black transition">
                     Войти
-            </a>
+                </a>
+
+            </div>
+
         {% endif %}
+
     </div>
 </div>
 {% endblock %}

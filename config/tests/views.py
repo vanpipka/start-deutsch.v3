@@ -3,8 +3,10 @@ from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Sum
+from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value, Exists
+from django.db.models.functions import Coalesce
 from .models import ExamAttempt, Question, Test, Answer, Exam, TestResult, UserAnswer
+from .utils import get_last_exam_result_preview
 
 
 class ExamDetailView(DetailView):
@@ -14,38 +16,154 @@ class ExamDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        letter = self.object
+        exam = self.object
+        user = self.request.user
 
-        context["seo_title"] = letter.get_seo_title()
-        context["seo_description"] = letter.get_seo_description()
+        context["seo_title"] = exam.get_seo_title()
+        context["seo_description"] = exam.get_seo_description()
+        
+        # -----------------------------------
+        # ДАННЫЕ О РЕЗУЛЬТАТАХ ПОЛЬЗОВАТЕЛЯ
+        # -----------------------------------
+        result_preview = None
+        attempts_count = 0
+        active_attempt = None
+
+        if user.is_authenticated:
+
+            # все попытки пользователя
+            attempts = ExamAttempt.objects.filter(
+                user=user,
+                exam=exam
+            )
+
+            attempts_count = attempts.count()
+
+            # незавершённая попытка (если есть)
+            active_attempt = attempts.filter(
+                finished_at__isnull=True
+            ).first()
+
+            # последняя завершённая попытка
+            last_finished_attempt = (
+                attempts.filter(finished_at__isnull=False)
+                .order_by("-started_at")
+                .first()
+            )
+            
+            if active_attempt and last_finished_attempt and last_finished_attempt.started_at > active_attempt.started_at:
+                active_attempt = None
+
+            if last_finished_attempt:
+                totals = TestResult.objects.filter(
+                    attempt=last_finished_attempt
+                ).aggregate(
+                    total_score=Sum("score"),
+                    total_questions=Sum("total")
+                )
+
+                score = totals["total_score"] or 0
+                total = totals["total_questions"] or 0
+
+                percent = 0
+                if total > 0:
+                    percent = round((score / total) * 100)
+
+                result_preview = {
+                    "attempt": last_finished_attempt,
+                    "score": score,
+                    "total": total,
+                    "percent": percent,
+                }
+
+        context["attempts_count"] = attempts_count
+        context["active_attempt"] = active_attempt
+        context["result_preview"] = result_preview
 
         return context
 
+
 @login_required
-def exam_start(request, exam_id):
+def exam_continue(request, exam_id):
     exam = get_object_or_404(Exam, id=exam_id)
 
-    # создаём новую попытку
-    attempt = ExamAttempt.objects.create(
-        user=request.user,
-        exam=exam
+    attempt = (
+        ExamAttempt.objects
+        .filter(
+            user=request.user,
+            exam=exam,
+            finished_at__isnull=True
+        )
+        .order_by("-started_at")
+        .first()
     )
 
-    # берём первый тест экзамена
-    first_test = exam.tests.order_by("id").first()
+    if not attempt:
+        attempt = ExamAttempt.objects.create(
+            user=request.user,
+            exam=exam
+        )
 
-    if not first_test:
-        return redirect("tests:exam_list")
+    answered_subquery = UserAnswer.objects.filter(
+        attempt=attempt,
+        question=OuterRef("pk")
+    )
 
-    # первый вопрос первого теста
-    first_question = first_test.questions.order_by("id").first()
+    next_question = (
+        Question.objects
+        .filter(test__exam=exam)
+        .annotate(answered=Exists(answered_subquery))
+        .filter(answered=False)
+        .select_related("test")
+        .order_by("test__id", "id")
+        .first()
+    )
+
+    if not next_question:
+        return redirect("tests:exam_finish", attempt_id=attempt.id)
 
     return redirect(
         "tests:exam_test",
         exam_id=exam.id,
         attempt_id=attempt.id,
-        test_id=first_test.id,
-        question_id=first_question.id
+        test_id=next_question.test.id,
+        question_id=next_question.id,
+    )
+    
+
+@login_required
+def exam_start(request, exam_id):
+    exam = get_object_or_404(Exam, id=exam_id)
+
+    attempt = ExamAttempt.objects.create(
+        user=request.user,
+        exam=exam
+    )
+
+    answered_subquery = UserAnswer.objects.filter(
+        attempt=attempt,
+        question=OuterRef("pk")
+    )
+
+    next_question = (
+        Question.objects
+        .filter(test__exam=exam)
+        .annotate(answered=Exists(answered_subquery))
+        .filter(answered=False)
+        .select_related("test")
+        .order_by("test__id", "id")
+        .first()
+    )
+
+    if not next_question:
+        return redirect("tests:exam_finish", attempt_id=attempt.id)
+
+    return redirect(
+        "tests:exam_test",
+        exam_id=exam.id,
+        attempt_id=attempt.id,
+        test_id=next_question.test.id,
+        question_id=next_question.id,
     )
 
 
@@ -57,6 +175,54 @@ class ExamListView(ListView):
     def get_queryset(self):
         qs = Exam.objects.annotate(
             tests_count=Count("tests", distinct=True)
+        )
+
+        user = self.request.user
+
+        # если пользователь не авторизован — просто список экзаменов
+        if not user.is_authenticated:
+            return qs.order_by("title")
+
+        # -----------------------------
+        # последняя попытка пользователя
+        # -----------------------------
+        last_attempt = ExamAttempt.objects.filter(
+            user=user,
+            exam=OuterRef("pk"),
+            finished_at__isnull=False
+        ).order_by("-finished_at")
+
+        # id последней попытки
+        qs = qs.annotate(
+            last_attempt_id=Subquery(
+                last_attempt.values("id")[:1]
+            )
+        )
+
+        # -----------------------------
+        # сумма правильных ответов
+        # -----------------------------
+        score_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_score=Sum("score")
+        ).values("total_score")
+
+        total_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_questions=Sum("total")
+        ).values("total_questions")
+
+        qs = qs.annotate(
+            user_score=Coalesce(
+                Subquery(score_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
+            user_total=Coalesce(
+                Subquery(total_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
         )
 
         return qs.order_by("title")

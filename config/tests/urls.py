@@ -7,6 +7,7 @@ urlpatterns = [
     # path('', views.exam_list, name='exam_list'),
     path("", views.ExamListView.as_view(), name="exam_list"),
     path('<int:exam_id>/start/', views.exam_start, name='exam_start'),
+    path('<int:exam_id>/continue/', views.exam_continue, name='exam_continue'),
     path(
         "<int:exam_id>/attempt/<int:attempt_id>/test/<int:test_id>/question/<int:question_id>/",
         views.exam_test_view,
