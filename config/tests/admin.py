@@ -33,7 +33,7 @@ def duplicate_objects(modeladmin, request, queryset):
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
-    list_display = ('title', 'seo_title', 'seo_description', 'created_at')
+    list_display = ('title', 'category', 'level', 'seo_title', 'seo_description', 'created_at')
     inlines = [TestInline]
 
 
@@ -51,8 +51,8 @@ class ExamLevelAdmin(admin.ModelAdmin):
   
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
-    list_display = ('title',  'category', 'exam', 'test_type', 'created_at')
-    list_filter = ('category', 'exam')
+    list_display = ('title',  'exam', 'test_type', 'created_at')
+    list_filter = ('exam', 'exam__category', 'exam__level', 'test_type')
     search_fields = ('title',)
     inlines = [QuestionInline]
 

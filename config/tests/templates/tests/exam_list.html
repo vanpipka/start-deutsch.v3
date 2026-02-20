@@ -7,7 +7,9 @@
 <!-- Header -->
 <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
     <div class="max-w-7xl mx-auto px-4 py-16">
-        <h1 class="text-4xl font-bold mb-2">Экзамены</h1>
+        <h1 class="text-4xl font-bold mb-2">
+            {% if header %}{{ header }}{% else %}Экзамены{% endif %}
+        </h1>
         <p class="text-blue-100">
             Проверь свои знания и отслеживай прогресс
         </p>

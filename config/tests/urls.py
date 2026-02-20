@@ -21,6 +21,55 @@ urlpatterns = [
     ),   
     path("result/<int:attempt_id>/", views.exam_result_detail, name="exam_result_detail"), 
     path("attempts/", views.exam_attempt_list, name="exam_attempt_list"),
+        #SEO pages
+    path("nemetskiy-a1-testy/", views.money_page, name="money_page"), 
+    path(
+        "a1-lesen-test/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Lesen", 
+            "level": "A1", 
+            "header": "Тесты на понимание текста (Lesen) для уровня A1",
+            "seo_title": "Тесты на понимание текста (Lesen) для уровня A1",
+            "seo_description": "Тесты на понимание текста (Lesen) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
+        },
+        name="lesen_test",
+    ),
+    path(
+        "a1-hoeren-test/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Hören", 
+            "level": "A1", 
+            "header": "Тесты на понимание текста (Hören) для уровня A1",
+            "seo_title": "Тесты на понимание текста (Hören) для уровня A1",
+            "seo_description": "Тесты на понимание текста (Hören) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
+        },
+        name="hoeren_test",
+    ),
+    path(
+        "a1-grammatik-test/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Grammatik", 
+            "level": "A1", 
+            "header": "Тесты на понимание грамматики (Grammatik) для уровня A1",
+            "seo_title": "Тесты на понимание грамматики (Grammatik) для уровня A1",
+            "seo_description": "Тесты на понимание грамматики (Grammatik) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
+        },
+        name="grammatik_test",
+    ),
+    path("a1-sprachen-test/", 
+         views.ExamListView.as_view(),
+        {
+            "category": "Sprachenschatz", 
+            "level": "A1", 
+            "header": "Тесты на словарный запас (Sprachenschatz) для уровня A1",
+            "seo_title": "Тесты на словарный запас (Sprachenschatz) для уровня A1",
+            "seo_description": "Тесты на словарный запас (Sprachenschatz) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
+        },
+        name="sprachen_test",
+    ),
 ]
 
 

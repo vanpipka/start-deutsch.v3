@@ -171,12 +171,28 @@ class ExamListView(ListView):
     model = Exam
     template_name = "tests/exam_list.html"
     context_object_name = "exams"
+    
 
     def get_queryset(self):
+        
+        self.extra_context = {
+            "seo_title": self.kwargs.get("seo_title") if self.kwargs.get("header") else "Бесплатные тесты по немецкому A1 онлайн",
+            "seo_description": self.kwargs.get("seo_description") if self.kwargs.get("header") else "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+        }
+        
         qs = Exam.objects.annotate(
             tests_count=Count("tests", distinct=True)
         )
 
+        category = self.kwargs.get("category")
+        if category: qs = qs.filter(category__name=category)
+            
+        level = self.kwargs.get("level")
+        if level: qs = qs.filter(level__name=level)
+            
+        header = self.kwargs.get("header")
+        if header: self.extra_context["header"] = header    
+            
         user = self.request.user
 
         # если пользователь не авторизован — просто список экзаменов
@@ -550,3 +566,16 @@ def exam_result_detail(request, attempt_id):
         "attempt": attempt,
         "answers_by_test": answers_by_test,
     })
+
+
+def money_page(request):
+    
+    context = {
+        "seo_title": "Бесплатные тесты по немецкому A1 онлайн",
+        "seo_description": "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+    }
+    
+    return render(
+        request, 
+        "tests/A1/nemetskiy_a1_testy.html",
+        context=context)

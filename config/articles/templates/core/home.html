@@ -94,33 +94,26 @@
             </div>
 
             <div class="space-y-4">
+                
+                <div class="bg-white p-5 rounded-2xl shadow hover:shadow-xl transition">
 
-                {% for exam in exams %}
-                    <div class="bg-white p-5 rounded-2xl shadow hover:shadow-xl transition">
+                    <h3 class="text-lg font-semibold mb-1">
+                        Немецкий A1 тесты
+                    </h3>
 
-                        <h3 class="text-lg font-semibold mb-1">
-                            {{ exam.title }}
-                        </h3>
+                    <p class="text-sm text-gray-600 mb-3">
+                        Goethe Start Deutsch A1, Telc A1, ÖSD A1
+                    </p>
 
-                        {% if exam.description %}
-                            <p class="text-sm text-gray-600 mb-3">
-                                {{ exam.description|truncatechars:100 }}
-                            </p>
-                        {% endif %}
-
-                        <a href="{% url 'tests:exam_detail' exam.id %}"
-                            class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                            Начать экзамен
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5l7 7-7 7"/>
-                            </svg>
-                            </a>
+                    <a href="{% url 'tests:money_page' %}"
+                        class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        Начать экзамен
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                         
-                    </div>
-                {% empty %}
-                    <p>Экзаменов пока нет.</p>
-                {% endfor %}
+                </div>
 
             </div>
 

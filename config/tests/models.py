@@ -30,6 +30,7 @@ class ExamLevel(models.Model):
 
 class Exam(models.Model):  
     level = models.ForeignKey(ExamLevel, on_delete=models.CASCADE, related_name="exams", verbose_name="Уровень")
+    category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, related_name="exams", verbose_name="Категория", null=True, blank=True)
     title = models.CharField(max_length=255, verbose_name="Название экзамена")
     description = models.TextField(blank=True, verbose_name="Описание экзамена")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
@@ -72,7 +73,7 @@ class Test(models.Model):
         (MULTIPLE_CHOICE, 'Выбор из вариантов'),
     ]
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="tests", verbose_name="Экзамен")
-    category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, related_name="exams", verbose_name="Категория")
+    #category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, related_name="exams", verbose_name="Категория")
     title = models.CharField(max_length=255, verbose_name="Название теста")
     description = models.TextField(blank=True, verbose_name="Описание")
     test_type = models.CharField(

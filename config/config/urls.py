@@ -19,6 +19,8 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.contrib import admin
 from django.urls import include, path
+
+#from config.dictionary import views
 from . import sitemaps
 from . import view
 
@@ -28,15 +30,22 @@ sitemaps = {
 }
 
 urlpatterns = [
+    
+    # SEO files
     path("robots.txt", view.robots_txt, name="robots_txt"),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    
+    # Admin and apps
     path('admin/', admin.site.urls),
+    
+    # Apps
     path('tests/', include('tests.urls')),
     path('profile/', include('accounts.urls')),
     path('articles/', include('articles.urls')),    
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    #path('dictionary/', include('dictionary.urls')),
+    
+    # Main page
     path('', view.home, name='home'),
 ]
 
