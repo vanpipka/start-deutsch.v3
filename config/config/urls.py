@@ -39,14 +39,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Apps
-    path('tests/', include('tests.urls')),
+    path('', include('tests.urls')),
     path('profile/', include('accounts.urls')),
     path('articles/', include('articles.urls')),    
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
-    # Main page
-    path('', view.home, name='home'),
 ]
 
 if settings.DEBUG:

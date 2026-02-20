@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.BreadcrumbMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -161,6 +162,11 @@ if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / 'config' /'static', BASE_DIR /'static',]
 else:
     STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'staticfiles')
+
+# Breadcrumbs context processor
+TEMPLATES[0]["OPTIONS"]["context_processors"] += [
+    "config.context_processors.breadcrumbs",
+]
 
 # CKEditor configuration
 CKEDITOR_UPLOAD_PATH = "uploads/"

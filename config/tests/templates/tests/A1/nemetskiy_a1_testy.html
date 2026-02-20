@@ -4,9 +4,6 @@
 Немецкий A1 тесты онлайн — подготовка к экзамену бесплатно
 {% endblock %}
 
-{% block seo_title %}
-gggggggggggg
-{% endblock %}
 
 {% block description %}
 Пройдите тесты по немецкому языку уровня A1 онлайн.
@@ -32,28 +29,29 @@ gggggggggggg
 
 <section class="max-w-7xl mx-auto px-4 py-16">
    
-
+    {% include "core/components/breadcrumbs.html" %}
+    
     <div class="grid md:grid-cols-2 gap-6">
 
-    <a href="lesen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-    <h2 class="text-xl font-semibold">📖 Lesen Test</h2>
-    <p>Тест на понимание текста.</p>
-    </a>
+        <a href="lesen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">📖 Lesen Test</h2>
+        <p>Тест на понимание текста.</p>
+        </a>
 
-    <a href="hoeren" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-    <h2 class="text-xl font-semibold">🎧 Hören Test</h2>
-    <p>Понимание немецкой речи.</p>
-    </a>
+        <a href="hoeren" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">🎧 Hören Test</h2>
+        <p>Понимание немецкой речи.</p>
+        </a>
 
-    <a href="grammatik" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-    <h2 class="text-xl font-semibold">✍️ Grammatik Test</h2>
-    <p>Грамматика уровня A1.</p>
-    </a>
+        <a href="grammatik" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">✍️ Grammatik Test</h2>
+        <p>Грамматика уровня A1.</p>
+        </a>
 
-    <a href="sprachen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-    <h2 class="text-xl font-semibold">📚 Sprachenschatz Test</h2>
-    <p>Тест на словарный запас.</p>
-    </a>
+        <a href="sprachen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">📚 Sprachenschatz Test</h2>
+        <p>Тест на словарный запас.</p>
+        </a>
 
     </div>
 

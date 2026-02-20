@@ -4,6 +4,7 @@
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+  {% include "core/components/breadcrumbs.html" %}
   <!-- Article Header -->
   <div class="mb-8">
     {% if article.image %}
@@ -24,6 +25,7 @@
       </div>
     </div>
     <p class="mt-4 text-gray-700 text-lg">{{ article.short_description }}</p>
+
 
     {% if article.tags.all %}
       <div class="mt-4 flex flex-wrap gap-2">

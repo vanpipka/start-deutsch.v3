@@ -5,8 +5,27 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value, Exists
 from django.db.models.functions import Coalesce
+
+from articles.models import Article
 from .models import ExamAttempt, Question, Test, Answer, Exam, TestResult, UserAnswer
 from .utils import get_last_exam_result_preview
+
+
+def home(request):
+    latest_articles = (
+        Article.objects
+        .filter(status=Article.PUBLISHED)
+        .select_related('category', 'author')
+        .prefetch_related('tags')
+        .order_by('-published_at')[:6]
+    )
+
+    exams = Exam.objects.all().order_by('created_at')[:5]
+
+    return render(request, 'core/home.html', {
+        'latest_articles': latest_articles,
+        'exams': exams
+    })
 
 
 class ExamDetailView(DetailView):
@@ -172,7 +191,6 @@ class ExamListView(ListView):
     template_name = "tests/exam_list.html"
     context_object_name = "exams"
     
-
     def get_queryset(self):
         
         self.extra_context = {
@@ -244,8 +262,9 @@ class ExamListView(ListView):
         return qs.order_by("title")
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+        
+        context = super().get_context_data(**kwargs)     
+  
         if self.request.user.is_authenticated:
             passed_exam_ids = [] 
             '''Result.objects.filter(
