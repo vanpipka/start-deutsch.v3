@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Немецкий A2 тесты онлайн — подготовка к экзамену бесплатно
+{% endblock %}
+
+
+{% block description %}
+Пройдите тесты по немецкому языку уровня A2 онлайн.
+Подготовка к экзамену Goethe Start Deutsch A2.
+{% endblock %}
+
+{% block content %}
+
+ <!-- Header -->
+<section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold mb-2">
+            {% if header %}{{ header }}{% else %}Экзамены A2{% endif %}
+        </h1>
+        <p class="text-blue-100">
+            Пройдите бесплатные тесты уровня A2 и проверьте готовность к экзамену.
+        </p>
+        <p class="text-blue-100">
+            Все задания соответствуют формату Deutsch A2. (Goethe Start Deutsch A2, Telc A2, ÖSD A2)
+        </p>
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-4 py-16">
+   
+    {% include "core/components/breadcrumbs.html" %}
+    
+    <div class="grid md:grid-cols-2 gap-6">
+
+        <a href="lesen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">📖 Lesen Test</h2>
+        <p>Тест на понимание текста.</p>
+        </a>
+
+        <a href="hoeren" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">🎧 Hören Test</h2>
+        <p>Понимание немецкой речи.</p>
+        </a>
+
+        <a href="grammatik" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">✍️ Grammatik Test</h2>
+        <p>Грамматика уровня A2.</p>
+        </a>
+
+        <a href="sprachen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
+        <h2 class="text-xl font-semibold">📚 Sprachenschatz Test</h2>
+        <p>Тест на словарный запас.</p>
+        </a>
+
+    </div>
+
+    <section class="mt-10">
+    <h2 class="text-2xl font-semibold mb-4">Что включает тест A2?</h2>
+
+    <ul class="list-disc ml-6 space-y-2">
+    <li>Чтение (Lesen)</li>
+    <li>Аудирование (Hören)</li>
+    <li>Базовая грамматика</li>
+    <li>Экзаменационный формат Goethe</li>
+    </ul>
+    </section>
+</section>
+
+{% endblock %}

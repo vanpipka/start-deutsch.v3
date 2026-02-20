@@ -23,7 +23,7 @@ urlpatterns = [
     path("exams/result/<int:attempt_id>/", views.exam_result_detail, name="exam_result_detail"), 
     path("exams/attempts/", views.exam_attempt_list, name="exam_attempt_list"),
         
-    #SEO pages
+    # SEO A1 pages
     path(
         "nemetskiy-a1-testy/lesen/",
         views.ExamListView.as_view(),
@@ -71,8 +71,57 @@ urlpatterns = [
         },
         name="sprachen_test",
     ),
-    
     path("nemetskiy-a1-testy/", views.money_page, name="money_page"),
+    
+    # SEO A2 pages
+    path(
+        "nemetskiy-a2-testy/lesen/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Lesen", 
+            "level": "A2", 
+            "header": "Тесты на понимание текста (Lesen) для уровня A2",
+            "seo_title": "Тесты на понимание текста (Lesen) для уровня A2",
+            "seo_description": "Тесты на понимание текста (Lesen) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
+        },
+        name="lesen_test",
+    ),
+    path(
+        "nemetskiy-a2-testy/hoeren/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Hören", 
+            "level": "A2", 
+            "header": "Тесты на понимание текста (Hören) для уровня A2",
+            "seo_title": "Тесты на понимание текста (Hören) для уровня A2",
+            "seo_description": "Тесты на понимание текста (Hören) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
+        },
+        name="hoeren_test",
+    ),
+    path(
+        "nemetskiy-a2-testy/grammatik/",
+        views.ExamListView.as_view(),
+        {
+            "category": "Grammatik", 
+            "level": "A2", 
+            "header": "Тесты на понимание грамматики (Grammatik) для уровня A2",
+            "seo_title": "Тесты на понимание грамматики (Grammatik) для уровня A2",
+            "seo_description": "Тесты на понимание грамматики (Grammatik) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
+        },
+        name="grammatik_test",
+    ),
+    path("nemetskiy-a2-testy/sprachen/", 
+         views.ExamListView.as_view(),
+        {
+            "category": "Sprachenschatz", 
+            "level": "A2", 
+            "header": "Тесты на словарный запас (Sprachenschatz) для уровня A2",
+            "seo_title": "Тесты на словарный запас (Sprachenschatz) для уровня A2",
+            "seo_description": "Тесты на словарный запас (Sprachenschatz) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
+        },
+        name="sprachen_test",
+    ),
+    path("nemetskiy-a2-testy/", views.money_page_A2, name="money_page_A2"),
      
 ]
 

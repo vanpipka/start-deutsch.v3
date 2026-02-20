@@ -21,7 +21,7 @@
             </a>
             <a href="{% url 'tests:exam_list' %}"
                class="bg-blue-500 border border-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition">
-                Пройти экзамен
+                Пройти тест
             </a>
         </div>
     </div>
@@ -30,61 +30,10 @@
 <!-- Content -->
 <section class="max-w-7xl mx-auto px-4 py-16">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <!-- Exams -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- Articles -->
         <div class="lg:col-span-2">
-
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold">Последние статьи</h2>
-                <a href="{% url 'articles:article_list' %}" class="text-blue-600 hover:underline">
-                    Все статьи →
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                {% for article in latest_articles %}
-                    <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-
-                        {% if article.image %}
-                            <img src="{{ article.image.url }}" class="w-full h-44 object-cover">
-                        {% endif %}
-
-                        <div class="p-5">
-                            <h3 class="text-lg font-semibold mb-2">
-                                <a href="{% url 'articles:article_detail' article.slug %}"
-                                   class="hover:text-blue-600 transition">
-                                    {{ article.title }}
-                                </a>
-                            </h3>
-
-                            <p class="text-gray-600 text-sm mb-4">
-                                {{ article.short_description|truncatechars:120 }}
-                            </p>
-
-                            <div class="flex items-center justify-between text-xs text-gray-500">
-                                <span>
-                                    {{ article.published_at|date:"d.m.Y" }} · {{ article.author }}
-                                </span>
-
-                                {% if article.category %}
-                                    <span class="bg-gray-100 px-2 py-1 rounded">
-                                        {{ article.category.name }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>Пока нет статей.</p>
-                {% endfor %}
-
-            </div>
-        </div>
-
-        <!-- Exams -->
-        <div>
 
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold">Экзамены</h2>
@@ -93,30 +42,111 @@
                 </a>
             </div>
 
-            <div class="space-y-4">
-                
-                <div class="bg-white p-5 rounded-2xl shadow hover:shadow-xl transition">
+            <div class="grid grid-cols-1 md:grid-cols-2">
 
-                    <h3 class="text-lg font-semibold mb-1">
-                        Немецкий A1 тесты
-                    </h3>
+                <div class="p-3">
+                    <a href="{% url 'tests:money_page' %}">
+                        <div class="relative p-6 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-transform transform hover:-translate-y-1">
 
-                    <p class="text-sm text-gray-600 mb-3">
-                        Goethe Start Deutsch A1, Telc A1, ÖSD A1
-                    </p>
+                            <!-- Градиентный анимированный фон -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 animate-gradient-x opacity-80 pointer-events-none"></div>
 
-                    <a href="{% url 'tests:money_page' %}"
-                        class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                        Начать экзамен
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
+                            <!-- overlay для контраста текста -->
+                            <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+                            <!-- Контент карточки -->
+                            <h3 class="relative text-lg font-bold mb-2 text-white drop-shadow-md">
+                            Немецкий A1 тесты
+                            </h3>
+
+                            <p class="relative text-sm text-white/90 mb-4 drop-shadow-sm">
+                            Goethe Start Deutsch A1, Telc A1, ÖSD A1
+                            </p>
+
+                        </div>
+
                     </a>
-                        
+                </div>
+
+                <div class="p-3">
+                    <a href="{% url 'tests:money_page_A2' %}">
+                        <div class="relative p-6 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-transform transform hover:-translate-y-1">
+
+                            <!-- Градиентный анимированный фон -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-green-500 via-green-400 to-green-600 animate-gradient-x opacity-80 pointer-events-none"></div>
+
+                            <!-- overlay для контраста текста -->
+                            <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+                            <!-- Контент карточки -->
+                            <h3 class="relative text-lg font-bold mb-2 text-white drop-shadow-md">
+                            Немецкий A2 тесты
+                            </h3>
+
+                            <p class="relative text-sm text-white/90 mb-4 drop-shadow-sm">
+                            Goethe Start Deutsch A2, Telc A2, ÖSD A2
+                            </p>
+
+                        </div>
+
+                    </a>
                 </div>
 
             </div>
+        </div>
+    </div>
 
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+
+        <!-- Articles -->
+        <div class="lg:col-span-3">
+
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold">Последние статьи</h2>
+                <a href="{% url 'articles:article_list' %}" class="text-blue-600 hover:underline">
+                    Все статьи →
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                {% for article in latest_articles %}
+                    <a href="{% url 'articles:article_detail' article.slug %}">
+                        <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+
+                            {% if article.image %}
+                                <img src="{{ article.image.url }}" class="w-full h-44 object-cover">
+                            {% endif %}
+
+                            <div class="p-5">
+                                <h3 class="text-lg font-semibold mb-2">
+                                    class="hover:text-blue-600 transition">
+                                    {{ article.title }}                             
+                                </h3>
+
+                                <p class="text-gray-600 text-sm mb-4">
+                                    {{ article.short_description|truncatechars:120 }}
+                                </p>
+
+                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                    <span>
+                                        {{ article.published_at|date:"d.m.Y" }} · {{ article.author }}
+                                    </span>
+
+                                    {% if article.category %}
+                                        <span class="bg-gray-100 px-2 py-1 rounded">
+                                            {{ article.category.name }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p>Пока нет статей.</p>
+                {% endfor %}
+
+            </div>
         </div>
 
     </div>

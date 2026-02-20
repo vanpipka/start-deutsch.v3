@@ -598,3 +598,16 @@ def money_page(request):
         request, 
         "tests/A1/nemetskiy_a1_testy.html",
         context=context)
+    
+    
+def money_page_A2(request):
+    
+    context = {
+        "seo_title": "Бесплатные тесты по немецкому A2 онлайн",
+        "seo_description": "Пройдите бесплатные тесты по немецкому языку уровня A2 онлайн. Подготовка к экзамену Goethe Start Deutsch A2.",
+    }
+    
+    return render(
+        request, 
+        "tests/A2/nemetskiy_a2_testy.html",
+        context=context)

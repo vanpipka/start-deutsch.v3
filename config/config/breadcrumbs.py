@@ -46,4 +46,30 @@ BREADCRUMB_MAP = {
                 "title": "Sprachenschatz",
                 "parent": "a1",
             },
+            
+        "a2": {
+            "title": "Немецкий A2",
+            "parent": "exams",
+            "url": "/nemetskiy-a2-testy/",
+        },
+
+            "lesen": {
+                "title": "Lesen",
+                "parent": "a2",
+            },
+
+            "hoeren": {
+                "title": "Hören",
+                "parent": "a2",
+            },
+
+            "grammatik": {
+                "title": "Grammatik",
+                "parent": "a2",
+            },
+
+            "sprachen": {
+                "title": "Sprachenschatz",
+                "parent": "a2",
+            },
 }
