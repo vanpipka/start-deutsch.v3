@@ -21,10 +21,10 @@ urlpatterns = [
     ),   
     path("result/<int:attempt_id>/", views.exam_result_detail, name="exam_result_detail"), 
     path("attempts/", views.exam_attempt_list, name="exam_attempt_list"),
-        #SEO pages
-    path("nemetskiy-a1-testy/", views.money_page, name="money_page"), 
+        
+    #SEO pages
     path(
-        "a1-lesen-test/",
+        "nemetskiy-a1-testy/lesen/",
         views.ExamListView.as_view(),
         {
             "category": "Lesen", 
@@ -36,7 +36,7 @@ urlpatterns = [
         name="lesen_test",
     ),
     path(
-        "a1-hoeren-test/",
+        "nemetskiy-a1-testy/hoeren/",
         views.ExamListView.as_view(),
         {
             "category": "Hören", 
@@ -48,7 +48,7 @@ urlpatterns = [
         name="hoeren_test",
     ),
     path(
-        "a1-grammatik-test/",
+        "nemetskiy-a1-testy/grammatik/",
         views.ExamListView.as_view(),
         {
             "category": "Grammatik", 
@@ -59,7 +59,7 @@ urlpatterns = [
         },
         name="grammatik_test",
     ),
-    path("a1-sprachen-test/", 
+    path("nemetskiy-a1-testy/sprachen/", 
          views.ExamListView.as_view(),
         {
             "category": "Sprachenschatz", 
@@ -70,6 +70,8 @@ urlpatterns = [
         },
         name="sprachen_test",
     ),
+    
+    path("nemetskiy-a1-testy/", views.money_page, name="money_page"), 
 ]
 
 
