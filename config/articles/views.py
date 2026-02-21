@@ -79,7 +79,9 @@ def article_detail(request, slug):
 
     rules = []
     for tag in article.tags.all():
-        rules.append(get_exam_rules_url(article.category.slug, tag.slug))
+        
+        url = get_exam_rules_url(article.category.slug, tag.slug)
+        if url: rules.append(url)
 
     return render(request, 'articles/article_detail.html', {
         'article': article,
