@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from articles.views import ArticleListView
 
 app_name = 'tests'
 
@@ -24,8 +25,10 @@ urlpatterns = [
     path("exams/attempts/", views.exam_attempt_list, name="exam_attempt_list"),
         
     # SEO A1 pages
-    path(
-        "nemetskiy-a1-testy/lesen/",
+    
+    path("nemetskiy-a1-testy/schreiben/rules", views.main_brief_view, name="article_detail"),
+    
+    path("nemetskiy-a1-testy/lesen/",
         views.ExamListView.as_view(),
         {
             "category": "Lesen", 
@@ -36,8 +39,7 @@ urlpatterns = [
         },
         name="lesen_test",
     ),
-    path(
-        "nemetskiy-a1-testy/hoeren/",
+    path("nemetskiy-a1-testy/hoeren/",
         views.ExamListView.as_view(),
         {
             "category": "Hören", 
@@ -48,8 +50,7 @@ urlpatterns = [
         },
         name="hoeren_test",
     ),
-    path(
-        "nemetskiy-a1-testy/grammatik/",
+    path("nemetskiy-a1-testy/grammatik/",
         views.ExamListView.as_view(),
         {
             "category": "Grammatik", 
@@ -70,6 +71,17 @@ urlpatterns = [
             "seo_description": "Тесты на словарный запас (Sprachenschatz) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
         name="sprachen_test",
+    ),
+    path("nemetskiy-a1-testy/schreiben/",
+        ArticleListView.as_view(),
+        {
+            "category": "A1", 
+            "tag": "schreiben", 
+            "header": "Тесты на письменную речь (Schreiben) для уровня A1",
+            "seo_title": "Тесты на письменную речь (Schreiben) для уровня A1",
+            "seo_description": "Тесты на письменную речь (Schreiben) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
+        },
+        name="schreiben_test",
     ),
     path("nemetskiy-a1-testy/", views.money_page, name="money_page"),
     

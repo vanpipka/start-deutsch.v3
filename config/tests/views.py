@@ -617,3 +617,8 @@ def money_page_A2(request):
         request, 
         "tests/A2/nemetskiy_a2_testy.html",
         context=context)
+    
+
+def main_brief_view(request):
+    
+    return render(request, 'base/Primer_pismennyy_nemetskiy_a1.html')

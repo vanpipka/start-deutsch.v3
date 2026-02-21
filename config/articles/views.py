@@ -1,5 +1,7 @@
 from django.views.generic import ListView
 from django.shortcuts import redirect, render, get_object_or_404
+
+from articles.utils import get_exam_rules_url
 from .forms import CommentForm
 from .models import Article, Category, Tag, Comment
 
@@ -12,11 +14,23 @@ class ArticleListView(ListView):
 
     def get_queryset(self):
         qs = Article.objects.filter(status=Article.PUBLISHED).select_related("category", "author")
+                
         category_slug = self.request.GET.get("category")
-
-        if category_slug:
-            qs = qs.filter(category__slug=category_slug)
-
+        if category_slug: qs = qs.filter(category__slug=category_slug)
+        
+        tag_slug = self.request.GET.get("tag")
+        if tag_slug: qs = qs.filter(tags__slug=tag_slug)
+        
+        self.extra_context = {
+            "seo_title": self.kwargs.get("seo_title") if self.kwargs.get("header") else "Бесплатные тесты по немецкому A1 онлайн.",
+            "seo_description": self.kwargs.get("seo_description") if self.kwargs.get("header") else "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+        }
+        
+        header = self.kwargs.get("header")
+        if header: self.extra_context["header"] = header 
+        
+        self.extra_context["exam_rules_url"] = get_exam_rules_url(category_slug, tag_slug)
+        
         return qs.order_by("-published_at")
 
     def get_context_data(self, **kwargs):
@@ -66,8 +80,3 @@ def article_detail(request, slug):
         'seo_title': article.get_seo_title(),
         'seo_description': article.get_seo_description()
     })
-
-
-def main_brief_view(request):
-    
-    return render(request, 'base/Primer_pismennyy_nemetskiy_a1.html')
