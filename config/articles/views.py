@@ -35,7 +35,10 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
+        
+        if not self.kwargs.get("category"):
+            context["categories"] = Category.objects.all()
+            
         context["current_category"] = self.request.GET.get("category")
         # context["seo_title"] = self.get_seo_title()
         # context["seo_description"] = self.get_seo_description()

@@ -25,13 +25,21 @@ class BreadcrumbMiddleware:
         # сопоставление url → breadcrumb node
         mapping = {
             "exam_detail": "exams",
-            "money_page": "a1",
+            
             "home": "home",
             "exam_list": "exams",
-            "lesen_test": "lesen",
-            "hoeren_test": "hoeren",
-            "grammatik_test": "grammatik",
-            "sprachen_test": "sprachen",
+            # SEO A1 pages
+            "money_page": "a1",
+            "lesen_test_a1": "lesen_a1",
+            "hoeren_test_a1": "hoeren_a1",
+            "grammatik_test_a1": "grammatik_a1",
+            "sprachen_test_a1": "sprachen_a1",
+            # SEO A2 pages
+            "money_page_A2": "a2",
+            "lesen_test_a2": "lesen_a2",
+            "hoeren_test_a2": "hoeren_a2",
+            "grammatik_test_a2": "grammatik_a2",
+            "sprachen_test_a2": "sprachen_a2",
             # Articles
             "article_list": "articles",
             "article_detail": "article_detail",

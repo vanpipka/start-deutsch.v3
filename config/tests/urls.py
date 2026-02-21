@@ -26,7 +26,7 @@ urlpatterns = [
         
     # SEO A1 pages
     
-    path("nemetskiy-a1-testy/schreiben/rules", views.main_brief_view, name="article_detail"),
+    path("nemetskiy-a1-testy/schreiben/rules", views.main_brief_view, name="article_rules"),
     
     path("nemetskiy-a1-testy/lesen/",
         views.ExamListView.as_view(),
@@ -37,7 +37,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание текста (Lesen) для уровня A1",
             "seo_description": "Тесты на понимание текста (Lesen) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
-        name="lesen_test",
+        name="lesen_test_a1",
     ),
     path("nemetskiy-a1-testy/hoeren/",
         views.ExamListView.as_view(),
@@ -48,7 +48,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание текста (Hören) для уровня A1",
             "seo_description": "Тесты на понимание текста (Hören) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
-        name="hoeren_test",
+        name="hoeren_test_a1",
     ),
     path("nemetskiy-a1-testy/grammatik/",
         views.ExamListView.as_view(),
@@ -59,7 +59,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание грамматики (Grammatik) для уровня A1",
             "seo_description": "Тесты на понимание грамматики (Grammatik) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
-        name="grammatik_test",
+        name="grammatik_test_a1",
     ),
     path("nemetskiy-a1-testy/sprachen/", 
          views.ExamListView.as_view(),
@@ -70,7 +70,7 @@ urlpatterns = [
             "seo_title": "Тесты на словарный запас (Sprachenschatz) для уровня A1",
             "seo_description": "Тесты на словарный запас (Sprachenschatz) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
-        name="sprachen_test",
+        name="sprachen_test_a1",
     ),
     path("nemetskiy-a1-testy/schreiben/",
         ArticleListView.as_view(),
@@ -81,7 +81,7 @@ urlpatterns = [
             "seo_title": "Тесты на письменную речь (Schreiben) для уровня A1",
             "seo_description": "Тесты на письменную речь (Schreiben) для уровня A1. Подготовка к экзамену Goethe Start Deutsch A1."
         },
-        name="schreiben_test",
+        name="schreiben_test_a1",
     ),
     path("nemetskiy-a1-testy/", views.money_page, name="money_page"),
     
@@ -96,7 +96,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание текста (Lesen) для уровня A2",
             "seo_description": "Тесты на понимание текста (Lesen) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
         },
-        name="lesen_test",
+        name="lesen_test_a2",
     ),
     path(
         "nemetskiy-a2-testy/hoeren/",
@@ -108,7 +108,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание текста (Hören) для уровня A2",
             "seo_description": "Тесты на понимание текста (Hören) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
         },
-        name="hoeren_test",
+        name="hoeren_test_a2",
     ),
     path(
         "nemetskiy-a2-testy/grammatik/",
@@ -120,7 +120,7 @@ urlpatterns = [
             "seo_title": "Тесты на понимание грамматики (Grammatik) для уровня A2",
             "seo_description": "Тесты на понимание грамматики (Grammatik) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
         },
-        name="grammatik_test",
+        name="grammatik_test_a2",
     ),
     path("nemetskiy-a2-testy/sprachen/", 
          views.ExamListView.as_view(),
@@ -131,7 +131,7 @@ urlpatterns = [
             "seo_title": "Тесты на словарный запас (Sprachenschatz) для уровня A2",
             "seo_description": "Тесты на словарный запас (Sprachenschatz) для уровня A2. Подготовка к экзамену Goethe Start Deutsch A2."
         },
-        name="sprachen_test",
+        name="sprachen_test_a2",
     ),
     path("nemetskiy-a2-testy/", views.money_page_A2, name="money_page_A2"),
      

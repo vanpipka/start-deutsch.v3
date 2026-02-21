@@ -279,7 +279,9 @@ class ExamListView(ListView):
         else:
             context["passed_exam_ids"] = set()
 
-        context["categories"] = TestCategory.objects.all()
+        if not self.kwargs.get("category"):
+            context["categories"] = TestCategory.objects.all()
+        
         context["current_category"] = self.request.GET.get("category")
 
         return context

@@ -27,22 +27,22 @@ BREADCRUMB_MAP = {
             "url": "/nemetskiy-a1-testy/",
         },
 
-            "lesen": {
+            "lesen_a1": {
                 "title": "Lesen",
                 "parent": "a1",
             },
 
-            "hoeren": {
+            "hoeren_a1": {
                 "title": "Hören",
                 "parent": "a1",
             },
 
-            "grammatik": {
+            "grammatik_a1": {
                 "title": "Grammatik",
                 "parent": "a1",
             },
 
-            "sprachen": {
+            "sprachen_a1": {
                 "title": "Sprachenschatz",
                 "parent": "a1",
             },
@@ -53,22 +53,22 @@ BREADCRUMB_MAP = {
             "url": "/nemetskiy-a2-testy/",
         },
 
-            "lesen": {
+            "lesen_a2": {
                 "title": "Lesen",
                 "parent": "a2",
             },
 
-            "hoeren": {
+            "hoeren_a2": {
                 "title": "Hören",
                 "parent": "a2",
             },
 
-            "grammatik": {
+            "grammatik_a2": {
                 "title": "Grammatik",
                 "parent": "a2",
             },
 
-            "sprachen": {
+            "sprachen_a2": {
                 "title": "Sprachenschatz",
                 "parent": "a2",
             },
