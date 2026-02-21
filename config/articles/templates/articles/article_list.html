@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% block title %}Все статьи{% endblock %}
+{% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
 {% block content %}
 {% load static %}
 
