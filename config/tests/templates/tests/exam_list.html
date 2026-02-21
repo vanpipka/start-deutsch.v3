@@ -21,6 +21,24 @@
 
     {% include "core/components/breadcrumbs.html" %}
 
+    {% if categories %}
+        <div class="flex flex-wrap gap-3 mb-10">
+            <a href="{% url 'tests:exam_list' %}"
+               class="px-4 py-2 rounded-full text-sm border
+               {% if not current_category %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+                Все
+            </a>
+
+            {% for category in categories %}
+                <a href="?category={{ category.name }}"
+                   class="px-4 py-2 rounded-full text-sm border
+                   {% if current_category == category.name %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
         {% for exam in exams %}

@@ -7,7 +7,7 @@ from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value
 from django.db.models.functions import Coalesce
 
 from articles.models import Article
-from .models import ExamAttempt, Question, Test, Answer, Exam, TestResult, UserAnswer
+from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer
 from .utils import get_last_exam_result_preview
 
 
@@ -210,6 +210,9 @@ class ExamListView(ListView):
             
         header = self.kwargs.get("header")
         if header: self.extra_context["header"] = header    
+        
+        category_name = self.request.GET.get("category")
+        if category_name: qs = qs.filter(category__name=category_name)
             
         user = self.request.user
 
@@ -275,6 +278,9 @@ class ExamListView(ListView):
             context["passed_exam_ids"] = set(passed_exam_ids)
         else:
             context["passed_exam_ids"] = set()
+
+        context["categories"] = TestCategory.objects.all()
+        context["current_category"] = self.request.GET.get("category")
 
         return context
 
