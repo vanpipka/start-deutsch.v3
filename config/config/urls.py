@@ -26,7 +26,8 @@ from . import view
 
 sitemaps = {
     'articles': sitemaps.ArticleSitemap,
-    'exams': sitemaps.ExamSitemap
+    'exams': sitemaps.ExamSitemap,
+    'static': sitemaps.StaticSitemap,
 }
 
 urlpatterns = [
