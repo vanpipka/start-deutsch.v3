@@ -46,6 +46,7 @@ class ArticleListView(ListView):
     
 
 def article_detail(request, slug):
+    
     article = get_object_or_404(
         Article.objects.select_related('category', 'author').prefetch_related('tags'),
         slug=slug,
@@ -76,10 +77,15 @@ def article_detail(request, slug):
             )
             return redirect('articles:article_detail', slug=article.slug)
 
+    rules = []
+    for tag in article.tags.all():
+        rules.append(get_exam_rules_url(article.category.slug, tag.slug))
+
     return render(request, 'articles/article_detail.html', {
         'article': article,
         'comments': comments,
         'comment_form': comment_form,
         'seo_title': article.get_seo_title(),
-        'seo_description': article.get_seo_description()
+        'seo_description': article.get_seo_description(),
+        'exam_rules_urls': rules
     })

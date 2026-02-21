@@ -38,6 +38,42 @@
     {% endif %}
   </div>
 
+  {% if exam_rules_urls %}
+    {% for exam_rules_url in exam_rules_urls %}
+    <div class="flex items-start gap-3 bg-red-50 rounded-xl p-4 border border-red-100 mb-10">
+
+        <!-- Icon -->
+        <svg class="w-5 h-5 text-red-600 shrink-0 mt-0.5"
+            fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+
+        <!-- Text -->
+        <div class="text-sm text-red-900 leading-relaxed">
+
+            <p class="font-semibold mb-1">
+                Перед тестом обязательно прочитайте правила экзамена A1
+            </p>
+
+            <p class="text-red-800">
+                90% ошибок происходят из-за незнания формата экзамена.
+                Узнайте, как проходит тест и за что снимают баллы —
+                <a href="{{ exam_rules_url }}" target="_blank"
+                class="font-semibold underline underline-offset-2 hover:text-red-600 transition">
+                ознакомиться с правилами →
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+    {% endfor %}
+  {% endif %}
+
   <!-- Article Content -->
   <div class="prose prose-lg max-w-full mb-12">
     <div class="ck-content">
