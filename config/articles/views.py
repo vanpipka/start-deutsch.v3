@@ -28,7 +28,6 @@ class ArticleListView(ListView):
         return context
     
 
-
 def article_detail(request, slug):
     article = get_object_or_404(
         Article.objects.select_related('category', 'author').prefetch_related('tags'),
@@ -67,3 +66,8 @@ def article_detail(request, slug):
         'seo_title': article.get_seo_title(),
         'seo_description': article.get_seo_description()
     })
+
+
+def main_brief_view(request):
+    
+    return render(request, 'base/Primer_pismennyy_nemetskiy_a1.html')
