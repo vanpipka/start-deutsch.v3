@@ -623,4 +623,12 @@ def money_page_A2(request):
 
 def main_brief_view(request):
     
-    return render(request, 'base/Primer_pismennyy_nemetskiy_a1.html')
+    context={
+            "title": "Правила Schreiben A1 — письмо на экзамене Start Deutsch A1 | Start Deutsch",
+            "seo_title": "Schreiben A1: правила письма на экзамене Start Deutsch A1 (пример + советы)",
+            "seo_description": "Как правильно написать письмо на экзамене Start Deutsch A1? Полные правила Schreiben, структура ответа, примеры и ошибки, из-за которых теряют баллы."
+         }
+    return render(
+        request, 
+        'base/Primer_pismennyy_nemetskiy_a1.html',
+        context=context)

@@ -28,11 +28,6 @@ urlpatterns = [
     
     path("nemetskiy-a1-testy/schreiben/rules", 
          views.main_brief_view, 
-         {
-            "title": "Правила Schreiben A1 — письмо на экзамене Start Deutsch A1 | Start Deutsch",
-            "seo_title": "Schreiben A1: правила письма на экзамене Start Deutsch A1 (пример + советы)",
-            "seo_description": "Как правильно написать письмо на экзамене Start Deutsch A1? Полные правила Schreiben, структура ответа, примеры и ошибки, из-за которых теряют баллы."
-         },
          name="article_rules"),
     
     path("nemetskiy-a1-testy/lesen/",
