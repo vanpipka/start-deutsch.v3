@@ -27,6 +27,7 @@ from . import view
 sitemaps = {
     'articles': sitemaps.ArticleSitemap,
     'exams': sitemaps.ExamSitemap,
+    'exam_attempts': sitemaps.ExamAttemptSitemap,
     'static': sitemaps.StaticSitemap,
 }
 

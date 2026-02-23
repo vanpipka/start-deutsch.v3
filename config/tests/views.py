@@ -1,4 +1,6 @@
 
+from multiprocessing import context
+
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
@@ -579,27 +581,55 @@ def exam_attempt_list(request):
     })
 
 
-@login_required
 def exam_result_detail(request, attempt_id):
+    
+    context = {}
+    
     attempt = get_object_or_404(
         ExamAttempt.objects.prefetch_related(
             "test_results__test",
             "answers__question__answers",
             "answers__selected_answer",
         ),
-        id=attempt_id,
-        user=request.user
+        id=attempt_id
     )
+
+    context["attempt"] = attempt
 
     # сгруппируем ответы по тестам
     answers_by_test = {}
     for answer in attempt.answers.all():
         answers_by_test.setdefault(answer.test, []).append(answer)
+        
+    context["answers_by_test"] = answers_by_test
 
-    return render(request, "tests/exam_result.html", {
-        "attempt": attempt,
-        "answers_by_test": answers_by_test,
-    })
+    # SEO Title и Description
+    context["seo_title"] = f"{ attempt.exam.title} — Пробный экзамен {attempt.exam.level} {attempt.exam.category} Deutsch"
+    context["seo_description"] = (
+            f"Пройдите {attempt.exam.title} экзамена ({attempt.exam.category} {attempt.exam.level}) онлайн с результатами и ответами."
+        )
+
+    # Breadcrumbs
+    context["breadcrumbs"] = [
+            {"title": "Главная", "url": "/"},
+            {"title": "Экзамены по немецкому", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/"},
+            {"title": f"{attempt.exam.level} тесты", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/{attempt.exam.category.name.lower()}/"},
+            {"title": attempt.exam.title, "url": f"/exams/{attempt.exam.id}/"},
+            {"title": f"Попытка от {attempt.finished_at.strftime('%d.%m.%Y')}", "url": None},
+        ]
+
+    # Related exams (internal linking)
+    context["related_exams"] = Exam.objects.filter(
+            level=attempt.exam.level,
+            category=attempt.exam.category
+        ).exclude(id=attempt.exam.id)[:3]
+
+
+    return render(
+        request, 
+        "tests/exam_result.html", 
+        context=context
+    )
 
 
 def money_page(request):

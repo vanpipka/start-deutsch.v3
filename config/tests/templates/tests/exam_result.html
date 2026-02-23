@@ -4,10 +4,26 @@
 
 <div class="max-w-5xl mx-auto px-4 py-10">
 
+  {# Breadcrumbs #}
+    <nav class="text-sm text-gray-500 mb-4" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2">
+            {% for crumb in breadcrumbs %}
+                <li class="inline-flex items-center">
+                    {% if crumb.url %}
+                        <a href="{{ crumb.url }}" class="text-blue-600 hover:underline">{{ crumb.title }}</a>
+                        <svg class="w-4 h-4 mx-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.05 14.95a.5.5 0 0 0 .7 0l5-5a.5.5 0 0 0 0-.7l-5-5a.5.5 0 1 0-.7.7L11.29 10l-4.24 4.24a.5.5 0 0 0 0 .7z"/></svg>
+                    {% else %}
+                        <span class="text-gray-700 font-medium">{{ crumb.title }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+
   <!-- Заголовок экзамена -->
   <div class="mb-8">
     <h1 class="text-2xl font-semibold text-gray-900">
-      {{ attempt.exam.title }}
+      {{ seo_title }}
     </h1>
     <p class="text-sm text-gray-500 mt-1">
       Результат экзамена · {{ attempt.started_at|date:"d.m.Y H:i" }}
@@ -122,6 +138,43 @@
 
     </div>
   {% endfor %}
+
+  {# Related attempts/internal linking #}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {% for exam in related_exams %}
+            <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6 flex flex-col">
+
+                <h3 class="text-xl font-semibold mb-2">
+                    {{ exam.title }}
+                </h3>
+
+                {% if exam.description %}
+                    <p class="text-gray-600 text-sm mb-4 flex-grow">
+                        {{ exam.description|truncatechars:120 }}
+                    </p>
+                {% endif %}
+
+                <div class="text-sm text-gray-500 mb-4">
+                    📝 Тестов: <span class="font-medium">{{ exam.tests_count }}</span>
+                </div>
+
+                <div class="mt-auto flex items-center justify-between">
+                        <a href="{% url 'tests:exam_detail' exam.id %}"
+                            class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                Начать
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                </div>
+
+            </div>
+        {% empty %}
+            <p>Экзаменов пока нет.</p>
+        {% endfor %}
+
+    </div>
+
 
   <!-- Кнопка назад -->
   <div class="text-center mt-10">
