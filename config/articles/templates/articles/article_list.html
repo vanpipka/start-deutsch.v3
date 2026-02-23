@@ -74,33 +74,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
         {% if exam_rules_url %}
-        <a href="{{ exam_rules_url }}" target="_blank">
-            <div class="bg-red-50 rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
 
-                <img src="{% static 'src/img/article_header.png' %}" class="w-full h-48 object-cover">
-
-                <div class="p-6 flex flex-col h-full">
-
-                    <h3 class="text-xl font-semibold mb-2">
-                        <p class="hover:text-blue-600 transition">
-                            Правила проведения экзамена
-                        </p>
-                    </h3>
-
-                    <p class="text-gray-600 text-sm mb-4 flex-grow">
-                        Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест.
-                    </p>
-
-                    <div class="flex items-center justify-between text-xs text-gray-500 mt-auto">
-                        <span>
-                            01.01.2026 · admin
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-        </a>
+            {% include 'core/components/rules_card.html' with  title="Правила проведения экзамена" description="Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест."  image_url="/static/src/img/wichtig.png"  url=exam_rules_url %}
+                
         {% endif %}
+        
         {% for article in articles %}
 
         <a href="{% url 'articles:article_detail' article.slug %}">
