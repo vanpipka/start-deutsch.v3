@@ -1,4 +1,4 @@
-from django.http import HttpResponseForbidden
+
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
@@ -9,7 +9,6 @@ from django.db.models.functions import Coalesce
 from articles.models import Article
 from articles.utils import get_exam_rules_url
 from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer
-from .utils import get_last_exam_result_preview
 
 
 def home(request):
@@ -25,7 +24,10 @@ def home(request):
 
     return render(request, 'core/home.html', {
         'latest_articles': latest_articles,
-        'exams': exams
+        'exams': exams,
+        'seo_description': "Немецкий A1-B2 тесты онлайн с ответами и результатами. Подготовка к Goethe Start Deutsch A1-B2: Lesen, Hören, Schreiben + пробный экзамен бесплатно.",
+        'seo_keywords': "Немецкий A1-B2 тесты онлайн, Goethe Start Deutsch A1-B2, Telc A1-B2, ÖSD A1-B2, немецкий язык практика, немецкий язык экзамен, немецкий язык тесты, немецкий язык подготовка, немецкий язык онлайн тесты"
+
     })
 
 
