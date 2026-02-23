@@ -78,8 +78,7 @@ def article_detail(request, slug):
             return redirect('articles:article_detail', slug=article.slug)
 
     rules = []
-    for tag in article.tags.all():
-        
+    for tag in article.tags.all():     
         url = get_exam_rules_url(article.category.slug, tag.slug)
         if url: rules.append(url)
 

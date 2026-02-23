@@ -1,0 +1,239 @@
+{% extends "core/base.html" %}
+{% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
+{% block content %}
+
+<section class="max-w-4xl mx-auto px-4 py-10">
+   <article class="w-full flex justify-center items-start">
+      <div class="flex-1 px-4 md:px-12 py-16 md:py-20 flex flex-col justify-start items-start gap-8">
+         <header class="w-full flex flex-col gap-4">
+            <h1 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">Правила аудирования на немецком A1 (Hören)</h1>
+            
+            <p class="text-[#605A57] text-lg font-normal leading-8 font-sans">Раздел Hören (Аудирование) проверяет вашу способность понимать устную немецкую речь в повседневных ситуациях.</p>
+         </header>
+         <div class="w-full flex flex-col gap-10 text-[#605A57] text-base font-normal leading-7 font-sans">
+            <section class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-[rgba(55,50,47,0.08)]">
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Чего ожидать</h2>
+               <p>Экзамен по аудированию A1 включает 3-4 части: понимание публичных объявлений, коротких диалогов. Каждая запись воспроизводится дважды. Время — около 20 минут.</p>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Советы экспертов по аудированию A1</h2>
+               <ul class="space-y-3">
+                  <li class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-[#49423D] text-white text-sm flex items-center justify-center font-medium">1</span><span>Прочитайте вопросы до воспроизведения аудио</span></li>
+                  <li class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-[#49423D] text-white text-sm flex items-center justify-center font-medium">2</span><span>Слушайте конкретную информацию: числа, время, места</span></li>
+                  <li class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-[#49423D] text-white text-sm flex items-center justify-center font-medium">3</span><span>Не пытайтесь понять каждое слово — сосредоточьтесь на ключевой информации</span></li>
+                  <li class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-[#49423D] text-white text-sm flex items-center justify-center font-medium">4</span><span>Используйте второе прослушивание для проверки ответов</span></li>
+                  <li class="flex items-start gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-[#49423D] text-white text-sm flex items-center justify-center font-medium">5</span><span>Ежедневно практикуйтесь с немецким радио, подкастами или YouTube</span></li>
+               </ul>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Базовая лексика для аудирования</h2>
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">hören - слышать/слушать</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">der Bahnhof - вокзал</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">die Durchsage - объявление</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">der Anruf - телефонный звонок</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">die Uhrzeit - время</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">die Verspätung - задержка/опоздание</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">das Gleis - платформа/путь</div>
+                  <div class="bg-white rounded-lg px-4 py-3 border border-[rgba(55,50,47,0.08)] text-[#49423D]">die Abfahrt - отправление</div>
+               </div>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Примеры для практики</h2>
+               <div class="space-y-6">
+                  <div class="bg-white rounded-xl p-6 border border-[rgba(55,50,47,0.08)]">
+                     <h3 class="text-[#49423D] font-semibold mb-3">Задание 1: Объявление на вокзале</h3>
+                     <div class="bg-[#F7F5F3] rounded-lg p-4 mb-4">
+                        <p class="text-[#605A57] whitespace-pre-wrap">Прослушайте объявление и ответьте: С какой платформы отправляется поезд в Мюнхен?
+                           [Текст аудио]: "Achtung an Gleis 5. Der ICE nach München über Nürnberg fährt in 10 Minuten ab."
+                        </p>
+                     </div>
+                     <div class="bg-[#e8f5e9] rounded-lg p-4">
+                        <p class="text-[#2e7d32] font-medium text-sm mb-2">Sample Answer:</p>
+                        <p class="text-[#2e7d32] whitespace-pre-wrap">Поезд в Мюнхен отправляется с платформы 5 (Gleis 5).</p>
+                     </div>
+                  </div>
+                  <div class="bg-white rounded-xl p-6 border border-[rgba(55,50,47,0.08)]">
+                     <h3 class="text-[#49423D] font-semibold mb-3">Задание 2: Диалог</h3>
+                     <div class="bg-[#F7F5F3] rounded-lg p-4 mb-4">
+                        <p class="text-[#605A57] whitespace-pre-wrap">Прослушайте диалог и ответьте: Что хочет купить женщина?
+                           [Текст аудио]:
+                           Verkäufer: "Guten Tag, kann ich Ihnen helfen?"
+                           Frau: "Ja, ich suche ein Buch über deutsche Grammatik."
+                           Verkäufer: "Die Bücher über Grammatik sind dort drüben."
+                        </p>
+                     </div>
+                     <div class="bg-[#e8f5e9] rounded-lg p-4">
+                        <p class="text-[#2e7d32] font-medium text-sm mb-2">Sample Answer:</p>
+                        <p class="text-[#2e7d32] whitespace-pre-wrap">Женщина хочет купить книгу по немецкой грамматике (ein Buch über deutsche Grammatik).</p>
+                     </div>
+                  </div>
+               </div>
+            </section>
+            <section class="bg-white rounded-xl p-6 md:p-8 border border-[rgba(55,50,47,0.08)]">
+               <h2 class="text-[#49423D] text-xl font-semibold mb-6">Экзамен по аудированию A1 в цифрах</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div class="text-center">
+                     <div class="text-3xl font-bold text-[#49423D] mb-1">3-4 части</div>
+                     <div class="text-sm text-[#605A57]">Объявления, Диалоги, Сообщения</div>
+                  </div>
+                  <div class="text-center">
+                     <div class="text-3xl font-bold text-[#49423D] mb-1">20 минут</div>
+                     <div class="text-sm text-[#605A57]">Общее время прослушивания</div>
+                  </div>
+                  <div class="text-center">
+                     <div class="text-3xl font-bold text-[#49423D] mb-1">2 раза</div>
+                     <div class="text-sm text-[#605A57]">Каждая запись воспроизводится дважды</div>
+                  </div>
+               </div>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-2">Goethe vs telc A1 Аудирование – Есть ли разница?</h2>
+               <p class="text-[#605A57] mb-4">Короткий ответ: Очень похожая структура.</p>
+               <div class="bg-white rounded-xl border border-[rgba(55,50,47,0.08)] overflow-hidden">
+                  <div class="grid grid-cols-3 bg-[#F7F5F3] border-b border-[rgba(55,50,47,0.08)]">
+                     <div class="px-4 py-3 text-sm font-semibold text-[#49423D]">Аспект</div>
+                     <div class="px-4 py-3 text-sm font-semibold text-[#49423D]">Goethe A1</div>
+                     <div class="px-4 py-3 text-sm font-semibold text-[#49423D]">telc A1</div>
+                  </div>
+                  <div class="grid grid-cols-3 border-b border-[rgba(55,50,47,0.08)] last:border-0">
+                     <div class="px-4 py-3 text-sm font-medium text-[#49423D]">Части</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">3-4 части</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">3-4 части</div>
+                  </div>
+                  <div class="grid grid-cols-3 border-b border-[rgba(55,50,47,0.08)] last:border-0">
+                     <div class="px-4 py-3 text-sm font-medium text-[#49423D]">Время</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">20 мин</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">20 мин</div>
+                  </div>
+                  <div class="grid grid-cols-3 border-b border-[rgba(55,50,47,0.08)] last:border-0">
+                     <div class="px-4 py-3 text-sm font-medium text-[#49423D]">Воспроизведение</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">2 раза каждая</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">2 раза каждая</div>
+                  </div>
+                  <div class="grid grid-cols-3 border-b border-[rgba(55,50,47,0.08)] last:border-0">
+                     <div class="px-4 py-3 text-sm font-medium text-[#49423D]">Содержание</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">Бытовые ситуации</div>
+                     <div class="px-4 py-3 text-sm text-[#605A57]">Бытовые ситуации</div>
+                  </div>
+               </div>
+               <p class="text-[#847971] text-sm mt-3 italic">Одни и те же навыки аудирования применимы к обоим форматам экзамена.</p>
+            </section>
+            <section class="mb-16 relative overflow-hidden rounded-2xl">
+                  <div class="mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl p-8 text-center">
+                     <h2 class="text-2xl font-semibold mb-3">
+                           Пройдите полный пробный экзамен Hören A1
+                     </h2>
+
+                     <p class="mb-6 opacity-90">
+                           Попробуйте реальные тесты от Goethe и telc,в формате настоящего экзамена. 
+                           Ответы с подробными объяснениями помогут вам понять каждую ошибку и улучшить навыки аудирования.
+                     </p>
+
+                     <a href="/nemetskiy-a1-testy/hoeren"
+                        class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
+                           Начать тест Hören A1 (Аудирование)→
+                     </a>
+                  </div>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">FAQ раздела Аудирование</h2>
+               <div class="bg-white rounded-xl border border-[rgba(55,50,47,0.08)] overflow-hidden">
+                  <div class="w-full border-b border-[rgba(73,66,61,0.16)] last:border-b-0 overflow-hidden">
+                     <button class="w-full px-5 py-[18px] flex justify-between items-center gap-5 text-left hover:bg-[rgba(73,66,61,0.02)] transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#37322F] focus-visible:ring-offset-1 active:bg-[rgba(73,66,61,0.04)]" aria-expanded="false">
+                        <div class="flex-1 text-[#49423D] text-base font-medium leading-6 font-sans">Какие типы аудио появляются на экзамене по аудированию A1?</div>
+                        <div class="flex justify-center items-center">
+                           <svg class="w-6 h-6 text-[rgba(73,66,61,0.60)] transition-transform duration-300 ease-in-out rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </div>
+                     </button>
+                     <div class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                        <div class="px-5 pb-[18px] text-[#605A57] text-sm font-normal leading-6 font-sans">Экзамен по аудированию A1 включает публичные объявления (вокзалы, аэропорты, магазины), короткие диалоги между двумя людьми (покупки, вопрос о направлении, запись на приём), телефонные и голосовые сообщения, краткие отрывки о погоде или новостях. Все аудио используют чёткую, намеренно медленную речь, подходящую для уровня A1. Говорящие чётко артикулируют и используют стандартный немецкий без сильных региональных акцентов для честной оценки.</div>
+                     </div>
+                  </div>
+                  <div class="w-full border-b border-[rgba(73,66,61,0.16)] last:border-b-0 overflow-hidden">
+                     <button class="w-full px-5 py-[18px] flex justify-between items-center gap-5 text-left hover:bg-[rgba(73,66,61,0.02)] transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#37322F] focus-visible:ring-offset-1 active:bg-[rgba(73,66,61,0.04)]" aria-expanded="false">
+                        <div class="flex-1 text-[#49423D] text-base font-medium leading-6 font-sans">Сколько раз воспроизводится каждая запись?</div>
+                        <div class="flex justify-center items-center">
+                           <svg class="w-6 h-6 text-[rgba(73,66,61,0.60)] transition-transform duration-300 ease-in-out rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </div>
+                     </button>
+                     <div class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                        <div class="px-5 pb-[18px] text-[#605A57] text-sm font-normal leading-6 font-sans">Каждая запись воспроизводится ровно дважды как на экзаменах Goethe, так и telc. Используйте первое прослушивание для понимания общей ситуации, определения говорящих и улавливания ключевых слов, связанных с вопросами. Второе прослушивание используйте для проверки начальных ответов и заполнения пропущенной информации. Прочитайте все вопросы до начала аудио, чтобы знать, что слушать.</div>
+                     </div>
+                  </div>
+                  <div class="w-full border-b border-[rgba(73,66,61,0.16)] last:border-b-0 overflow-hidden">
+                     <button class="w-full px-5 py-[18px] flex justify-between items-center gap-5 text-left hover:bg-[rgba(73,66,61,0.02)] transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#37322F] focus-visible:ring-offset-1 active:bg-[rgba(73,66,61,0.04)]" aria-expanded="false">
+                        <div class="flex-1 text-[#49423D] text-base font-medium leading-6 font-sans">На чём сосредоточиться при прослушивании?</div>
+                        <div class="flex justify-center items-center">
+                           <svg class="w-6 h-6 text-[rgba(73,66,61,0.60)] transition-transform duration-300 ease-in-out rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </div>
+                     </button>
+                     <div class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+                        <div class="px-5 pb-[18px] text-[#605A57] text-sm font-normal leading-6 font-sans">Сосредоточьтесь на конкретной информации, а не пытайтесь понять всё: числа (цены, время, номера платформ, телефонные номера), дни недели и даты, имена людей и мест, что людям нужно, хотят или ищут. Тренируйтесь распознавать числовые паттерны и временные выражения, так как они появляются почти в каждом задании на аудирование. Записывайте числа сразу, когда их слышите.</div>
+                     </div>
+                  </div>
+               </div>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Официальная информация об экзамене</h2>
+               <p class="text-[#605A57] mb-4">Узнайте больше об официальных сертификационных экзаменах A1 от аккредитованных организаций:</p>
+               <div class="space-y-2">
+                  <div class="flex items-center gap-2">
+                     <span class="w-1.5 h-1.5 rounded-full bg-[#6B6560]"></span>
+                     <a href="https://www.goethe.de/en/spr/kup/prf/prf/sd1.html" target="_blank" rel="noopener noreferrer" class="text-[#605A57] hover:text-[#37322F] hover:underline transition-colors inline-flex items-center gap-1.5">
+                        <span>Goethe-Institut</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5">
+                           <path d="M15 3h6v6"></path>
+                           <path d="M10 14 21 3"></path>
+                           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        </svg>
+                     </a>
+                  </div>
+                  <div class="flex items-center gap-2">
+                     <span class="w-1.5 h-1.5 rounded-full bg-[#6B6560]"></span>
+                     <a href="https://www.telc.net/en/candidates/language-examinations/tests/detail/telc-deutsch-a1.html" target="_blank" rel="noopener noreferrer" class="text-[#605A57] hover:text-[#37322F] hover:underline transition-colors inline-flex items-center gap-1.5">
+                        <span>telc</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5">
+                           <path d="M15 3h6v6"></path>
+                           <path d="M10 14 21 3"></path>
+                           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        </svg>
+                     </a>
+                  </div>
+                  <div class="flex items-center gap-2">
+                     <span class="w-1.5 h-1.5 rounded-full bg-[#6B6560]"></span>
+                     <a href="https://www.osd.at/en/exams/oesd-exams/oesd-zertifikat-a1/" target="_blank" rel="noopener noreferrer" class="text-[#605A57] hover:text-[#37322F] hover:underline transition-colors inline-flex items-center gap-1.5">
+                        <span>ÖSD</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link w-3.5 h-3.5">
+                           <path d="M15 3h6v6"></path>
+                           <path d="M10 14 21 3"></path>
+                           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        </svg>
+                     </a>
+                  </div>
+               </div>
+               <p class="text-[#847971] text-xs mt-3 italic">Контент основан на официальных публичных руководствах и примерах заданий.</p>
+            </section>
+            <section>
+               <h2 class="text-[#49423D] text-xl font-semibold mb-4">Практикуйте другие навыки</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {% include "core/components/go_to_rules.html" with title="Lesen (Чтение)" description="Практикуйте понимание прочитанного на немецком A1 с реальными примерами. Научитесь понимат..." url="/nemetskiy-a1-testy/lesen/" %}
+               
+                  {% include "core/components/go_to_rules.html" with title="Schreiben (письмо)" description="Реальные примеры письма на немецком A1 для Goethe &amp; telc. Практикуйте все темы с..." url="/nemetskiy-a1-testy/schreiben?category=A1&tag=schreiben" %}
+                  
+                  {% include "core/components/go_to_rules.html" with title="Sprachen (Разговорная речь)" description="Подготовьтесь к устному экзамену по немецкому A1 с реальными примерами. Научитес..." url="/nemetskiy-a1-testy/sprachen/" %}
+               
+               </div>
+            </section>
+         </div>
+      </div>
+   </article>
+</section>
+
+{% endblock%}

@@ -102,33 +102,16 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <a href="/nemetskiy-a1-testy/schreiben/rules" target="_blank">
-                    <div class="bg-red-50 rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-
-                        <img src="{% static 'src/img/article_header.png' %}" class="w-full h-48 object-cover">
-
-                        <div class="p-6 flex flex-col h-full">
-
-                            <h3 class="text-xl font-semibold mb-2">
-                                <p class="hover:text-blue-600 transition">
-                                    A1 Schreiben: правила письма на экзамене Deutsch A1
-                                </p>
-                            </h3>
-
-                            <p class="text-gray-600 text-sm mb-4 flex-grow">
-                                Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест.
-                            </p>
-
-                            <div class="flex items-center justify-between text-xs text-gray-500 mt-auto">
-                                <span>
-                                    01.01.2026 · admin
-                                </span>
-                            </div>
-                        </div>
-
-                    </div>
-                </a>
+                
+                {% include 'core/components/rules_card.html' with  title="A1 Schreiben: правила письма на экзамене Deutsch A1" description="Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест."  image_url="static/src/img/schreiben.png"  url="/nemetskiy-a1-testy/schreiben/rules" %}
+                
+                {% include 'core/components/rules_card.html' with  title="A1 Lesen: правила чтения на экзамене Deutsch A1" description="Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест."  image_url="static/src/img/lesen.png"  url="/nemetskiy-a1-testy/lesen/rules" %}
+                
+                {% include 'core/components/rules_card.html' with  title="A1 Hören: правила аудирования на экзамене Deutsch A1" description="Официальные правила проведения экзамена, которые помогут вам избежать ошибок и успешно сдать тест."  image_url="static/src/img/hoeren.png"  url="/nemetskiy-a1-testy/hoeren/rules" %}  
+                
             </div>    
+
+
 
         </div>
 

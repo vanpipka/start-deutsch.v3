@@ -33,6 +33,8 @@ class StaticSitemap(Sitemap):
     def items(self):
         return [
             "/nemetskiy-a1-testy/schreiben/rules",
+            "/nemetskiy-a1-testy/lesen/rules",
+            "/nemetskiy-a1-testy/hoeren/rules",
             "/nemetskiy-a1-testy/lesen/",
             "/nemetskiy-a1-testy/hoeren/",
             "/nemetskiy-a1-testy/grammatik/",

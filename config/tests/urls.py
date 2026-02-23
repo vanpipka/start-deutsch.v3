@@ -30,6 +30,14 @@ urlpatterns = [
          views.main_brief_view, 
          name="article_rules"),
     
+    path("nemetskiy-a1-testy/lesen/rules", 
+         views.main_lesen_view, 
+         name="article_lesen_rules"),
+    
+    path("nemetskiy-a1-testy/hoeren/rules", 
+         views.main_hoeren_view, 
+         name="article_hoeren_rules"),
+    
     path("nemetskiy-a1-testy/lesen/",
         views.ExamListView.as_view(),
         {

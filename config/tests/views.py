@@ -7,6 +7,7 @@ from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value
 from django.db.models.functions import Coalesce
 
 from articles.models import Article
+from articles.utils import get_exam_rules_url
 from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer
 from .utils import get_last_exam_result_preview
 
@@ -281,6 +282,10 @@ class ExamListView(ListView):
 
         if not self.kwargs.get("category"):
             context["categories"] = TestCategory.objects.all()
+            
+        context["exam_rules_url"] = get_exam_rules_url(
+            self.kwargs.get("level", ""), 
+            self.kwargs.get("category", ""))
         
         context["current_category"] = self.request.GET.get("category")
 
@@ -631,4 +636,30 @@ def main_brief_view(request):
     return render(
         request, 
         'base/Primer_pismennyy_nemetskiy_a1.html',
+        context=context)
+    
+    
+def main_lesen_view(request):
+    
+    context={
+            "title": "Правила Lesen A1 — чтение на экзамене Start Deutsch A1 | Start Deutsch",
+            "seo_title": "Lesen A1: правила чтения на экзамене Start Deutsch A1 (пример + советы)",
+            "seo_description": "Как правильно читать текст на экзамене Start Deutsch A1? Полные правила Lesen, структура ответа, примеры и ошибки, из-за которых теряют баллы."
+         }
+    return render(
+        request, 
+        'base/primer_chteniye_nemeckiy_a1.html',
+        context=context)
+
+
+def main_hoeren_view(request):
+    
+    context={
+            "title": "Правила Hören A1 — аудирование на экзамене Start Deutsch A1 | Start Deutsch",
+            "seo_title": "Hören A1: правила аудирования на экзамене Start Deutsch A1 (пример + советы)",
+            "seo_description": "Как правильно слушать текст на экзамене Start Deutsch A1? Полные правила Hören, структура ответа, примеры и ошибки, из-за которых теряют баллы."
+         }
+    return render(
+        request, 
+        'base/primer_audirovanie_nemeckiy_a1.html',
         context=context)
