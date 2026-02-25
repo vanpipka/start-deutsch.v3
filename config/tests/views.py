@@ -613,7 +613,7 @@ def exam_result_detail(request, attempt_id):
     context["breadcrumbs"] = [
             {"title": "Главная", "url": "/"},
             {"title": "Экзамены по немецкому", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/"},
-            {"title": f"{attempt.exam.level} тесты", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/{attempt.exam.category.name.lower()}/"},
+            {"title": f"{attempt.exam.level} тесты", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/{attempt.exam.category.name.lower().replace('ö', 'oe')}/"},
             {"title": attempt.exam.title, "url": f"/exams/{attempt.exam.id}/"},
             {"title": f"Попытка от {attempt.finished_at.strftime('%d.%m.%Y')}", "url": None},
         ]

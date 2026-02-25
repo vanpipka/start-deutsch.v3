@@ -155,10 +155,6 @@
                     </p>
                 {% endif %}
 
-                <div class="text-sm text-gray-500 mb-4">
-                    📝 Тестов: <span class="font-medium">{{ exam.tests_count }}</span>
-                </div>
-
                 <div class="mt-auto flex items-center justify-between">
                         <a href="{% url 'tests:exam_detail' exam.id %}"
                             class="inline-flex items-center text-sm text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
