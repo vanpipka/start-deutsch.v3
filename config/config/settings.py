@@ -186,6 +186,28 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django/error.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}
+
 # Authentication redirects
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "tests:exam_list"
