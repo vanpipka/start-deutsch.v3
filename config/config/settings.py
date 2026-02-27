@@ -186,6 +186,8 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -196,7 +198,7 @@ LOGGING = {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": "/var/log/django/error.log",
+            "filename": os.path.join(BASE_DIR, "logs/django_error.log"),
         },
     },
     "loggers": {
