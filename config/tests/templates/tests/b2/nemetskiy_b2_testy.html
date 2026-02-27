@@ -1,13 +1,13 @@
 {% extends "core/base.html" %}
 
 {% block title %}
-Немецкий A1 тесты онлайн — подготовка к экзамену бесплатно
+Немецкий B2 тесты онлайн — подготовка к экзамену бесплатно
 {% endblock %}
 
 
 {% block description %}
-Пройдите тесты по немецкому языку уровня A1 онлайн.
-Подготовка к экзамену Goethe Start Deutsch A1.
+Пройдите тесты по немецкому языку уровня B2 онлайн.
+Подготовка к экзамену Goethe Start Deutsch B2.
 {% endblock %}
 
 {% block content %}
@@ -16,13 +16,13 @@
 <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
     <div class="max-w-7xl mx-auto px-4 py-16">
         <h1 class="text-4xl font-bold mb-2">
-            {% if header %}{{ header }}{% else %}Экзамены A1{% endif %}
+            {% if header %}{{ header }}{% else %}Экзамены B2{% endif %}
         </h1>
         <p class="text-blue-100">
-            Пройдите бесплатные тесты уровня A1 и проверьте готовность к экзамену.
+            Пройдите бесплатные тесты уровня B2 и проверьте готовность к экзамену.
         </p>
         <p class="text-blue-100">
-            Все задания соответствуют формату Deutsch A1. (Goethe Start Deutsch A1, Telc A1, ÖSD A1)
+            Все задания соответствуют формату Deutsch B2. (Goethe Start Deutsch B2, Telc B2, ÖSD B2)
         </p>
     </div>
 </section>
@@ -53,7 +53,7 @@
             <p class="text-red-800">
                 90% ошибок происходят из-за незнания формата экзамена.
                 Узнайте, как проходит тест и за что снимают баллы —
-                <a href="{% url 'tests:tests_rules' 'a1' 'all' %}" target="_blank"
+                <a href="{% url 'tests:tests_rules' 'b2' 'all' %}" target="_blank"
                 class="font-semibold underline underline-offset-2 hover:text-red-600 transition">
                 ознакомиться с правилами →
                 </a>
@@ -99,7 +99,7 @@
     </div>
 
     <section class="mt-10">
-        <h2 class="text-2xl font-semibold mb-4">Что включает тест A1?</h2>
+        <h2 class="text-2xl font-semibold mb-4">Что включает тест B2?</h2>
 
         <ul class="list-disc ml-6 space-y-2">
         <li>Чтение (Lesen)</li>

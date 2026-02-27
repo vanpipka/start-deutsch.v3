@@ -1,0 +1,14 @@
+<a href="{{ rule.url }}" class="block p-4 bg-white rounded-lg shadow hover:shadow-lg transition">   
+    <div class="flex gap-4">
+        <div class="feature-icon flex-shrink-0">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 12l2 2 4-4"></path>
+                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9-9 9-9-1.8-9-9 1.8-9 9-9z"></path>
+            </svg>
+        </div>
+        <div>
+            <h3 class="font-semibold text-[var(--color-ink)] mb-1">{{ rule.title }}</h3>
+            <p class="text-[var(--color-ink-muted)] text-sm">{{ rule.description }}</p>
+        </div>
+    </div>
+</a>

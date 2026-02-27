@@ -1,0 +1,235 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-4 py-10">
+
+    <!-- HERO -->
+    <section class="mb-12">
+        <h1 class="text-4xl font-bold mb-4">
+            Экзамен Goethe A1 (Start Deutsch 1) — правила проведения
+        </h1>
+
+        <p class="text-gray-600 text-lg">
+            Полный официальный гайд по процедуре сдачи экзамена Goethe-Zertifikat A1:
+            структура, длительность, оценивание и требования к участникам.
+        </p>
+    </section>
+
+    <!-- STRUCTURE -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">Структура экзамена</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'hoeren' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            👂 Hören (Аудирование)
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Прослушивание коротких диалогов и объявлений. Нужно выбрать правильный ответ или отметить информацию.
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'lesen' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            📖 Lesen (Чтение)
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Чтение коротких текстов, объявлений, писем и сообщений. Нужно выбрать правильный ответ или отметить информацию.
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'schreiben' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            📖 Schreiben (Письмо)
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Заполнение формуляра и написание короткого сообщения.
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'sprechen' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            🗣 Sprechen (Устная часть)  
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Представление себя, вопросы партнёру и простые просьбы.
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- TIME -->
+    <section class="mb-14 ">
+        <h2 class="text-2xl font-semibold mb-6">Длительность экзамена</h2>
+
+        <div class="bg-blue-50 shadow rounded-xl p-6">
+            <ul class="space-y-2 text-gray-700">
+                <li>• Hören — около 20 минут</li>
+                <li>• Lesen — около 25 минут</li>
+                <li>• Schreiben — около 20 минут</li>
+                <li>• Sprechen — примерно 15 минут (в паре)</li>
+            </ul>
+
+            <p class="mt-4 text-sm text-gray-500">
+                Письменная часть проводится подряд, устная — отдельно.
+            </p>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">Как проходит экзамен</h2>
+
+        <div class="space-y-6 border-l-4 border-green-400 pl-6">
+
+            <div>
+                <h3 class="font-semibold">1. Регистрация</h3>
+                <p class="text-gray-600">
+                    Проверка удостоверения личности и распределение участников.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold">2. Письменный экзамен</h3>
+                <p class="text-gray-600">
+                    Все кандидаты выполняют Hören, Lesen и Schreiben в аудитории.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold">3. Перерыв</h3>
+                <p class="text-gray-600">
+                    После письменной части возможна пауза перед устным экзаменом.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold">4. Устная часть</h3>
+                <p class="text-gray-600">
+                    Экзамен проходит в парах перед двумя экзаменаторами.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SCORING -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">Оценивание</h2>
+
+        <div class="bg-white shadow rounded-xl p-6">
+
+            <p class="mb-4 text-gray-700">
+                Экзамен оценивается по системе баллов. Максимум — 100 баллов.
+            </p>
+
+            <ul class="space-y-2 text-gray-700">
+                <li>• Каждая часть экзамена имеет собственный вес</li>
+                <li>• Минимальный проходной результат — 60%</li>
+                <li>• Все навыки проверяются отдельно</li>
+            </ul>
+
+        </div>
+    </section>
+
+    <!-- RULES -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">Правила для участников</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <div class="bg-red-50 shadow rounded-xl p-6">
+                <h3 class="font-semibold mb-3">❌ Запрещено</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>• Использование телефона</li>
+                    <li>• Подсказки и общение</li>
+                    <li>• Использование словарей</li>
+                </ul>
+            </div>
+
+            <div class="bg-green-50 shadow rounded-xl p-6">
+                <h3 class="font-semibold mb-3">✅ Разрешено</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li>• Паспорт или ID</li>
+                    <li>• Ручка</li>
+                    <li>• Следование инструкциям экзаменатора</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="mb-10">
+        <h2 class="text-2xl font-semibold mb-6">Результаты и сертификат</h2>
+
+        <div class="bg-gray-50 rounded-xl p-6">
+            <p class="text-gray-700">
+                Результаты экзамена публикуются экзаменационным центром.
+                При успешной сдаче участник получает официальный сертификат
+                Goethe-Zertifikat A1 (Start Deutsch 1).
+            </p>
+
+            <p class="mt-3 text-gray-600 text-sm">
+                Сертификат подтверждает базовые знания немецкого языка
+                согласно уровню CEFR A1.
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t pt-6 text-sm text-gray-500">
+        Основано на официальных Durchführungsbestimmungen
+        <a href="https://www.goethe.de/pro/relaunch/prf/de/Durchfuehrungsbestimmungen_A1_Start_Deutsch_1.pdf" class="text-blue-600 hover:underline">
+            Goethe-Zertifikat A1 (Stand: 01.09.2025).
+        </a>
+    </footer>
+
+</div>
+
+{% endblock %}

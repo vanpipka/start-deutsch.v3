@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
+{% block content %}
+
+<section class="max-w-4xl mx-auto px-4 py-10">
+   <article class="w-full flex justify-center items-start">
+      <div class="flex-1 px-4 md:px-12 py-16 md:py-20 flex flex-col justify-start items-start gap-8">
+         <header class="w-full flex flex-col gap-4">
+            <h1 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">
+               Раздел находится в разработке и скоро будет готов!
+            </h1>
+            
+            <p class="text-[#605A57] text-lg font-normal leading-8 font-sans">
+               Мы приносим извинения за неудобства, но этот раздел ещё не готов. Наша команда активно работает над созданием качественного контента, который поможет вам подготовиться к экзамену по аудированию A1. Пожалуйста, загляните сюда немного позже — мы обещаем, что результат будет стоить ожидания!
+            </p>
+         </header>
+         
+      </div>
+   </article>
+</section>
+
+{% endblock%}

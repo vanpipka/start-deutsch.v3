@@ -1,0 +1,68 @@
+<div class="bg-white rounded-2xl shadow-lg border p-6 w-full max-w-sm">
+
+    <!-- TITLE -->
+    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2">
+        📈 Мой прогресс
+    </h3>
+
+    {% if user.is_authenticated %}
+
+        <!-- PROGRESS BAR -->
+        <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+            <div
+                class="bg-yellow-400 h-3 rounded-full transition-all duration-500"
+                style="width: {{ progress_percent }}%;">
+            </div>
+        </div>
+
+        <p class="text-sm text-gray-500 mb-2">
+            Прогресс курса: {{ progress_percent }}%
+        </p>
+
+        <!-- NEXT LESSON -->
+        <div class="bg-gray-50 rounded-xl p-4 flex justify-between items-center">
+
+            <div>
+                <p class="text-xs text-gray-400">
+                    Следующий урок
+                </p>
+
+                <p class="font-medium">
+                    {{ next_lesson_title }}
+                </p>
+            </div>
+
+            <a href="{{ next_lesson_url }}"
+               class="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-black transition">
+                Продолжить →
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <!-- MOCK STATE -->
+        <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+            <div class="bg-gray-400 h-3 rounded-full w-1/3"></div>
+        </div>
+
+        <p class="text-sm text-gray-500 mb-4">
+            Войдите, чтобы сохранять прогресс обучения
+        </p>
+
+        <div class="bg-gray-50 rounded-xl p-4 text-center">
+
+            <p class="text-sm text-gray-600 mb-4">
+                🔒 Прогресс доступен только после входа
+            </p>
+
+            <a href="{% url 'accounts:login' %}"
+               class="inline-block bg-red-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-red-700 transition">
+                Войти
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>

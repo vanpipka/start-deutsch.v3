@@ -33,25 +33,36 @@
     
     <div class="grid md:grid-cols-2 gap-6">
 
-        <a href="lesen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-        <h2 class="text-xl font-semibold">📖 Lesen Test</h2>
-        <p>Тест на понимание текста.</p>
-        </a>
+        {% for i in categories %}
+        <a class="exam-card group" href="{{i.absolute_url }}" style="">
+            <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                        {{i.name}}
+                    </h3>
+                    <div class="flex items-center gap-2">                    
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                            тестов: {{i.tests_count}}
+                        </span>
+                    </div>
+                </div>
+                <p class="text-sm text-[var(--color-ink-muted)] mb-3 font-medium">
+                    {{ i.description }}
+                </p>
+                <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                    {{ i.full_description}}
+                </p>
+                <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                    Начать подготовку
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </div>
+            </div>
+        </a>   
 
-        <a href="hoeren" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-        <h2 class="text-xl font-semibold">🎧 Hören Test</h2>
-        <p>Понимание немецкой речи.</p>
-        </a>
-
-        <a href="grammatik" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-        <h2 class="text-xl font-semibold">✍️ Grammatik Test</h2>
-        <p>Грамматика уровня A2.</p>
-        </a>
-
-        <a href="sprachen" class="p-6 bg-white shadow rounded-xl hover:shadow-lg">
-        <h2 class="text-xl font-semibold">📚 Sprachenschatz Test</h2>
-        <p>Тест на словарный запас.</p>
-        </a>
+        {% endfor %}
 
     </div>
 

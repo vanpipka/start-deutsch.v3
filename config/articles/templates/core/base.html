@@ -37,86 +37,16 @@
     <!--<script src="https://cdn.tailwindcss.com"></script>-->
     <link rel="stylesheet" href="{% static 'dist/tailwind.css' %}">
     <link rel="stylesheet" href="{% static 'django_ckeditor_5/dist/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
+
 <body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
-    <!-- Navbar -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-
-                <!-- Логотип -->
-                <div class="flex-shrink-0">
-                    <a href="/" class="text-xl font-bold text-blue-600">
-                        Учебная платформа
-                    </a>
-                </div>
-
-                <!-- Меню -->
-                <div class="hidden md:flex space-x-6 items-center">
-                    <a href="{% url 'articles:article_list' %}" class="text-gray-700 hover:text-blue-600">
-                        Статьи
-                    </a>
-                    <a href="{% url 'tests:exam_list' %}" class="text-gray-700 hover:text-blue-600">
-                        Экзамены
-                    </a>
-
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'accounts:profile' %}" class="text-gray-700 hover:text-blue-600">
-                            {{ user.username }}
-                        </a>
-                        <a href="{% url 'accounts:logout' %}" class="text-gray-700 hover:text-red-600">
-                            Выйти
-                        </a>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-blue-600">
-                            Войти
-                        </a>
-                        <a href="{% url 'accounts:register' %}" class="text-gray-700 hover:text-blue-600">
-                            Регистрация
-                        </a>
-                    {% endif %}
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
-                        <!-- Hamburger icon -->
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
-            <a href="{% url 'articles:article_list' %}" class="block text-gray-700 hover:text-blue-600">
-                Статьи
-            </a>
-            <a href="{% url 'tests:exam_list' %}" class="block text-gray-700 hover:text-blue-600">
-                Экзамены
-            </a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'accounts:profile' %}" class="block text-gray-700 hover:text-blue-600">
-                    {{ user.username }}
-                </a>
-                <a href="" class="block text-gray-700 hover:text-red-600">
-                    Выйти
-                </a>
-            {% else %}
-                <a href="" class="block text-gray-700 hover:text-blue-600">
-                    Войти
-                </a>
-                <a href="" class="block text-gray-700 hover:text-blue-600">
-                    Регистрация
-                </a>
-            {% endif %}
-        </div>
-    </header>
+    {% include 'core/components/header.html' %}
 
     <!-- Основной контент -->
     <main class="flex-grow">
@@ -135,7 +65,6 @@
         </div>
     </footer>
 
-    <!-- Mobile menu toggle script -->
     <script>
         const btn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');

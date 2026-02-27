@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
 
-{% block title %}Экзамены{% endblock %}
+{% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -8,10 +8,10 @@
 <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
     <div class="max-w-7xl mx-auto px-4 py-16">
         <h1 class="text-4xl font-bold mb-2">
-            {% if header %}{{ header }}{% else %}Экзамены{% endif %}
+            {% if title %}{{ title }}{% else %}Тесты{% endif %}
         </h1>
         <p class="text-blue-100">
-            Проверь свои знания и отслеживай прогресс
+            Отличный способ проверить свои знания и подготовиться к реальному экзамену. Выберите экзамен и начните прямо сейчас!
         </p>
     </div>
 </section>
@@ -21,18 +21,39 @@
 
     {% include "core/components/breadcrumbs.html" %}
 
-    {% if categories %}
+    {% if levels %}
         <div class="flex flex-wrap gap-3 mb-10">
             <a href="{% url 'tests:exam_list' %}"
                class="px-4 py-2 rounded-full text-sm border
-               {% if not current_category %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+               {% if not current_level or current_level == 'all' %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+                Все
+            </a>
+
+            {% for level in levels %}
+
+                <a href="{% url 'tests:exam_list' level.slug %}"
+                   class="px-4 py-2 rounded-full text-sm border
+                   {% if current_level == level.slug %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+                    {{ level.name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if categories %}
+        <div class="flex flex-wrap gap-3 mb-10">
+
+            <a href="{% url 'tests:exam_list' current_level %}"
+               class="px-4 py-2 rounded-full text-sm border
+               {% if not current_type or current_type == 'all' %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
                 Все
             </a>
 
             {% for category in categories %}
-                <a href="?category={{ category.name }}"
+
+                <a href="{% url 'tests:exam_list' current_level category.slug %}"
                    class="px-4 py-2 rounded-full text-sm border
-                   {% if current_category == category.name %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
+                   {% if current_type == category.slug %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
                     {{ category.name }}
                 </a>
             {% endfor %}

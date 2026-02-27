@@ -1,0 +1,65 @@
+<!-- ================= HEADER ================= -->
+<header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+
+            <a href="/">
+                <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-red-600 text-white rounded-xl flex items-center justify-center font-bold">
+                    Ä
+                </div>
+                <span class="font-semibold text-lg">START DEUTSCH</span>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="{% url 'articles:article_list' %}" class="hover:text-red-600">Статьи</a>
+                <a href="{% url 'tests:exam_list' %}">Экзамены</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:profile' %}" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition">
+                        {{ user.username }}
+                    </a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition">
+                        Войти
+                    </a>
+                {% endif %}  
+            </div>
+
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <!-- Hamburger icon -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>    
+    </div>
+    <!-- Mobile menu toggle script -->
+    <!-- Mobile Menu -->
+        <div class="md:hidden hidden px-2 pt-2 pb-3 space-y-1" id="mobile-menu">
+            <a href="{% url 'articles:article_list' %}" class="block text-gray-700 hover:text-blue-600">
+                Статьи
+            </a>
+            <a href="{% url 'tests:exam_list' %}" class="block text-gray-700 hover:text-blue-600">
+                Экзамены
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="block text-gray-700 hover:text-blue-600">
+                    {{ user.username }}
+                </a>
+                <a href="" class="block text-gray-700 hover:text-red-600">
+                    Выйти
+                </a>
+            {% else %}
+                <a href="" class="block text-gray-700 hover:text-blue-600">
+                    Войти
+                </a>
+                <a href="" class="block text-gray-700 hover:text-blue-600">
+                    Регистрация
+                </a>
+            {% endif %}
+        </div>
+</header>

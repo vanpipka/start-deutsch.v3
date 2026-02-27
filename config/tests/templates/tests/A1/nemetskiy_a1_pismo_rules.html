@@ -2,15 +2,21 @@
 {% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
 {% block content %}
 
-<section class="max-w-4xl mx-auto px-4 py-10">
 
+               
 <article class="w-full">
-   <div class="px-4 md:px-12 py-16 md:py-20">
-      <header class="max-w-2xl mb-16">
-         <h1 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">Примеры письма на немецком A1 – Goethe &amp; telc (Официальный формат)</h1>
-         
-         <p class="mt-4 text-[#605A57] text-lg font-normal leading-8 font-sans">На экзаменах Goethe-Institut A1 и telc A1 письменная часть проверяет, можете ли вы написать простое, правильное и понятное сообщение в повседневных ситуациях. Оценивается НЕ креативность, а: ясность, правильная структура, базовая грамматика и выполнение всех требуемых пунктов.</p>
-         <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/60 rounded-full text-amber-700 text-sm">
+   <div class="max-w-5xl mx-auto px-4 py-10">
+      <section class="mb-12">
+         <h1 class="text-4xl font-bold mb-4">
+            Правила письма на немецком A1 – Goethe &amp; telc (Официальный формат)
+         </h1>
+
+         <p class="text-gray-600 text-lg">
+            На экзаменах Goethe-Institut A1 и telc A1 письменная часть проверяет, можете ли вы написать простое, правильное и понятное сообщение в повседневных ситуациях. Оценивается НЕ креативность, а: ясность, правильная структура, базовая грамматика и выполнение всех требуемых пунктов.</p>
+         </p>
+
+         <p class="mt-4 text-[#605A57] text-lg font-normal leading-8 font-sans">
+            <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/60 rounded-full text-amber-700 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert w-4 h-4">
                <circle cx="12" cy="12" r="10"></circle>
                <line x1="12" x2="12" y1="8" y2="12"></line>
@@ -18,7 +24,9 @@
             </svg>
             <span>Многие кандидаты проваливаются не из-за словарного запаса, а потому что игнорируют правила форматирования.</span>
          </div>
-      </header>
+    </section>
+
+
       <section class="mb-16">
          <h2 class="text-[#37322F] text-2xl font-semibold mb-2">Письмо на немецком A1: Официальные типы заданий (Goethe &amp; telc)</h2>
          <p class="text-[#6B6560] mb-6">Эти типы заданий встречаются на экзаменах Goethe и telc A1:</p>
@@ -434,11 +442,11 @@
          <h2 class="text-[#37322F] text-2xl font-semibold mb-6">Практикуйте другие навыки</h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-            {% include "core/components/go_to_rules.html" with title="Hören (Аудирование)" description="Улучшите навыки аудирования на немецком A1 с реальными примерами. Практикуйте понимание об..." url="/nemetskiy-a1-testy/hoeren/" %}
+            {% include "core/components/go_to_rules.html" with title="Hören (Аудирование)" description="Улучшите навыки аудирования на немецком A1 с реальными примерами. Практикуйте понимание об..." url="/a1/rules/horen" %}
             
-            {% include "core/components/go_to_rules.html" with title="Lesen (Чтение)" description="Практикуйте понимание прочитанного на немецком A1 с реальными примерами. Научитесь понимат..." url="/nemetskiy-a1-testy/lesen/" %}
+            {% include "core/components/go_to_rules.html" with title="Lesen (Чтение)" description="Практикуйте понимание прочитанного на немецком A1 с реальными примерами. Научитесь понимат..." url="/a1/rules/lesen" %}
             
-            {% include "core/components/go_to_rules.html" with title="Sprachen (Разговорная речь)" description="Подготовьтесь к устному экзамену по немецкому A1 с реальными примерами. Научитес..." url="/nemetskiy-a1-testy/sprachen/" %}
+            {% include "core/components/go_to_rules.html" with title="Sprachen (Разговорная речь)" description="Подготовьтесь к устному экзамену по немецкому A1 с реальными примерами. Научитес..." url="/a1/rules/sprachen" %}
             
          </div>
       </section>

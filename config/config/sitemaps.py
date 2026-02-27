@@ -48,29 +48,83 @@ class StaticSitemap(Sitemap):
     def items(self):
         return [
             
-            # SEO A1 rules pages
-            "/nemetskiy-a1-testy/schreiben/rules",
-            "/nemetskiy-a1-testy/lesen/rules",
-            "/nemetskiy-a1-testy/hoeren/rules",
+            #      
+            "/tests/",
+            "/tests/a1/",
+            "/tests/a2/",
+            "/tests/b1/",
+            "/tests/b2/",
+            "/tests/a1/hoeren/",
+            "/tests/a2/hoeren/",
+            "/tests/b1/hoeren/",
+            "/tests/b2/hoeren/",
+            "/tests/a1/lesen",
+            "/tests/a2/lesen",
+            "/tests/b1/lesen",
+            "/tests/b2/lesen",
+            "/tests/a1/schreiben",
+            "/tests/a2/schreiben",
+            "/tests/b1/schreiben",
+            "/tests/b2/schreiben",
+            "/tests/a1/sprechen",
+            "/tests/a2/sprechen",
+            "/tests/b1/sprechen",
+            "/tests/b2/sprechen",
             
-            # SEO A2 rules pages
-            #"/nemetskiy-a2-testy/schreiben/rules",
+            # tests rules pages
+            "/a1/rules/main",
+            "/a1/rules/schreiben/",
+            "/a1/rules/lesen/",
+            "/a1/rules/hoeren/",
+            "/a1/rules/sprechen/",
+            "/a2/rules/main/",
+            "/a2/rules/schreiben/",
+            "/a2/rules/lesen/",
+            "/a2/rules/hoeren/",
+            "/a2/rules/sprechen/",
+            "/b1/rules/main/",
+            "/b1/rules/schreiben/",
+            "/b1/rules/lesen/",
+            "/b1/rules/hoeren/",
+            "/b1/sprechen/",
+            "/b2/rules/main/",
+            "/b2/rules/schreiben/",
+            "/b2/rules/lesen/",
+            "/b2/rules/hoeren/",
+            "/b2/rules/sprechen/",        
             
             # SEO A1 pages
-            "/nemetskiy-a1-testy/lesen/",
-            "/nemetskiy-a1-testy/hoeren/",
-            "/nemetskiy-a1-testy/grammatik/",
-            "/nemetskiy-a1-testy/sprachen/",
-            "/nemetskiy-a1-testy/schreiben/",
-            "/nemetskiy-a1-testy/",
+            "/a1/"
+            "/a1/lesen/",
+            "/a1/hoeren/",
+            "/a1/grammatik/",
+            "/a1/sprechen/",
+            "/a1/schreiben/",
             
             # SEO A2 pages
-            "/nemetskiy-a2-testy/lesen/",
-            "/nemetskiy-a2-testy/hoeren/",
-            "/nemetskiy-a2-testy/grammatik/",
-            "/nemetskiy-a2-testy/sprachen/",
-            "/nemetskiy-a2-testy/schreiben/",
-            "/nemetskiy-a2-testy/",
+            "/a2/",
+            "/a2/lesen/",
+            "/a2/hoeren/",
+            "/a2/grammatik/",
+            "/a2/sprechen/",
+            "/a2/schreiben/",
+            
+            # SEO B1 pages
+            "/b1/",
+            "/b1/lesen/",
+            "/b1/hoeren/",
+            "/b1/grammatik/",
+            "/b1/sprechen/",
+            "/b1/schreiben/",
+            
+            # SEO B2 pages
+            "/b2/",
+            "/b2/lesen/",
+            "/b2/hoeren/",
+            "/b2/grammatik/",
+            "/b2/sprechen/",
+            "/b2/schreiben/",
+            
         ]
 
     def location(self, item):

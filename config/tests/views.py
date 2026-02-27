@@ -1,16 +1,14 @@
-
 from multiprocessing import context
-
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value, Exists
+from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value, Exists, Q
 from django.db.models.functions import Coalesce
-
 from articles.models import Article
 from articles.utils import get_exam_rules_url
-from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer
+from .utils.home_page_utils import get_rules, get_test_groups, get_context_for_rule_page, get_seo_data_for_tests, get_context_for_money_page
+from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer, ExamLevel
 
 
 def home(request):
@@ -24,13 +22,236 @@ def home(request):
 
     exams = Exam.objects.all().order_by('created_at')[:5]
 
-    return render(request, 'core/home.html', {
+    return render(request, 'core/new_home.html', {
         'latest_articles': latest_articles,
         'exams': exams,
+        'rules': get_rules(),
+        'test_groups': get_test_groups(),
         'seo_description': "Немецкий A1-B2 тесты онлайн с ответами и результатами. Подготовка к Goethe Start Deutsch A1-B2: Lesen, Hören, Schreiben + пробный экзамен бесплатно.",
         'seo_keywords': "Немецкий A1-B2 тесты онлайн, Goethe Start Deutsch A1-B2, Telc A1-B2, ÖSD A1-B2, немецкий язык практика, немецкий язык экзамен, немецкий язык тесты, немецкий язык подготовка, немецкий язык онлайн тесты"
 
     })
+
+
+def rules_view(request, level, type):
+    
+    context = get_context_for_rule_page(level=level, type=type)
+    
+    return render(
+        request, 
+        context.get('template', 'tests/page_dont_ready.html'),
+        context=context)
+ 
+    
+def tests_by_level_page(request, level=None):
+    
+    context = get_context_for_money_page(level)
+     
+    level = get_object_or_404(ExamLevel, slug=level)
+    
+    if level: 
+        categories = TestCategory.objects.annotate(tests_count=Count("exams", filter=Q(exams__level=level)))
+    else:
+        categories = TestCategory.objects.all()
+    
+    categories = list(categories)    
+    TestCategory.add_absolute_url(categories, level)
+
+    context["categories"] = categories
+    
+    return render(
+        request, 
+        context.get("template", "tests/page_dont_ready.html"),
+        context=context)
+        
+        
+class TestsListViewByLevel(ListView):
+    
+    model = Exam
+    template_name = "tests/exam_list.html"
+    context_object_name = "exams"
+     
+    def get_queryset(self):
+        
+        user = self.request.user
+        test_type = self.kwargs.get("type")
+        level = self.kwargs.get("level")
+        
+        seo_data = get_seo_data_for_tests(level=level, type=test_type)
+        
+        self.extra_context = {
+            "title": seo_data.get("title") if seo_data.get("title") else "Бесплатные тесты по немецкому онлайн",
+            "seo_title": seo_data.get("seo_title") if seo_data.get("seo_title") else "Бесплатные тесты по немецкому онлайн",
+            "seo_description": seo_data.get("seo_description") if seo_data.get("seo_description") else "Пройдите бесплатные тесты по немецкому языку онлайн. Подготовка к экзамену по немецкому языку.",
+        }
+        
+        qs = Exam.objects.annotate(tests_count=Count("tests", distinct=True))
+        
+        if test_type: qs = qs.filter(category__slug=test_type)       
+        if level and level != "all" : qs = qs.filter(level__slug=level)
+        
+        # если пользователь не авторизован — просто список экзаменов
+        if not user.is_authenticated:
+            return qs.order_by("-created_at")
+
+        # -----------------------------
+        # последняя попытка пользователя
+        # -----------------------------
+        last_attempt = ExamAttempt.objects.filter(
+            user=user,
+            exam=OuterRef("pk"),
+            finished_at__isnull=False
+        ).order_by("-finished_at")
+
+        # id последней попытки
+        qs = qs.annotate(
+            last_attempt_id=Subquery(
+                last_attempt.values("id")[:1]
+            )
+        )
+
+        # -----------------------------
+        # сумма правильных ответов
+        # -----------------------------
+        score_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_score=Sum("score")
+        ).values("total_score")
+
+        total_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_questions=Sum("total")
+        ).values("total_questions")
+
+        qs = qs.annotate(
+            user_score=Coalesce(
+                Subquery(score_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
+            user_total=Coalesce(
+                Subquery(total_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
+        )
+
+        return qs.order_by("-created_at")
+
+    def get_context_data(self, **kwargs):
+        
+        test_type = self.kwargs.get("type")
+        level = self.kwargs.get("level")
+        
+        context = super().get_context_data(**kwargs)
+        
+        if not test_type:
+            context["categories"] = TestCategory.objects.all()
+            
+        context["exam_rules_url"] = get_exam_rules_url(level=level, category=test_type)      
+        context["current_category"] = test_type
+        context["current_level"] = level
+
+        return context
+        
+
+class TestsListView(ListView):
+    model = Exam
+    template_name = "tests/exam_list.html"
+    context_object_name = "exams"
+    
+    def get_queryset(self):
+        
+        self.extra_context = {
+            "seo_title": self.kwargs.get("seo_title") if self.kwargs.get("header") else "Бесплатные тесты по немецкому A1 онлайн",
+            "seo_description": self.kwargs.get("seo_description") if self.kwargs.get("header") else "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+        }
+        
+        qs = Exam.objects.annotate(
+            tests_count=Count("tests", distinct=True)
+        )
+
+        category = self.kwargs.get("type")
+        if category: qs = qs.filter(category__slug=category)
+            
+        level = self.kwargs.get("level")
+        if level: qs = qs.filter(level__slug=level)
+            
+        header = self.kwargs.get("header")
+        if header: self.extra_context["header"] = header    
+            
+        user = self.request.user
+
+        # если пользователь не авторизован — просто список экзаменов
+        if not user.is_authenticated:
+            return qs.order_by("title")
+
+        # -----------------------------
+        # последняя попытка пользователя
+        # -----------------------------
+        last_attempt = ExamAttempt.objects.filter(
+            user=user,
+            exam=OuterRef("pk"),
+            finished_at__isnull=False
+        ).order_by("-finished_at")
+
+        # id последней попытки
+        qs = qs.annotate(
+            last_attempt_id=Subquery(
+                last_attempt.values("id")[:1]
+            )
+        )
+
+        # -----------------------------
+        # сумма правильных ответов
+        # -----------------------------
+        score_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_score=Sum("score")
+        ).values("total_score")
+
+        total_subquery = TestResult.objects.filter(
+            attempt_id=OuterRef("last_attempt_id")
+        ).values("attempt").annotate(
+            total_questions=Sum("total")
+        ).values("total_questions")
+
+        qs = qs.annotate(
+            user_score=Coalesce(
+                Subquery(score_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
+            user_total=Coalesce(
+                Subquery(total_subquery, output_field=IntegerField()),
+                Value(0)
+            ),
+        )
+
+        return qs.order_by("title")
+
+    def get_context_data(self, **kwargs):
+        
+        context = super().get_context_data(**kwargs)     
+  
+        if self.request.user.is_authenticated:
+            passed_exam_ids = [] 
+            '''Result.objects.filter(
+                user=self.request.user
+            ).values_list("exam_id", flat=True).distinct()
+            '''
+
+            context["passed_exam_ids"] = set(passed_exam_ids)
+        else:
+            context["passed_exam_ids"] = set()
+
+        context["levels"] = ExamLevel.objects.all()
+        context["categories"] = TestCategory.objects.all()            
+        context["exam_rules_url"] = get_exam_rules_url(level=self.kwargs.get("level", ""), category=self.kwargs.get("type", ""))    
+        context["current_type"] = self.kwargs.get("type", "all")
+        context["current_level"] = self.kwargs.get("level", "all")
+
+        return context
 
 
 class ExamDetailView(DetailView):
@@ -189,111 +410,6 @@ def exam_start(request, exam_id):
         test_id=next_question.test.id,
         question_id=next_question.id,
     )
-
-
-class ExamListView(ListView):
-    model = Exam
-    template_name = "tests/exam_list.html"
-    context_object_name = "exams"
-    
-    def get_queryset(self):
-        
-        self.extra_context = {
-            "seo_title": self.kwargs.get("seo_title") if self.kwargs.get("header") else "Бесплатные тесты по немецкому A1 онлайн",
-            "seo_description": self.kwargs.get("seo_description") if self.kwargs.get("header") else "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
-        }
-        
-        qs = Exam.objects.annotate(
-            tests_count=Count("tests", distinct=True)
-        )
-
-        category = self.kwargs.get("category")
-        if category: qs = qs.filter(category__name=category)
-            
-        level = self.kwargs.get("level")
-        if level: qs = qs.filter(level__name=level)
-            
-        header = self.kwargs.get("header")
-        if header: self.extra_context["header"] = header    
-        
-        category_name = self.request.GET.get("category")
-        if category_name: qs = qs.filter(category__name=category_name)
-            
-        user = self.request.user
-
-        # если пользователь не авторизован — просто список экзаменов
-        if not user.is_authenticated:
-            return qs.order_by("title")
-
-        # -----------------------------
-        # последняя попытка пользователя
-        # -----------------------------
-        last_attempt = ExamAttempt.objects.filter(
-            user=user,
-            exam=OuterRef("pk"),
-            finished_at__isnull=False
-        ).order_by("-finished_at")
-
-        # id последней попытки
-        qs = qs.annotate(
-            last_attempt_id=Subquery(
-                last_attempt.values("id")[:1]
-            )
-        )
-
-        # -----------------------------
-        # сумма правильных ответов
-        # -----------------------------
-        score_subquery = TestResult.objects.filter(
-            attempt_id=OuterRef("last_attempt_id")
-        ).values("attempt").annotate(
-            total_score=Sum("score")
-        ).values("total_score")
-
-        total_subquery = TestResult.objects.filter(
-            attempt_id=OuterRef("last_attempt_id")
-        ).values("attempt").annotate(
-            total_questions=Sum("total")
-        ).values("total_questions")
-
-        qs = qs.annotate(
-            user_score=Coalesce(
-                Subquery(score_subquery, output_field=IntegerField()),
-                Value(0)
-            ),
-            user_total=Coalesce(
-                Subquery(total_subquery, output_field=IntegerField()),
-                Value(0)
-            ),
-        )
-
-        return qs.order_by("title")
-
-    def get_context_data(self, **kwargs):
-        
-        context = super().get_context_data(**kwargs)     
-  
-        if self.request.user.is_authenticated:
-            passed_exam_ids = [] 
-            '''Result.objects.filter(
-                user=self.request.user
-            ).values_list("exam_id", flat=True).distinct()
-            '''
-
-            context["passed_exam_ids"] = set(passed_exam_ids)
-        else:
-            context["passed_exam_ids"] = set()
-
-        if not self.kwargs.get("category"):
-            context["categories"] = TestCategory.objects.all()
-            
-        context["exam_rules_url"] = get_exam_rules_url(
-            self.kwargs.get("level", ""), 
-            self.kwargs.get("category", ""))
-        
-        context["current_category"] = self.request.GET.get("category")
-
-        return context
 
 
 @login_required
@@ -612,9 +728,9 @@ def exam_result_detail(request, attempt_id):
     # Breadcrumbs
     context["breadcrumbs"] = [
             {"title": "Главная", "url": "/"},
-            {"title": "Экзамены по немецкому", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/"},
-            {"title": f"{attempt.exam.level} тесты", "url": f"/nemetskiy-{attempt.exam.level.name.lower()}-testy/{attempt.exam.category.name.lower().replace('ö', 'oe')}/"},
-            {"title": attempt.exam.title, "url": f"/exams/{attempt.exam.id}/"},
+            {"title": "Экзамены по немецкому", "url": f"/{attempt.exam.level.slug}/"},
+            {"title": f"{attempt.exam.level} тесты", "url": f"/{attempt.exam.level.slug}/{attempt.exam.category.slug.replace('ö', 'oe')}/"},
+            {"title": attempt.exam.title, "url": f"/tests/{attempt.exam.id}/"},
             {"title": f"Попытка от {attempt.finished_at.strftime('%d.%m.%Y')}", "url": None},
         ]
 
@@ -630,68 +746,5 @@ def exam_result_detail(request, attempt_id):
         "tests/exam_result.html", 
         context=context
     )
-
-
-def money_page(request):
-    
-    context = {
-        "seo_title": "Бесплатные тесты по немецкому A1 онлайн",
-        "seo_description": "Пройдите бесплатные тесты по немецкому языку уровня A1 онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
-    }
-    
-    return render(
-        request, 
-        "tests/A1/nemetskiy_a1_testy.html",
-        context=context)
-    
-    
-def money_page_A2(request):
-    
-    context = {
-        "seo_title": "Бесплатные тесты по немецкому A2 онлайн",
-        "seo_description": "Пройдите бесплатные тесты по немецкому языку уровня A2 онлайн. Подготовка к экзамену Goethe Start Deutsch A2.",
-    }
-    
-    return render(
-        request, 
-        "tests/A2/nemetskiy_a2_testy.html",
-        context=context)
     
 
-def main_brief_view(request):
-    
-    context={
-            "title": "Правила Schreiben A1 — письмо на экзамене Start Deutsch A1 | Start Deutsch",
-            "seo_title": "Schreiben A1: правила письма на экзамене Start Deutsch A1 (пример + советы)",
-            "seo_description": "Как правильно написать письмо на экзамене Start Deutsch A1? Полные правила Schreiben, структура ответа, примеры и ошибки, из-за которых теряют баллы."
-         }
-    return render(
-        request, 
-        'base/Primer_pismennyy_nemetskiy_a1.html',
-        context=context)
-    
-    
-def main_lesen_view(request):
-    
-    context={
-            "title": "Правила Lesen A1 — чтение на экзамене Start Deutsch A1 | Start Deutsch",
-            "seo_title": "Lesen A1: правила чтения на экзамене Start Deutsch A1 (пример + советы)",
-            "seo_description": "Как правильно читать текст на экзамене Start Deutsch A1? Полные правила Lesen, структура ответа, примеры и ошибки, из-за которых теряют баллы."
-         }
-    return render(
-        request, 
-        'base/primer_chteniye_nemeckiy_a1.html',
-        context=context)
-
-
-def main_hoeren_view(request):
-    
-    context={
-            "title": "Правила Hören A1 — аудирование на экзамене Start Deutsch A1 | Start Deutsch",
-            "seo_title": "Hören A1: правила аудирования на экзамене Start Deutsch A1 (пример + советы)",
-            "seo_description": "Как правильно слушать текст на экзамене Start Deutsch A1? Полные правила Hören, структура ответа, примеры и ошибки, из-за которых теряют баллы."
-         }
-    return render(
-        request, 
-        'base/primer_audirovanie_nemeckiy_a1.html',
-        context=context)

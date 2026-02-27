@@ -1,0 +1,475 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Реальные экзамены по немецкому языку A1–B2 онлайн (Goethe, TELC, ÖSD) — Бесплатная подготовка к экзамену{% endblock %}
+
+{% block extra_meta %}
+    <meta property="og:image" content="{% static 'src/img/og_image.png' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<div class="bg-editorial noise-overlay">
+  
+  <section class="relative overflow-hidden">
+    <div class="decorative-dots -top-4 -right-4 opacity-20" aria-hidden="true"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1">
+          <div class="gold-accent mb-6"></div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+                <span class="gradient-text">Реальные тесты по немецкому языку <br>A1–B2 онлайн </span>
+            </h1>
+          <p class="text-lg md:text-xl text-[var(--color-ink-light)] mb-8 leading-relaxed max-w-xl">Пройдите реальные тесты Lesen, Hören, Schreiben и пробные экзамены A1-B2, чтобы подготовиться к экзамену быстро и без стресса. </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="{% url 'tests:exam_list' %}" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition">
+                <span>Перейти к тестам</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </div>
+          <!--<div class="mt-12 pt-8 border-t border-[var(--color-cream-dark)]">
+            <div class="grid grid-cols-3 gap-6">
+              <div>
+                <div class="stat-number">6+</div>
+                <div class="stat-label">Exam Certifications</div>
+              </div>
+              <div>
+                <div class="stat-number">250+</div>
+                <div class="stat-label">Practice Exams</div>
+              </div>
+              <div>
+                <div class="stat-number">17+</div>
+                <div class="stat-label">Languages</div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="order-1 lg:order-2">
+
+            <!-- COLUMN WRAPPER -->
+            <div class="flex flex-col items-start">
+
+                <!-- IMAGE -->
+                <div class="relative pb-6 w-full">
+                    <img
+                        alt="Master Your English Exam"
+                        width="768"
+                        height="512"
+                        src="/static/src/img/main_pic_1.png"
+                        class="w-full h-auto object-cover rounded-2xl shadow-2xl"
+                        style="aspect-ratio: 3 / 2;"
+                    >
+                </div>
+
+                <!-- MY PROGRESS CARD -->
+                <!--
+                <div name="my_progress" class="w-full max-w-sm lg:ml-6 -mt-16 z-10">
+                    include 'core/components/my_progress.html'
+                </div>
+                -->
+
+            </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="exams" class="py-8 md:py-10 bg-warm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 md:mb-16">
+        <div class="gold-accent mx-auto mb-6"></div>
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">Тесты по уровням</h2>
+        <p class="text-lg text-[var(--color-ink-muted)] max-w-2xl mx-auto">Выберите уровень подготовки и пройдите тесты по немецкому языку A1-B2</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+        {% for test_group in test_groups %}
+            {% include 'core/components/exam_level_card.html' with test_group=test_group %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+  <section class="py-8 md:py-10 ">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="gold-accent mx-auto mb-6"></div>
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-6">Официальные правила проведения экзаменов</h2>
+        <p class="text-lg text-[var(--color-ink-light)] mb-12 leading-relaxed">Правила проведения экзаменов Goethe Start Deutsch A1-B2, Telc A1-B2, ÖSD A1-B2</p>
+        <div class="grid sm:grid-cols-2 gap-8 text-left">
+            {% for rule in rules %}
+              {% include 'core/components/small_rule_card.html' with rule=rule %}
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="tests"
+        class="relative overflow-hidden rounded-2xl py-8 md:py-10 px-6 md:px-16 bg-gradient-to-br from-blue-50 via-blue-100 to-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Абстрактные круги -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-200/40 rounded-full filter blur-3xl"></div>
+        <div class="absolute -bottom-28 -right-28 w-80 h-80 bg-blue-300/30 rounded-full filter blur-2xl"></div>
+
+        <!-- Лёгкие гео‑линии/паттерн -->
+        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.2),rgba(255,255,255,0.2)_1px,transparent_1px,transparent_10px)] pointer-events-none">
+
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 class="text-3xl md:text-4xl font-bold  mb-4">Готовы начать учиться?</h2>
+          <p class="text-lg mb-8 max-w-2xl mx-auto">Выбери подходящий уровень и раздел тестирования. Начни подготовку прямо сейчас!</p>
+
+
+          <div class="inline-flex items-center justify-center flex flex-wrap gap-4">
+            <a href="{% url 'tests:exam_list' %}" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition">
+                <span>Перейти к тестам</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </div>
+        
+        
+        </div>
+      </div>
+  </section>
+  
+  <section class="py-8 md:py-10 bg-warm">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-12 md:mb-16">
+        <div class="gold-accent mx-auto mb-6"></div>
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">Полезные статьи</h2>
+        <p class="text-lg text-[var(--color-ink-muted)] max-w-2xl mx-auto">Здесь вы найдете полезные статьи, которын помогут Вам подготовиться к экзамену любого уровня сложности.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+              <div class="flex items-end justify-between mb-6">
+                  <a href="{% url 'articles:article_list' %}" class="text-red-600 hover:underline">
+                      Все статьи →
+                  </a>
+              </div>
+          <!-- Articles -->
+          <div class="lg:col-span-3">
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                  {% for article in latest_articles %}
+                      <a href="{% url 'articles:article_detail' article.slug %}">
+                          <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+
+                              {% if article.image %}
+                                  <img src="{{ article.image.url }}" class="w-full h-44 object-cover">
+                              {% endif %}
+
+                              <div class="p-5">
+                                  <h3 class="text-lg font-semibold mb-2">
+                                      {{ article.title }}                             
+                                  </h3>
+
+                                  <p class="text-gray-600 text-sm mb-4">
+                                      {{ article.short_description|truncatechars:120 }}
+                                  </p>
+
+                                  <div class="flex items-center justify-between text-xs text-gray-500">
+                                      <span>
+                                          {{ article.published_at|date:"d.m.Y" }} · {{ article.author }}
+                                      </span>
+
+                                      {% if article.category %}
+                                          <span class="bg-gray-100 px-2 py-1 rounded">
+                                              {{ article.category.name }}
+                                          </span>
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </a>
+                  {% empty %}
+                      <p>Пока нет статей.</p>
+                  {% endfor %}
+
+              </div>
+          </div>
+
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="py-8 md:py-10 bg-warm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="gold-accent mx-auto mb-6"></div>
+
+        <h2 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-6">
+          Почему готовиться к экзамену с нами эффективнее
+        </h2>
+
+        <p class="text-lg text-[var(--color-ink-light)] mb-12 leading-relaxed">
+          Наши тесты повторяют реальный формат экзаменов Goethe, telc и DTZ,
+          чтобы вы заранее понимали структуру заданий, требования экзаменаторов
+          и чувствовали уверенность в день экзамена.
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-8 text-left">
+
+          <!-- REAL EXAM FORMAT -->
+          <div class="flex gap-4">
+            <div class="feature-icon flex-shrink-0">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 12l2 2 4-4"></path>
+                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9-9 9-9-1.8-9-9 1.8-9 9-9z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[var(--color-ink)] mb-1">
+                Реальный формат экзамена
+              </h3>
+              <p class="text-[var(--color-ink-muted)] text-sm">
+                Задания соответствуют структуре Goethe, telc и DTZ —
+                Lesen, Hören, Schreiben и Sprechen без неожиданностей на экзамене.
+              </p>
+            </div>
+          </div>
+
+          <!-- PROGRESS -->
+          <div class="flex gap-4">
+            <div class="feature-icon flex-shrink-0">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[var(--color-ink)] mb-1">
+                Отслеживание прогресса
+              </h3>
+              <p class="text-[var(--color-ink-muted)] text-sm">
+                Видите свои результаты и слабые места. Система показывает,
+                какие навыки нужно улучшить перед экзаменом.
+              </p>
+            </div>
+          </div>
+
+          <!-- EXAM CONFIDENCE -->
+          <div class="flex gap-4">
+            <div class="feature-icon flex-shrink-0">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M2 12h20"></path>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[var(--color-ink)] mb-1">
+                Подготовка к реальным ситуациям
+              </h3>
+              <p class="text-[var(--color-ink-muted)] text-sm">
+                Тренируйтесь писать письма, понимать объявления и выполнять задания,
+                которые встречаются на настоящем экзамене в Германии.
+              </p>
+            </div>
+          </div>
+
+          <!-- EASY START -->
+          <div class="flex gap-4">
+            <div class="feature-icon flex-shrink-0">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
+                        a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
+                        1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-[var(--color-ink)] mb-1">
+                Бесплатный старт
+              </h3>
+              <p class="text-[var(--color-ink-muted)] text-sm">
+                Начните подготовку бесплатно, попробуйте реальные тесты
+                и сохраняйте свой прогресс после регистрации.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sr-only" aria-label="German Exam Preparation Information">
+    <article itemscope itemtype="https://schema.org/Article">
+
+      <h2 itemprop="headline">
+        Подготовка к экзаменам по немецкому языку A1, A2, B1, B2 — реальные тесты и структура экзамена
+      </h2>
+
+      <p itemprop="description">
+        Онлайн-подготовка к официальным экзаменам Goethe, telc, DTZ и ÖSD.
+        Практические тесты по чтению (Lesen), аудированию (Hören), письму (Schreiben)
+        и устной части (Sprechen) с заданиями, максимально приближенными к реальному экзамену.
+      </p>
+
+      <!-- ===== EXAM PROVIDERS ===== -->
+
+      <h3>Популярные немецкие экзамены</h3>
+
+      <ul>
+        <li>
+          <h4>Goethe-Zertifikat (A1–B2)</h4>
+          <p>
+            Международный сертификат Goethe-Institut подтверждает знание немецкого языка
+            для учебы, работы и получения ВНЖ или гражданства Германии.
+            Практические тесты помогают понять формат заданий Schreiben,
+            Lesen и Hören до реального экзамена.
+          </p>
+          <p>
+            Поисковые запросы:
+            goethe a1 schreiben пример, goethe a2 письмо образец,
+            goethe b1 экзамен структура, start deutsch подготовка.
+          </p>
+        </li>
+
+        <li>
+          <h4>telc Deutsch Exams</h4>
+          <p>
+            Экзамены telc широко используются для работы и интеграции в Германии.
+            Подготовка включает реальные задания и критерии оценки telc.
+          </p>
+          <p>
+            Поисковые запросы:
+            telc b1 schreiben темы, telc a2 тест онлайн,
+            telc deutsch экзамен подготовка.
+          </p>
+        </li>
+
+        <li>
+          <h4>Deutsch-Test für Zuwanderer (DTZ)</h4>
+          <p>
+            DTZ — экзамен после интеграционных курсов.
+            На платформе доступны тренировки письма, понимания текста
+            и экзаменационные сценарии уровня A2–B1.
+          </p>
+          <p>
+            Поисковые запросы:
+            dtz schreiben пример, dtz письмо образец,
+            dtz экзамен структура.
+          </p>
+        </li>
+
+        <li>
+          <h4>ÖSD Zertifikat Deutsch</h4>
+          <p>
+            Австрийский языковой сертификат ÖSD признаётся в Европе.
+            Практические задания помогают подготовиться к письменной и устной части экзамена.
+          </p>
+        </li>
+      </ul>
+
+      <!-- ===== SKILLS CLUSTER ===== -->
+
+      <h3>Разделы экзамена немецкого языка</h3>
+
+      <ul>
+        <li>
+          <h4>Lesen — Чтение</h4>
+          <p>
+            Задания проверяют понимание объявлений, писем, электронных сообщений
+            и повседневных текстов. Пользователи тренируются работать с таймингом
+            и переносом ответов в бланк.
+          </p>
+        </li>
+
+        <li>
+          <h4>Hören — Аудирование</h4>
+          <p>
+            Прослушивание диалогов, объявлений и интервью.
+            Тренировка помогает привыкнуть к скорости речи носителей языка.
+          </p>
+        </li>
+
+        <li>
+          <h4>Schreiben — Письмо</h4>
+          <p>
+            Написание email, официальных сообщений и ответов на задания экзамена.
+            Пользователь изучает структуру письма, ключевые фразы и критерии оценки.
+          </p>
+        </li>
+
+        <li>
+          <h4>Sprechen — Устная часть</h4>
+          <p>
+            Моделирование диалогов, представления себя и обсуждения повседневных ситуаций,
+            как на настоящем экзамене Goethe или telc.
+          </p>
+        </li>
+      </ul>
+
+      <!-- ===== LEVEL CLUSTER ===== -->
+
+      <h3>Уровни немецкого языка (CEFR)</h3>
+
+      <ul>
+        <li>
+          <strong>A1 — Start Deutsch 1</strong>
+          <p>
+            Базовый уровень для начинающих. Требуется для визы воссоединения семьи.
+          </p>
+        </li>
+
+        <li>
+          <strong>A2 — базовое общение</strong>
+          <p>
+            Понимание повседневных ситуаций и простых письменных сообщений.
+          </p>
+        </li>
+
+        <li>
+          <strong>B1 — независимое владение языком</strong>
+          <p>
+            Часто требуется для получения Niederlassungserlaubnis и гражданства Германии.
+          </p>
+        </li>
+
+        <li>
+          <strong>B2 — Продвинутое владение языком</strong>
+          <p>
+            Часто требуется для получения Niederlassungserlaubnis и гражданства Германии.
+          </p>
+        </li>
+
+      </ul>
+
+      <!-- ===== TRUST SIGNALS ===== -->
+
+      <h3>Почему подготовка через реальные тесты эффективна</h3>
+
+      <ul>
+        <li>Задания соответствуют формату настоящего экзамена</li>
+        <li>Тренировка тайминга экзамена</li>
+        <li>Понимание критериев оценки Schreiben</li>
+        <li>Пошаговая подготовка к Goethe, telc и DTZ</li>
+        <li>Сохранение прогресса после регистрации</li>
+      </ul>
+
+      <meta itemprop="inLanguage" content="ru">
+      <meta itemprop="about" content="German language exams preparation">
+      <meta itemprop="educationalLevel" content="A1,A2,B1,B2">
+
+    </article>
+  </section>
+
+</div>
+
+{% endblock %}

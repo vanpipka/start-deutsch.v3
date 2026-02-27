@@ -1,27 +1,52 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class TestCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название категории")
     description = models.TextField(blank=True, verbose_name="Описание категории")
-
+    full_description = models.TextField(blank=True, verbose_name="Полное описание категории")
+    slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)
+    
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self, level = "a1"):
+        return reverse('tests:tests_list', args=['a1', self.slug])
+    
+    @staticmethod
+    def add_absolute_url(data, level):
+        
+        if isinstance(data, TestCategory):
+            data.absolute_url = data.get_absolute_url(level)
+        if isinstance(data, list):          
+            for i in data: TestCategory.add_absolute_url(i, level)
+                   
     class Meta:
         verbose_name = "Категория теста"
         verbose_name_plural = "Категории тестов"
-
+        
 
 class ExamLevel(models.Model):
     name = models.CharField(max_length=100, verbose_name="Уровень экзамена")
     description = models.TextField(blank=True, verbose_name="Описание экзамена")
+    slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Уровень экзамена"
