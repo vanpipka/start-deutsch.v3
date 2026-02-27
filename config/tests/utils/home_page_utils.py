@@ -291,7 +291,7 @@ def get_context_for_money_page(level = None):
     if level == "A1":
         return {
             "url": f"/{level.lower()}/",
-            "template": "tests/A1/nemetskiy_a1_testy.html",
+            "template": "tests/a1/nemetskiy_a1_testy.html",
             "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
             "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
             "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
@@ -299,7 +299,7 @@ def get_context_for_money_page(level = None):
     if level == "A2":
         return {
             "url": f"/{level.lower()}/",
-            "template": "tests/A2/nemetskiy_a2_testy.html",
+            "template": "tests/a2/nemetskiy_a2_testy.html",
             "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
             "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
             "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
@@ -307,7 +307,7 @@ def get_context_for_money_page(level = None):
     if level == "B1":
         return {
             "url": f"/{level.lower()}/",
-            "template": "tests/B1/nemetskiy_b1_testy.html",
+            "template": "tests/b1/nemetskiy_b1_testy.html",
             "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
             "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
             "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
@@ -315,7 +315,7 @@ def get_context_for_money_page(level = None):
     if level == "B2":
         return {
             "url": f"/{level.lower()}/",
-            "template": "tests/B2/nemetskiy_b2_testy.html",
+            "template": "tests/b2/nemetskiy_b2_testy.html",
             "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
             "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
             "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
