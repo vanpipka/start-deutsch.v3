@@ -20,7 +20,7 @@ class TestCategory(models.Model):
         super().save(*args, **kwargs)
     
     def get_absolute_url(self, level = "a1"):
-        return reverse('tests:tests_list', args=['a1', self.slug])
+        return reverse('tests:tests_list', args=[level, self.slug])
     
     @staticmethod
     def add_absolute_url(data, level):

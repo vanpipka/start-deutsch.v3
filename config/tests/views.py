@@ -55,7 +55,7 @@ def tests_by_level_page(request, level=None):
         categories = TestCategory.objects.all()
     
     categories = list(categories)    
-    TestCategory.add_absolute_url(categories, level)
+    TestCategory.add_absolute_url(categories, level.slug)
 
     context["categories"] = categories
     
@@ -172,10 +172,10 @@ class TestsListView(ListView):
         )
 
         category = self.kwargs.get("type")
-        if category: qs = qs.filter(category__slug=category)
+        if category and category != 'all': qs = qs.filter(category__slug=category)
             
         level = self.kwargs.get("level")
-        if level: qs = qs.filter(level__slug=level)
+        if level and level != 'all': qs = qs.filter(level__slug=level)
             
         header = self.kwargs.get("header")
         if header: self.extra_context["header"] = header    

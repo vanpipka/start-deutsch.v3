@@ -30,3 +30,7 @@ Thumbs.db
 media/
 staticfiles/
 config/static/
+
+# Logs
+config/logs/
+config/logs/django_error.log
