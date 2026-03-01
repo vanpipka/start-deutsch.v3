@@ -18,7 +18,7 @@ class TestPart(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title, allow_unicode=True)
+            self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
     
 # Hoeren, Lesen, Schreiben, Sprechen
