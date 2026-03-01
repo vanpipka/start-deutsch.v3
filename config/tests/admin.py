@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
-from .models import ExamAttempt, Test, Question, Answer, TestCategory, ExamLevel, Exam, UserAnswer, QuestionText
+from .models import ExamAttempt, Test, Question, Answer, TestCategory, ExamLevel, Exam, UserAnswer, QuestionText, TestPart
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -30,6 +30,11 @@ def duplicate_objects(modeladmin, request, queryset):
         obj.save()
     modeladmin.message_user(request, f"Успешно скопировано {queryset.count()} объектов.")
 
+
+@admin.register(TestPart)
+class TestPartAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'slug')
+    
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):

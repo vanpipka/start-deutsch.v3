@@ -3,12 +3,30 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
+# Teil 1, Teil 2 ....
+class TestPart(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Название части")
+    description = models.TextField(blank=True, verbose_name="Описание части")
+    content = CKEditor5Field('Текст статьи', config_name='extends') 
+    slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)   
+
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
+    
+# Hoeren, Lesen, Schreiben, Sprechen
 class TestCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название категории")
     description = models.TextField(blank=True, verbose_name="Описание категории")
     full_description = models.TextField(blank=True, verbose_name="Полное описание категории")
+    
     slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)
     
     def __str__(self):
@@ -34,7 +52,7 @@ class TestCategory(models.Model):
         verbose_name = "Категория теста"
         verbose_name_plural = "Категории тестов"
         
-
+# A1, A2....
 class ExamLevel(models.Model):
     name = models.CharField(max_length=100, verbose_name="Уровень экзамена")
     description = models.TextField(blank=True, verbose_name="Описание экзамена")
@@ -92,13 +110,15 @@ class Exam(models.Model):
 class Test(models.Model):
     YES_NO = 'yes_no'
     MULTIPLE_CHOICE = 'multiple_choice'
+    TEXT = 'text_without_answer'
 
     TEST_TYPE_CHOICES = [
         (YES_NO, 'Да / Нет'),
         (MULTIPLE_CHOICE, 'Выбор из вариантов'),
+        (TEXT, 'Просто текст'),
     ]
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="tests", verbose_name="Экзамен")
-    #category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, related_name="exams", verbose_name="Категория")
+    part = models.ForeignKey(TestPart, on_delete=models.CASCADE, related_name="exams", verbose_name="Часть", blank=True, null=True)
     title = models.CharField(max_length=255, verbose_name="Название теста")
     description = models.TextField(blank=True, verbose_name="Описание")
     test_type = models.CharField(
