@@ -2,14 +2,39 @@
 {% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
 {% block content %}
 
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/a1/">A1</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="{% url 'tests:tests_main_rules' level|lower %}">Общие правила</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">Hören (Аудирование)</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
+            Правила аудирования на немецком A1 (Hören) — экзамен Start Deutsch A1 | Start Deutsch
+        </h1>
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
+            Раздел Hören (Аудирование) проверяет вашу способность понимать устную немецкую речь в повседневных ситуациях.
+         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/img/src/a1.png" src="/static/img/src/a1.png">
+    </div>
+    </div>
+  </div>
+</section>
+
 <section class="max-w-4xl mx-auto px-4 py-10">
    <article class="w-full flex justify-center items-start">
       <div class="flex-1 px-4 md:px-12 py-16 md:py-20 flex flex-col justify-start items-start gap-8">
-         <header class="w-full flex flex-col gap-4">
-            <h1 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">Правила аудирования на немецком A1 (Hören)</h1>
-            
-            <p class="text-[#605A57] text-lg font-normal leading-8 font-sans">Раздел Hören (Аудирование) проверяет вашу способность понимать устную немецкую речь в повседневных ситуациях.</p>
-         </header>
          <div class="w-full flex flex-col gap-10 text-[#605A57] text-base font-normal leading-7 font-sans">
             <section class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-[rgba(55,50,47,0.08)]">
                <h2 class="text-[#49423D] text-xl font-semibold mb-4">Чего ожидать</h2>
@@ -130,7 +155,7 @@
                            Ответы с подробными объяснениями помогут вам понять каждую ошибку и улучшить навыки аудирования.
                      </p>
 
-                     <a href="/nemetskiy-a1-testy/hoeren"
+                     <a href="{% url 'tests:tests_list' 'a1' 'hoeren' %}"
                         class="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
                            Начать тест Hören A1 (Аудирование)→
                      </a>

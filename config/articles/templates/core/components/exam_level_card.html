@@ -1,34 +1,34 @@
-
-
-<a class="exam-card group" href="{{test_group.url}}" style="animation-delay: 0ms;">
-    <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
-        <div class="flex items-start justify-between mb-4">
-            <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
-                {{test_group.name}}
-            </h3>
-            <div class="flex items-center gap-2">
-            <!--
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
-                    
-                </span>
-            -->
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                    тестов: {{test_group.count}}
-                </span>
-            </div>
-        </div>
-        <p class="text-sm text-[var(--color-ink-muted)] mb-3 font-medium">
-            {{test_group.description}}
-        </p>
-        <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
-            {{test_group.description_full}}
-        </p>
-        <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+<a class="exam-identity-card group" data-exam="{{test_group.name|lower}}" href="{{test_group.url}}" style="animation-delay: 0ms;">
+  <div class="card-accent"></div>
+  <div class="overflow-hidden">
+    <img alt="{{test_group.name}}" loading="lazy" width="600" height="300" decoding="async" data-nimg="1" class="card-illustration" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" srcset="/static/src/img/{{test_group.name|lower}}.png" src="/static/src/img/{{test_group.name|lower}}.png" style="color: transparent;"></div>
+  <div class="card-body">
+    <div class="flex items-start justify-between mb-3">
+      <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:opacity-80 transition-opacity">{{test_group.name}}</h3>
+      <div class="flex items-center gap-2 flex-shrink-0 ml-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700">
+            Тестов: {{test_group.count}}
+        </span>
+    </div>
+    </div>
+    <p class="text-sm text-[var(--color-ink-muted)] mb-2 font-medium">{{test_group.description}}</p>
+    <p class="text-[var(--color-ink-light)] mb-4 line-clamp-2 text-sm leading-relaxed">{{test_group.description_full}}</p>
+    <div class="flex items-center justify-between">
+        <span class="exam-badge">
+            <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+            Доступно
+        </span>
+        <span class="text-[var(--color-ink-muted)] group-hover:text-[var(--color-ink)] transition-colors text-sm font-medium flex items-center">
             Начать подготовку
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
             </svg>
-        </div>
+        </span>
     </div>
+  </div>
 </a>
+
+
+
+

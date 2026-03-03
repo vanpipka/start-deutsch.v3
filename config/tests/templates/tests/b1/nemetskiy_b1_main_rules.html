@@ -1,20 +1,39 @@
 {% extends "core/base.html" %}
 {% block content %}
 
-<section class="max-w-5xl mx-auto px-4 py-12">
-
-    <!-- HEADER -->
-    <header class="mb-10">
-        <h1 class="text-4xl font-bold mb-4">
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/b1/">B1</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">Общие правила</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
             Правила экзамена Goethe-Zertifikat B1 
         </h1>
-
-        <p class="text-lg text-gray-600">
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
             Полное руководство по проведению экзамена Goethe B1:
             структура, порядок частей, требования и официальные правила
             проведения согласно регламенту Goethe-Institut.
-        </p>
-    </header>
+         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/b1.png" src="/static/src/img/b1.png">
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="max-w-5xl mx-auto px-4 py-12">
+
 
 
     <!-- INTRO -->

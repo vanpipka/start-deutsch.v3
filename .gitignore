@@ -33,4 +33,3 @@ config/static/
 
 # Logs
 config/logs/
-config/logs/django_error.log

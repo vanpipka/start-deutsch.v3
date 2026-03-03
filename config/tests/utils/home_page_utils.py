@@ -1,26 +1,27 @@
-from ..models import Exam, TestCategory
+from ..models import Exam, TestCategory, TestsCountByLevelTypePart
+from django.db.models import Count, Q
          
     
 def get_rules():
     return [
         {
             "title": "Правила экзамена Goethe Start Deutsch A1",
-            "url": "a1/rules/all/",
+            "url": "a1/rules/",
             "description": "Полные правила проведения экзамена Goethe Start Deutsch A1. Что нужно знать и как подготовиться к экзамену A1."
         },
         {
             "title": "Правила экзамена Goethe Start Deutsch A2",
-            "url": "a2/rules/all/",
+            "url": "a2/rules/",
             "description": "Полные правила проведения экзамена Goethe Start Deutsch A2. Что нужно знать и как подготовиться к экзамену A2."
         },
         {
             "title": "Правила экзамена Goethe Start Deutsch B1",
-            "url": "b1/rules/all/",
+            "url": "b1/rules/",
             "description": "Полные правила проведения экзамена Goethe Start Deutsch B1. Что нужно знать и как подготовиться к экзамену B1."
         },
         {
             "title": "Правила экзамена Goethe Start Deutsch B2",
-            "url": "b2/rules/all/",
+            "url": "b2/rules/",
             "description": "Полные правила проведения экзамена Goethe Start Deutsch B2. Что нужно знать и как подготовиться к экзамену B2."
         }
     ]    
@@ -107,6 +108,8 @@ def get_context_for_rule_page(type=None, level=None):
     if level == "A1":
         if type == "ALL":
             return {
+                "level": "a1",
+                "type": "all",
                 "url": "a1/rules/all/",
                 "template": "tests/a1/nemetskiy_a1_main_rules.html",
                 "title": "Правила экзамена Goethe Start Deutsch A1 | Start Deutsch",
@@ -116,6 +119,8 @@ def get_context_for_rule_page(type=None, level=None):
         
         elif type == "SCHREIBEN":
             return {
+                "level": "a1",
+                "type": "schreiben",
                 "url": "a1/rules/Schreiben/",
                 "template": "tests/a1/nemetskiy_a1_pismo_rules.html",
                 "title": "Правила письма A1 (Schreiben) — экзамен Start Deutsch A1 | Start Deutsch",
@@ -124,6 +129,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "LESEN":
             return {
+                "level": "a1",
+                "type": "lesen",
                 "url": "a1/rules/Lesen/",
                 "template": "tests/a1/nemetskiy_a1_chtenie_rules.html",
                 "title": "Правила чтения A1 (Lesen) — экзамен Start Deutsch A1 | Start Deutsch",
@@ -132,14 +139,18 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "HÖREN" or type == "HOEREN":
             return {
+                "level": "a1",
+                "type": "hoeren",
                 "url": "a1/rules/Hoeren/",
                 "template": "tests/a1/nemetskiy_a1_audirovanie_rules.html",
                 "title": "Правила аудирования A1 (Hören) — экзамен Start Deutsch A1 | Start Deutsch",
                 "seo_title": "Правила аудирования A1 (Hören) — экзамен Start Deutsch A1 | Start Deutsch (Примеры и советы)",
                 "seo_description": "Как правильно выполнить аудирование на экзамене Start Deutsch A1? Полные правила Hören, структура ответа, примеры и ошибки, из-за которых теряют баллы."
             }
-        elif type == "SPRECHEN":
+        elif type == "#SPRECHEN":
             return {
+                "level": "a1",
+                "type": "sprechen",
                 "url": "a1/rules/Sprechen/",
                 "template": "tests/a1/nemetskiy_a1_govorit_rules.html",
                 "title": "Правила говорения A1 (Sprechen) — экзамен Start Deutsch A1 | Start Deutsch",
@@ -149,6 +160,8 @@ def get_context_for_rule_page(type=None, level=None):
     elif level == "A2":
         if type == "ALL":
             return {
+                "level": "a2",
+                "type": "all",
                 "url": "a2/rules/all/",
                 "template": "tests/a2/nemetskiy_a2_main_rules.html",
                 "title": "Правила экзамена Goethe Start Deutsch A2 | Start Deutsch",
@@ -157,6 +170,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#SCHREIBEN":
             return {
+                "level": "a2",
+                "type": "schreiben",
                 "url": "a2/rules/Schreiben/",
                 "template": "tests/a2/nemetskiy_a2_pismo_rules.html",
                 "title": "Правила письма A2 (Schreiben) — экзамен Start Deutsch A2 | Start Deutsch",
@@ -165,6 +180,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#LESEN":
             return {
+                "level": "a2",
+                "type": "lesen",
                 "url": "a2/rules/Lesen/",
                 "template": "tests/a2/nemetskiy_a2_chtenie_rules.html",
                 "title": "Правила читения A2 (Lesen) — экзамен Start Deutsch A2 | Start Deutsch",
@@ -173,6 +190,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#HÖREN" or type == "#HOEREN":
             return {
+                "level": "a2",
+                "type": "hoeren",
                 "url": "a2/rules/Hoeren/",
                 "template": "tests/a2/nemetskiy_a2_audirovanie_rules.html",
                 "title": "Правила аудирования A2 (Hören) — экзамен Start Deutsch A2 | Start Deutsch",
@@ -181,6 +200,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#SPRECHEN":
             return {
+                "level": "a2",
+                "type": "sprechen",
                 "url": "a2/rules/Sprechen/",
                 "template": "tests/a2/nemetskiy_a2_govorit_rules.html",
                 "title": "Правила говорения A2 (Sprechen) — экзамен Start Deutsch A2 | Start Deutsch",
@@ -190,6 +211,8 @@ def get_context_for_rule_page(type=None, level=None):
     elif level == "B1":
         if type == "ALL":
             return {
+                "level": "b1",
+                "type": "all",
                 "url": "b1/rules/all/",
                 "template": "tests/b1/nemetskiy_b1_main_rules.html",
                 "title": "Правила экзамена Goethe Start Deutsch B1 | Start Deutsch",
@@ -198,6 +221,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#SCHREIBEN":
             return {
+                "level": "b1",
+                "type": "schreiben",
                 "url": "b1/rules/Schreiben/",
                 "template": "tests/b1/nemetskiy_b1_pismo_rules.html",
                 "title": "Правила письма B1 (Schreiben) — экзамен Start Deutsch B1 | Start Deutsch",
@@ -206,6 +231,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#LESEN":
             return {
+                "level": "b1",
+                "type": "lesen",
                 "url": "b1/rules/Lesen/",
                 "template": "tests/b1/nemetskiy_b1_chtenie_rules.html",
                 "title": "Правила читения B1 (Lesen) — экзамен Start Deutsch B1 | Start Deutsch",
@@ -214,6 +241,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#HÖREN" or type == "#HOEREN":
             return {
+                "level": "b1",
+                "type": "hoeren",
                 "url": "b1/rules/Hoeren/",
                 "template": "tests/b1/nemetskiy_b1_audirovanie_rules.html",
                 "title": "Правила аудирования B1 (Hören) — экзамен Start Deutsch B1 | Start Deutsch",
@@ -222,6 +251,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
         elif type == "#SPRECHEN":
             return {
+                "level": "b1",
+                "type": "sprechen",
                 "url": "b1/rules/Sprechen/",
                 "template": "tests/b1/nemetskiy_b1_govorit_rules.html",
                 "title": "Правила говорения B1 (Sprechen) — экзамен Start Deutsch B1 | Start Deutsch",
@@ -230,6 +261,8 @@ def get_context_for_rule_page(type=None, level=None):
             }
             
     return {
+        "level": level.lower(),
+        "type": type.lower(),
         "url": f"{level.lower()}/rules/{type.lower()}/",
         "template": "tests/page_dont_ready.html",
         "title": f"Правила экзамена {level} ({type}) | Start Deutsch",
@@ -284,48 +317,62 @@ def get_seo_data_for_tests(level=None, type=None):
     
 def get_context_for_money_page(level = None):
     
-    if level is None: level = ""
-    
-    level = level.upper()
-    
-    if level == "A1":
+    if level is None:
         return {
-            "url": f"/{level.lower()}/",
+            "url": f"/all/",
+            "categories": [],
+            "template": "tests/page_dont_ready.html",
+            "title": f"Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
+            "seo_title": f"Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch (Примеры и советы)",
+            "seo_description": f"Тесты для уровня {level} — экзамен Start Deutsch {level}. Подготовка к экзамену Start Deutsch {level} с помощью тестов на понимание текста, аудирования, грамматики и словарного запаса."
+        }
+    
+    categories = TestCategory.objects.annotate(tests_count=Count("exams", filter=Q(exams__level=level)))
+    TestCategory.add_absolute_url(categories, level.slug)
+    TestCategory.add_tests_count(categories, level)
+    
+    level_slug = level.slug.upper()
+    
+    if level_slug == "A1":
+        return {
+            "level": level_slug,
+            "url": f"/{level_slug.lower()}/",
+            "categories": categories,
             "template": "tests/a1/nemetskiy_a1_testy.html",
-            "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
-            "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
-            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+            "title": f"Бесплатные Тесты для уровня {level_slug} — экзамен Start Deutsch {level_slug} | Start Deutsch",
+            "seo_title": f"Бесплатные тесты по немецкому {level_slug} онлайн",
+            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level_slug} онлайн. (Goethe Start Deutsch {level_slug}, Telc {level_slug}, ÖSD {level_slug})",
         }
-    if level == "A2":
+    if level_slug == "A2":
         return {
-            "url": f"/{level.lower()}/",
-            "template": "tests/a2/nemetskiy_a2_testy.html",
-            "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
-            "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
-            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+            "level": level_slug,
+            "url": f"/{level_slug.lower()}/",
+            "categories": categories,
+            "template": "tests/a1/nemetskiy_a1_testy.html",
+            "title": f"Бесплатные Тесты для уровня {level_slug} — экзамен Start Deutsch {level_slug} | Start Deutsch",
+            "seo_title": f"Бесплатные тесты по немецкому {level_slug} онлайн",
+            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level_slug} онлайн. (Goethe Start Deutsch {level_slug}, Telc {level_slug}, ÖSD {level_slug})",
         }
-    if level == "B1":
+    if level_slug == "B1":
         return {
-            "url": f"/{level.lower()}/",
-            "template": "tests/b1/nemetskiy_b1_testy.html",
-            "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
-            "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
-            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+            "level": level_slug,
+            "url": f"/{level_slug.lower()}/",
+            "categories": categories,
+            "template": "tests/a1/nemetskiy_a1_testy.html",
+            "title": f"Бесплатные Тесты для уровня {level_slug} — экзамен Start Deutsch {level_slug} | Start Deutsch",
+            "seo_title": f"Бесплатные тесты по немецкому {level_slug} онлайн",
+            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level_slug} онлайн. (Goethe Start Deutsch {level_slug}, Telc {level_slug}, ÖSD {level_slug})",
         }
-    if level == "B2":
+    if level_slug == "B2":
         return {
-            "url": f"/{level.lower()}/",
-            "template": "tests/b2/nemetskiy_b2_testy.html",
-            "title": f"Бесплатные Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
-            "seo_title": f"Бесплатные тесты по немецкому {level} онлайн",
-            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level} онлайн. Подготовка к экзамену Goethe Start Deutsch A1.",
+            "level": level_slug,
+            "url": f"/{level_slug.lower()}/",
+            "categories": categories,
+            "template": "tests/a1/nemetskiy_a1_testy.html",
+            "title": f"Бесплатные Тесты для уровня {level_slug} — экзамен Start Deutsch {level_slug} | Start Deutsch",
+            "seo_title": f"Бесплатные тесты по немецкому {level_slug} онлайн",
+            "seo_description": f"Пройдите бесплатные тесты по немецкому языку уровня {level_slug} онлайн. (Goethe Start Deutsch {level_slug}, Telc {level_slug}, ÖSD {level_slug})",
         }    
     
     
-    return {
-        "url": f"/{level.lower()}/",
-        "template": "tests/page_dont_ready.html",
-        "title": f"Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch",
-        "seo_title": f"Тесты для уровня {level} — экзамен Start Deutsch {level} | Start Deutsch (Примеры и советы)",
-        "seo_description": f"Тесты для уровня {level} — экзамен Start Deutsch {level}. Подготовка к экзамену Start Deutsch {level} с помощью тестов на понимание текста, аудирования, грамматики и словарного запаса."
-    }    
+    

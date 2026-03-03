@@ -1,3 +1,4 @@
+from collections import abc
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -5,21 +6,6 @@ from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from django_ckeditor_5.fields import CKEditor5Field
 
-
-# Teil 1, Teil 2 ....
-class TestPart(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название части")
-    description = models.TextField(blank=True, verbose_name="Описание части")
-    content = CKEditor5Field('Текст статьи', config_name='extends') 
-    slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)   
-
-    def __str__(self):
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name, allow_unicode=True)
-        super().save(*args, **kwargs)
     
 # Hoeren, Lesen, Schreiben, Sprechen
 class TestCategory(models.Model):
@@ -37,16 +23,25 @@ class TestCategory(models.Model):
             self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
     
-    def get_absolute_url(self, level = "a1"):
-        return reverse('tests:tests_list', args=[level, self.slug])
+    def get_absolute_url(self, str_level = "a1"):
+        return reverse('tests:tests_list', args=[str_level, self.slug])
     
     @staticmethod
-    def add_absolute_url(data, level):
-        
-        if isinstance(data, TestCategory):
-            data.absolute_url = data.get_absolute_url(level)
-        if isinstance(data, list):          
-            for i in data: TestCategory.add_absolute_url(i, level)
+    def add_absolute_url(testCategory, str_level):       
+        if isinstance(testCategory, TestCategory):
+            testCategory.absolute_url = testCategory.get_absolute_url(str_level)
+        if isinstance(testCategory, abc.Iterable):          
+            for i in testCategory: TestCategory.add_absolute_url(i, str_level)
+                       
+    def get_tests_count(self, level):     
+        return TestsCountByLevelTypePart.objects.filter(level = level, category = self)
+                      
+    @staticmethod
+    def add_tests_count(testCategory, level):      
+        if isinstance(testCategory, TestCategory):
+            testCategory.tests_info = testCategory.get_tests_count(level)
+        if isinstance(testCategory, abc.Iterable):          
+            for i in testCategory: TestCategory.add_tests_count(i, level)
                    
     class Meta:
         verbose_name = "Категория теста"
@@ -71,6 +66,25 @@ class ExamLevel(models.Model):
         verbose_name_plural = "Уровни экзаменов"
 
 
+# Teil 1, Teil 2 ....
+class TestPart(models.Model):
+    level = models.ForeignKey(ExamLevel, on_delete=models.CASCADE, verbose_name="Уровень", null=True, blank=True)
+    category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, verbose_name="Категория", null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="Название части")
+    description = models.TextField(blank=True, verbose_name="Описание части")
+    content = CKEditor5Field('Текст статьи', config_name='extends') 
+    slug = models.SlugField(max_length=255, unique=True, verbose_name="Slug", blank=True, null=True)   
+    sequence_number = models.IntegerField(default = 1, verbose_name="Порядковый номер")
+    
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
+        
+        
 class Exam(models.Model):  
     level = models.ForeignKey(ExamLevel, on_delete=models.CASCADE, related_name="exams", verbose_name="Уровень")
     category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, related_name="exams", verbose_name="Категория", null=True, blank=True)
@@ -310,4 +324,9 @@ class UserAnswer(models.Model):
         unique_together = ("attempt", "question")
 
 
+class TestsCountByLevelTypePart(models.Model):
+    level = models.ForeignKey(ExamLevel, on_delete=models.CASCADE, verbose_name="Уровень", null=True, blank=True)
+    category = models.ForeignKey(TestCategory, on_delete=models.CASCADE, verbose_name="Категория", null=True, blank=True)
+    part = models.ForeignKey(TestPart, on_delete=models.CASCADE,  verbose_name="Часть", blank=True, null=True)
+    count = models.IntegerField(default=0, verbose_name="Количество")      
 

@@ -1,64 +1,153 @@
 {% extends "core/base.html" %}
 
-{% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
+{% block title %}
+    {% if title %}
+        {{ title }}
+    {% else %}
+        Все тесты
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
 <!-- Header -->
-<section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-        <h1 class="text-4xl font-bold mb-2">
-            {% if title %}{{ title }}{% else %}Тесты{% endif %}
-        </h1>
-        <p class="text-blue-100">
-            Отличный способ проверить свои знания и подготовиться к реальному экзамену. Выберите экзамен и начните прямо сейчас!
+
+<section class="exam-page-header" data-exam="{{ current_level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        {% for breadcrumb in breadcrumbs %}
+            <li>
+                <a class="hover:text-[var(--exam-{{ current_level|lower }})]" href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a>
+            </li>
+            <li aria-hidden="true">/</li>           
+        {% endfor %}
+        <li aria-current="page">
+            <span class="text-[var(--color-ink)] font-medium">{{ current_category|title }}</span>
+        </li>       
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
+            {% if title %}
+                {{ title }}
+            {% else %} 
+                Тесты с экзаменов {{current_category}} {{ current_level }}
+            {% endif %}</h1>
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
+            {% if current_category == 'Все тесты' %}
+                Выберите уровень, тип задания и часть экзамена, чтобы тренироваться именно на нужных заданиях.
+            {% else %}
+                Пройдите бесплатные тесты уровня {{current_category}} {{ current_level }}  и проверьте готовность к экзамену.
+                Все задания соответствуют формату Deutsch {{current_category}} {{ current_level }}. (Goethe Start Deutsch {{current_category}} {{ current_level }}, Telc {{current_category}} {{ current_level }}, ÖSD {{current_category}} {{ current_level }})
+            {% endif %}
         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/{{current_level}}.png" src="/static/src/img/{{current_level}}.png">
     </div>
+    </div>
+  </div>
 </section>
+
+{% if not hide_search_panel %}
+<section class="py-12 bg-gray-50 border-y border-gray-200">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- FILTER BAR -->
+    <form method="get"
+          class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+
+      <div class="flex flex-col md:flex-row gap-4">
+
+        <!-- LEVEL -->
+        <div class="w-full">
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Уровень
+          </label>
+
+          <select name="level"
+                  class="w-full rounded-xl border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-3 bg-gray-50 hover:bg-white transition">
+
+              <option value="">Все уровни</option>
+
+              {% for level in levels %}
+                <option value="{{ level.slug }}"
+                        {% if request.GET.level == level.slug %}selected{% endif %}>
+                    {{ level.name }}
+                </option>
+              {% endfor %}
+
+          </select>
+        </div>
+
+
+        <!-- CATEGORY -->
+        <div class="w-full">
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Тип задания
+          </label>
+
+          <select name="category"
+                  class="w-full rounded-xl border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-3 bg-gray-50 hover:bg-white transition">
+
+              <option value="">Все типы</option>
+
+              {% for category in categories %}
+                <option value="{{ category.slug }}"
+                        {% if request.GET.category == category.slug %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+              {% endfor %}
+
+          </select>
+        </div>
+
+
+        <!-- PART -->
+        <div class="w-full">
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Часть экзамена
+          </label>
+
+          <select name="part"
+                  class="w-full rounded-xl border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-3 bg-gray-50 hover:bg-white transition">
+
+              <option value="">Все части</option>
+
+              {% for part in parts %}
+                <option value="{{ part }}"
+                        {% if request.GET.part == part %}selected{% endif %}>
+                    Teil {{ part }}
+                </option>
+              {% endfor %}
+
+          </select>
+        </div>
+
+
+        <!-- BUTTON -->
+        <div class="flex items-end">
+          <button type="submit"
+                  class="w-full md:w-auto px-8 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition shadow-sm">
+            Показать
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>
+{% endif %}
 
 <!-- Exams -->
 <section class="max-w-7xl mx-auto px-4 py-16">
-
-    {% include "core/components/breadcrumbs.html" %}
-
-    {% if levels %}
-        <div class="flex flex-wrap gap-3 mb-10">
-            <a href="{% url 'tests:exam_list' %}"
-               class="px-4 py-2 rounded-full text-sm border
-               {% if not current_level or current_level == 'all' %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
-                Все
-            </a>
-
-            {% for level in levels %}
-
-                <a href="{% url 'tests:exam_list' level.slug %}"
-                   class="px-4 py-2 rounded-full text-sm border
-                   {% if current_level == level.slug %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
-                    {{ level.name }}
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% if categories %}
-        <div class="flex flex-wrap gap-3 mb-10">
-
-            <a href="{% url 'tests:exam_list' current_level %}"
-               class="px-4 py-2 rounded-full text-sm border
-               {% if not current_type or current_type == 'all' %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
-                Все
-            </a>
-
-            {% for category in categories %}
-
-                <a href="{% url 'tests:exam_list' current_level category.slug %}"
-                   class="px-4 py-2 rounded-full text-sm border
-                   {% if current_type == category.slug %}bg-blue-600 text-white border-blue-600{% else %}text-gray-700{% endif %}">
-                    {{ category.name }}
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
 
     {% if exam_rules_url %}
     <div class="flex items-start gap-3 bg-red-50 rounded-xl p-4 border border-red-100 mb-10">

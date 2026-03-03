@@ -11,8 +11,8 @@ urlpatterns = [
     # Main page
     path('', views.home, name='home'),           
     path("tests/", views.TestsListView.as_view(), name="exam_list"),
-    path("tests/<level:level>/", views.TestsListView.as_view(), name="exam_list"),
-    path("tests/<level:level>/<type:type>/", views.TestsListView.as_view(), name="exam_list"),
+    # path("tests/<level:level>/", views.TestsListView.as_view(), name="exam_list"),
+    # path("tests/<level:level>/<type:type>/", views.TestsListView.as_view(), name="exam_list"),
     path('tests/<int:exam_id>/start/', views.exam_start, name='exam_start'),
     path('tests/<int:exam_id>/continue/', views.exam_continue, name='exam_continue'),
     path("tests/<int:exam_id>/attempt/<int:attempt_id>/test/<int:test_id>/question/<int:question_id>/",
@@ -26,16 +26,11 @@ urlpatterns = [
     ),   
     path("tests/result/<int:attempt_id>/", views.exam_result_detail, name="exam_result_detail"), 
     path("tests/attempts/", views.exam_attempt_list, name="exam_attempt_list"),
-          
-    path("<level:level>/rules/<type:type>/", 
-        views.rules_view,
-        name="tests_rules"),       
-    path("<level:level>/",
-        views.tests_by_level_page,
-        name="tests_prev_page"),    
-    path("<level:level>/<type:type>/",
-        views.TestsListViewByLevel.as_view(),
-        name="tests_list"),
+     
+    path("<level:level>/rules/", views.main_rules_view, name="tests_main_rules"),     
+    path("<level:level>/rules/<type:type>/", views.rules_view,name="tests_rules"),       
+    path("<level:level>/", views.tests_by_level_page, name="tests_prev_page"),  
+    path("<level:level>/<type:type>/", views.TestsListViewByLevel.as_view(),name="tests_list"),
         
 ]
 

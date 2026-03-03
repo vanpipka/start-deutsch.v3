@@ -2,13 +2,44 @@
 {% block title %}{% if title %}{{ title }}{% else %}Все статьи{% endif %}{% endblock %}
 {% block content %}
 
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/{{ level|lower }}/">{{ level|upper }}</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="{% url 'tests:tests_main_rules' level|lower %}">Общие правила</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">{{ type|title }}</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
+            Экзамен Goethe {{ level|upper }} (Start Deutsch 1) — правила проведения и структура | Start Deutsch
+        </h1>
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
+            Полный официальный гайд по процедуре сдачи экзамена Goethe-Zertifikat {{ level|upper }}:
+            структура, длительность, оценивание и требования к участникам.
+         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/cambridge.png" src="/static/src/img/cambridge.png">
+    </div>
+    </div>
+  </div>
+</section>
+
 <section class="max-w-4xl mx-auto px-4 py-10">
    <article class="w-full flex justify-center items-start">
       <div class="flex-1 px-4 md:px-12 py-16 md:py-20 flex flex-col justify-start items-start gap-8">
          <header class="w-full flex flex-col gap-4">
-            <h1 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">
+            <h2 class="text-[#49423D] font-semibold leading-tight md:leading-[44px] font-sans text-3xl md:text-4xl tracking-tight">
                Раздел находится в разработке и скоро будет готов!
-            </h1>
+            </h2>
             
             <p class="text-[#605A57] text-lg font-normal leading-8 font-sans">
                Мы приносим извинения за неудобства, но этот раздел ещё не готов. Наша команда активно работает над созданием качественного контента, который поможет вам подготовиться к экзамену по аудированию A1. Пожалуйста, загляните сюда немного позже — мы обещаем, что результат будет стоить ожидания!

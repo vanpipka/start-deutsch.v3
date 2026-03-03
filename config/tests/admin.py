@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
-from .models import ExamAttempt, Test, Question, Answer, TestCategory, ExamLevel, Exam, UserAnswer, QuestionText, TestPart
+from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
+from .models import ExamAttempt, TestsCountByLevelTypePart, Test, Question, Answer, TestCategory, ExamLevel, Exam, UserAnswer, QuestionText, TestPart
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -40,6 +40,7 @@ class TestPartAdmin(admin.ModelAdmin):
 class ExamAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'level', 'seo_title', 'seo_description', 'created_at')
     inlines = [TestInline]
+    actions = [duplicate_objects]
 
 
 @admin.register(TestCategory)
@@ -118,6 +119,10 @@ class QuestionTextAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
     
+    
+@admin.register(TestsCountByLevelTypePart)
+class TestsCountByLevelTypePartAdmin(admin.ModelAdmin):
+    list_display = ('level', 'category', 'part', 'count')   
 
 
 @admin.register(ExamAttempt)

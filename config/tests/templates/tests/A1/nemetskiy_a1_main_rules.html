@@ -1,19 +1,38 @@
 {% extends "core/base.html" %}
 {% block content %}
 
-<div class="max-w-5xl mx-auto px-4 py-10">
 
-    <!-- HERO -->
-    <section class="mb-12">
-        <h1 class="text-4xl font-bold mb-4">
-            Экзамен Goethe A1 (Start Deutsch 1) — правила проведения
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/a1/">A1</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">Общие правила</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
+            Экзамен Goethe A1 (Start Deutsch 1) — правила проведения и структура | Start Deutsch
         </h1>
-
-        <p class="text-gray-600 text-lg">
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
             Полный официальный гайд по процедуре сдачи экзамена Goethe-Zertifikat A1:
             структура, длительность, оценивание и требования к участникам.
-        </p>
-    </section>
+         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/a1.png" src="/static/src/img/a1.png">
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="max-w-5xl mx-auto px-4 py-10">
 
     <!-- STRUCTURE -->
     <section class="mb-14">
@@ -22,7 +41,7 @@
         <div class="grid md:grid-cols-2 gap-6">
 
             <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'hoeren' %}" style="animation-delay: 0ms;">
-                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                <div class="">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
                             👂 Hören (Аудирование)
@@ -42,7 +61,7 @@
             </a>
 
             <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'lesen' %}" style="animation-delay: 0ms;">
-                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                <div class="">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
                             📖 Lesen (Чтение)
@@ -62,7 +81,7 @@
             </a>
 
             <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'schreiben' %}" style="animation-delay: 0ms;">
-                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                <div class="">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
                             📖 Schreiben (Письмо)
@@ -82,7 +101,7 @@
             </a>
 
             <a class="exam-card group" href="{% url 'tests:tests_rules' 'a1' 'sprechen' %}" style="animation-delay: 0ms;">
-                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                <div class="">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
                             🗣 Sprechen (Устная часть)  

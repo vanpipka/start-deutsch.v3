@@ -7,8 +7,8 @@ from django.db.models import Count, OuterRef, Subquery, Sum, IntegerField, Value
 from django.db.models.functions import Coalesce
 from articles.models import Article
 from articles.utils import get_exam_rules_url
-from .utils.home_page_utils import get_rules, get_test_groups, get_context_for_rule_page, get_seo_data_for_tests, get_context_for_money_page
-from .models import ExamAttempt, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer, ExamLevel
+from .utils import home_page_utils
+from .models import ExamAttempt, TestPart, Question, Test, Answer, Exam, TestCategory, TestResult, UserAnswer, ExamLevel
 
 
 def home(request):
@@ -25,8 +25,8 @@ def home(request):
     return render(request, 'core/new_home.html', {
         'latest_articles': latest_articles,
         'exams': exams,
-        'rules': get_rules(),
-        'test_groups': get_test_groups(),
+        'rules': home_page_utils.get_rules(),
+        'test_groups': home_page_utils.get_test_groups(),
         'seo_description': "Немецкий A1-B2 тесты онлайн с ответами и результатами. Подготовка к Goethe Start Deutsch A1-B2: Lesen, Hören, Schreiben + пробный экзамен бесплатно.",
         'seo_keywords': "Немецкий A1-B2 тесты онлайн, Goethe Start Deutsch A1-B2, Telc A1-B2, ÖSD A1-B2, немецкий язык практика, немецкий язык экзамен, немецкий язык тесты, немецкий язык подготовка, немецкий язык онлайн тесты"
 
@@ -35,35 +35,34 @@ def home(request):
 
 def rules_view(request, level, type):
     
-    context = get_context_for_rule_page(level=level, type=type)
+    context = home_page_utils.get_context_for_rule_page(level=level, type=type)
     
     return render(
         request, 
         context.get('template', 'tests/page_dont_ready.html'),
         context=context)
+    
  
+def main_rules_view(request, level):
+    
+    context = home_page_utils.get_context_for_rule_page(level=level, type='all')
+    
+    return render(
+        request, 
+        context.get('template', 'tests/page_dont_ready.html'),
+        context=context)
+    
     
 def tests_by_level_page(request, level=None):
     
-    context = get_context_for_money_page(level)
-     
     level = get_object_or_404(ExamLevel, slug=level)
-    
-    if level: 
-        categories = TestCategory.objects.annotate(tests_count=Count("exams", filter=Q(exams__level=level)))
-    else:
-        categories = TestCategory.objects.all()
-    
-    categories = list(categories)    
-    TestCategory.add_absolute_url(categories, level.slug)
-
-    context["categories"] = categories
-    
+    context = home_page_utils.get_context_for_money_page(level)  
+         
     return render(
         request, 
         context.get("template", "tests/page_dont_ready.html"),
         context=context)
-        
+       
         
 class TestsListViewByLevel(ListView):
     
@@ -76,8 +75,9 @@ class TestsListViewByLevel(ListView):
         user = self.request.user
         test_type = self.kwargs.get("type")
         level = self.kwargs.get("level")
+        part = self.request.GET.get("teil")
         
-        seo_data = get_seo_data_for_tests(level=level, type=test_type)
+        seo_data = home_page_utils.get_seo_data_for_tests(level=level, type=test_type)
         
         self.extra_context = {
             "title": seo_data.get("title") if seo_data.get("title") else "Бесплатные тесты по немецкому онлайн",
@@ -87,7 +87,8 @@ class TestsListViewByLevel(ListView):
         
         qs = Exam.objects.annotate(tests_count=Count("tests", distinct=True))
         
-        if test_type: qs = qs.filter(category__slug=test_type)       
+        if test_type: qs = qs.filter(category__slug=test_type)   
+        if part: qs = qs.filter(tests__part__sequence_number=part)     
         if level and level != "all" : qs = qs.filter(level__slug=level)
         
         # если пользователь не авторизован — просто список экзаменов
@@ -141,16 +142,19 @@ class TestsListViewByLevel(ListView):
     def get_context_data(self, **kwargs):
         
         test_type = self.kwargs.get("type")
-        level = self.kwargs.get("level")
+        test_level = self.kwargs.get("level")
         
+        breadcrumbs = [{'name': 'Главная', 'url': '/'}]
+        if test_level and test_level != "all":
+            breadcrumbs.append({'name': test_level.upper(), 'url': f"/{test_level.lower()}/"})
+             
         context = super().get_context_data(**kwargs)
-        
-        if not test_type:
-            context["categories"] = TestCategory.objects.all()
             
-        context["exam_rules_url"] = get_exam_rules_url(level=level, category=test_type)      
-        context["current_category"] = test_type
-        context["current_level"] = level
+        context["exam_rules_url"] = get_exam_rules_url(level=test_level, category=test_type)      
+        context["current_category"] = test_type.lower() if test_type else None
+        context["current_level"] = test_level.lower() if test_level else None
+        context["breadcrumbs"] = breadcrumbs
+        context["hide_search_panel"] = True
 
         return context
         
@@ -171,14 +175,14 @@ class TestsListView(ListView):
             tests_count=Count("tests", distinct=True)
         )
 
-        category = self.kwargs.get("type")
+        category = self.request.GET.get("category", "all")
         if category and category != 'all': qs = qs.filter(category__slug=category)
             
-        level = self.kwargs.get("level")
+        level = self.request.GET.get("level", "all")
         if level and level != 'all': qs = qs.filter(level__slug=level)
-            
-        header = self.kwargs.get("header")
-        if header: self.extra_context["header"] = header    
+               
+        #part = self.request.GET.get("part", "all")
+        #if part and part != 'all': qs = qs.filter(part__slug=part)
             
         user = self.request.user
 
@@ -234,22 +238,17 @@ class TestsListView(ListView):
         
         context = super().get_context_data(**kwargs)     
   
-        if self.request.user.is_authenticated:
-            passed_exam_ids = [] 
-            '''Result.objects.filter(
-                user=self.request.user
-            ).values_list("exam_id", flat=True).distinct()
-            '''
+        breadcrumbs = [{'name': 'Главная', 'url': '/'}]
 
-            context["passed_exam_ids"] = set(passed_exam_ids)
-        else:
-            context["passed_exam_ids"] = set()
-
+        
+        context["title"] = "Все тесты по немецкому языку онлайн"
+        context["breadcrumbs"] = breadcrumbs
         context["levels"] = ExamLevel.objects.all()
+        context["parts"] = [str(i) for i in TestPart.objects.values_list('sequence_number', flat=True).distinct()]
         context["categories"] = TestCategory.objects.all()            
         context["exam_rules_url"] = get_exam_rules_url(level=self.kwargs.get("level", ""), category=self.kwargs.get("type", ""))    
-        context["current_type"] = self.kwargs.get("type", "all")
-        context["current_level"] = self.kwargs.get("level", "all")
+        context["current_category"] = "Все тесты"
+        context["current_level"] = "cambridge"
 
         return context
 
@@ -321,6 +320,7 @@ class ExamDetailView(DetailView):
                     "percent": percent,
                 }
 
+        # context["part_info"] = exam.tests.values_list("part__content", flat=True).first()        
         context["attempts_count"] = attempts_count
         context["active_attempt"] = active_attempt
         context["result_preview"] = result_preview

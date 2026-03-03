@@ -1,37 +1,54 @@
 {% extends "core/base.html" %}
 
 {% block title %}
-Немецкий A1 тесты онлайн — подготовка к экзамену бесплатно
+    {% if seo_title %}
+        {{ seo_title }}
+    {% else %}
+        Немецкий {{ level }} тесты онлайн — подготовка к экзамену бесплатно
+    {% endif %}
 {% endblock %}
 
 
 {% block description %}
-Пройдите тесты по немецкому языку уровня A1 онлайн.
-Подготовка к экзамену Goethe Start Deutsch A1.
+    {% if seo_description %}
+        {{ seo_description }}
+    {% else %}
+        Пройдите тесты по немецкому языку уровня {{ level }} онлайн. Подготовка к экзамену немецкий {{ level }} (Goethe Start Deutsch {{ level }}, Telc {{ level }}, ÖSD {{ level }}).
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 
  <!-- Header -->
-<section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-        <h1 class="text-4xl font-bold mb-2">
-            {% if header %}{{ header }}{% else %}Экзамены A1{% endif %}
-        </h1>
-        <p class="text-blue-100">
-            Пройдите бесплатные тесты уровня A1 и проверьте готовность к экзамену.
+ 
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">{{ level }}</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">{% if title %}{{ title }}{% else %} Тесты с экзаменов {{ level }}{% endif %}</h1>
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
+            Пройдите бесплатные тесты уровня {{ level }} и проверьте готовность к экзамену.
+            Все задания соответствуют формату Deutsch {{ level }}. (Goethe Start Deutsch {{ level }}, Telc {{ level }}, ÖSD {{ level }})
         </p>
-        <p class="text-blue-100">
-            Все задания соответствуют формату Deutsch A1. (Goethe Start Deutsch A1, Telc A1, ÖSD A1)
-        </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="{{ level }} Illustration" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/{{level|lower}}.png" src="/static/src/img/{{level|lower}}.png">
     </div>
+    </div>
+  </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-4 py-16">
-   
-    {% include "core/components/breadcrumbs.html" %}
-    
-    <div class="flex items-start gap-3 bg-red-50 rounded-xl p-4 border border-red-100 mb-10">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  
+    <div class="flex items-start gap-3 bg-red-50 rounded-xl p-4 border border-red-100">
 
         <!-- Icon -->
         <svg class="w-5 h-5 text-red-600 shrink-0 mt-0.5"
@@ -63,51 +80,79 @@
 
     </div>
 
-    <div class="mt-6 grid md:grid-cols-2 gap-6">
+</section>
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
 
         {% for i in categories %}
-        <a class="exam-card group" href="{{i.absolute_url }}" style="">
-            <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
-                <div class="flex items-start justify-between mb-4">
-                    <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
-                        {{i.name}}
-                    </h3>
-                    <div class="flex items-center gap-2">                    
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                            тестов: {{i.tests_count}}
-                        </span>
-                    </div>
-                </div>
-                <p class="text-sm text-[var(--color-ink-muted)] mb-3 font-medium">
-                    {{ i.description }}
-                </p>
-                <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
-                    {{ i.full_description}}
-                </p>
-                <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
-                    Начать подготовку
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
-                        <path d="M5 12h14"></path>
-                        <path d="m12 5 7 7-7 7"></path>
-                    </svg>
+        <div class="mt-6 bg-white border border-[var(--color-cream-dark)] rounded-xl overflow-hidden">
+            <div class="p-4 border-b border-[var(--color-cream-dark)] bg-[var(--color-cream)]">
+                <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-[var(--color-ink)]">
+                    {{i.name}}
+                </h2>
+                <span class="text-sm text-[var(--color-ink-muted)]">
+                </span>
+            </div>
+            </div>
+            <div class="p-4">
+             
+                <div class="grid gap-3 sm:grid-cols-2">
+                    {% for part_info in i.tests_info %}
+                    {% if part_info.part %}
+
+                        {% if part_info.count > 0 %}
+
+                            <div class="relative p-4 rounded-lg border bg-white border-[var(--color-cream-dark)] hover:shadow-md hover:border-[var(--examtoefl-mid)] transition-all">
+                                <a href="{{i.absolute_url }}?teil={{part_info.part.sequence_number}}">
+                                <div class="flex items-start justify-between mb-2">
+                                    <span class="text-sm font-medium text-[var(--exam-toefl)]">
+                                        {{ part_info.part.name }}
+                                    </span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700">
+                                        {{ part_info.count }}
+                                    </span>
+                                </div>
+                                <h3 class="text-base font-semibold text-[var(--color-ink)] mb-1">
+                                    {{part_info.part.description}}
+                                </h3>
+                                <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">Complete missing letters in words within a paragraph using context clues</p>
+                                <span class="mt-2 inline-block text-[var(--exam-toefl)] text-sm font-medium">
+                                    Начать подготовку →</span>
+                                </a>
+                            </div>
+                        {% else %}
+                            <a href="{{i.absolute_url }}?teil={{part_info.part.sequence_number}}">
+                                <div class="relative p-4 rounded-lg border bg-[var(--color-cream)] border-[var(--color-cream-dark)]">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <span class="text-sm font-medium text-[var(--color-ink-muted)]">
+                                            {{ part_info.part.name }}
+                                        </span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                                            еще нет тестов
+                                        </span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-[var(--color-ink-muted)] mb-1">
+                                        {{part_info.part.description}}
+                                    </h3>
+                                    <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">
+                                        
+                                    </p>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    
                 </div>
             </div>
-        </a>   
-
+        </div> 
         {% endfor %}
+   
+</section>
 
-    </div>
-
-    <section class="mt-10">
-        <h2 class="text-2xl font-semibold mb-4">Что включает тест A1?</h2>
-
-        <ul class="list-disc ml-6 space-y-2">
-        <li>Чтение (Lesen)</li>
-        <li>Аудирование (Hören)</li>
-        <li>Базовая грамматика</li>
-        <li>Экзаменационный формат Goethe</li>
-        </ul>
-    </section>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        
 </section>
 
 {% endblock %}
