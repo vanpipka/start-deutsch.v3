@@ -67,14 +67,14 @@ class TestAdmin(admin.ModelAdmin):
 
         test = form.instance
 
-        if test.is_yes_no():
+        if not test.is_yes_no():
             answers = Answer.objects.filter(question__test=test)
 
             correct_answers = answers.filter(is_correct=True)
 
             if correct_answers.count() != 1:
                 raise ValueError(
-                    "Для YES/NO теста должен быть ровно один правильный Answer"
+                    "Для типа 'Выбор варианта' должен быть ровно один правильный Answer"
                 )
 
 
