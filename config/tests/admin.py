@@ -65,17 +65,17 @@ class TestAdmin(admin.ModelAdmin):
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
 
-        test = form.instance
+        #test = form.instance
 
-        if not test.is_yes_no():
-            answers = Answer.objects.filter(question__test=test)
-
-            correct_answers = answers.filter(is_correct=True)
-
-            if correct_answers.count() != 1:
-                raise ValueError(
-                    "Для типа 'Выбор варианта' должен быть ровно один правильный Answer"
-                )
+        #if not test.is_yes_no():
+        #    answers = Answer.objects.filter(question__test=test)
+        #
+        #    correct_answers = answers.filter(is_correct=True)
+        #
+        #    if correct_answers.count() != 1:
+        #        raise ValueError(
+        #            "Для типа 'Выбор варианта' должен быть ровно один правильный Answer"
+        #        )
 
 
 @admin.register(Question)
