@@ -116,7 +116,6 @@
                                         {{ part_info.count }}
                                     </span>
                                 </div>
-                                
                                 <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">
                                     {{part_info.part.description}}
                                 </p>
@@ -128,16 +127,16 @@
                             <a href="{{i.absolute_url }}?teil={{part_info.part.sequence_number}}">
                                 <div class="relative p-4 rounded-lg border bg-[var(--color-cream)] border-[var(--color-cream-dark)]">
                                     <div class="flex items-start justify-between mb-2">
-                                        <span class="text-sm font-medium text-[var(--color-ink-muted)]">
+                                        <h3 class="text-base font-semibold text-[var(--color-ink-muted)] mb-1">
                                             {{ part_info.part.name }}
-                                        </span>
+                                        </h3>
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
                                             еще нет тестов
                                         </span>
                                     </div>
-                                    <h3 class="text-base font-semibold text-[var(--color-ink-muted)] mb-1">
+                                    <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">
                                         {{part_info.part.description}}
-                                    </h3>
+                                    </p>
                                     <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">
                                         
                                     </p>
