@@ -1,0 +1,313 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<section class="exam-page-header" data-exam="{{ level|lower }}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/">Главная</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="hover:text-[var(--exam-{{ level|lower }})]" href="/a2/">A2</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page"><span class="text-[var(--color-ink)] font-medium">Общие правила</span></li>
+      </ol>
+    </nav>
+    <div class="flex items-start gap-8">
+      <div class="flex-1">
+        <div class="header-accent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-ink)] mb-4">
+            Полный гайд по экзамену Goethe-Zertifikat A2 (Deutsch)
+        </h1>
+        <p class="text-lg text-[var(--color-ink-light)] max-w-2xl">
+            Подробное руководство по структуре, проведению, оцениванию и правилам экзамена Goethe A2 согласно официальным
+            Durchführungsbestimmungen Goethe-Institut (2025).
+         </p>
+      </div>
+      <div class="hidden lg:block flex-shrink-0 w-48 h-36 rounded-xl overflow-hidden shadow-md opacity-80">
+        <img alt="" aria-hidden="true" loading="lazy" width="300" height="200" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" srcset="/static/src/img/a2.png" src="/static/src/img/a2.png">
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<article class="max-w-5xl mx-auto px-4 py-12">
+
+    <!-- ABOUT EXAM -->
+    <section class="mb-14">
+        <div class="bg-blue-50 shadow rounded-2xl p-8">
+            <h2 class="text-2xl font-semibold mb-4">
+                Что подтверждает Goethe A2
+            </h2>
+
+            <p class="text-gray-700 mb-4">
+                Goethe-Zertifikat A2 подтверждает владение немецким языком
+                на уровне A2 CEFR — элементарное самостоятельное использование языка.
+            </p>
+
+            <ul class="space-y-2 text-gray-700">
+                <li>✅ понимание повседневных текстов</li>
+                <li>✅ участие в простых диалогах</li>
+                <li>✅ написание коротких сообщений и писем</li>
+                <li>✅ понимание объявлений и разговорной речи</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- STRUCTURE -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">
+            Структура экзамена
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <h3 class="font-semibold text-lg mb-3">✍️ Письменная часть</h3>
+                <ul class="space-y-2 text-gray-700 text-sm">
+                    <li><a href="{% url 'tests:tests_rules' 'a2' 'lesen' %}">📖 Lesen — чтение</a></li>
+                    <li><a href="{% url 'tests:tests_rules' 'a2' 'hoeren' %}">🎧 Hören — аудирование</a></li>
+                    <li><a href="{% url 'tests:tests_rules' 'a2' 'schreiben' %}">✍️ Schreiben — письмо</a></li>
+                </ul>
+                <p class="text-sm text-gray-500 mt-4">
+                    Общая длительность: 90 минут без перерывов.
+                </p>
+            </div>
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <h3 class="font-semibold text-lg mb-3">🗣 Устная часть</h3>
+                <ul class="space-y-2 text-gray-700 text-sm">
+                    <li>Teil 1 — знакомство</li>
+                    <li>Teil 2 — вопросы партнёру</li>
+                    <li>Teil 3 — совместное планирование</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- MATERIALS -->
+    <section class="mb-14">
+        
+            <h2 class="text-2xl font-semibold mb-6">
+                Экзаменационные материалы
+            </h2>
+
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <p class="text-gray-700 mb-4">
+                    Экзамен проводится по единым стандартам во всех центрах Goethe-Institut.
+                    Используются специальные материалы:
+                </p>
+
+                <ul class="space-y-2 text-gray-700">
+                    <li>📄 Kandidatenblätter — задания для участников</li>
+                    <li>📝 Antwortbogen — ответный бланк</li>
+                    <li>🎧 аудиофайл для части Hören</li>
+                    <li>📊 формы оценки Schreiben и Sprechen</li>
+                </ul>
+
+                <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/60 rounded-full text-amber-700 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert w-4 h-4">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" x2="12" y1="8" y2="12"></line>
+                    <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                    </svg>
+                    <span>Все ответы и тексты записываются только в Antwortbogen.</span>
+                </div>
+            </div>
+    </section>
+
+
+    <!-- EXAM DAY -->
+    <section class="mb-14">
+        <h2 class="text-2xl font-semibold mb-6">
+            Как проходит экзаменационный день
+        </h2>
+
+        <div class="space-y-6">
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <h3 class="font-semibold mb-2">1️⃣ Проверка личности</h3>
+                <p class="text-gray-700">
+                    Перед экзаменом участники обязаны предъявить удостоверение личности.
+                </p>
+            </div>
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <h3 class="font-semibold mb-2">2️⃣ Инструкции экзаменатора</h3>
+                <p class="text-gray-700">
+                    Экзаменатор объясняет организационные правила.
+                    Задания не комментируются.
+                </p>
+            </div>
+
+            <div class="bg-white shadow rounded-xl p-6">
+                <h3 class="font-semibold mb-2">3️⃣ Заполнение данных</h3>
+                <p class="text-gray-700">
+                    Экзамен начинается только после заполнения личных данных
+                    в ответном бланке.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- WRITTEN FLOW -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold mb-6">
+            Порядок письменной части
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a2' 'lesen' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            📖 Lesen (Чтение)   
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Чтение и понимание текстов, ответы в заданиях и перенос в бланк.    
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a2' 'hoeren' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            🎧 Hören (Аудирование)   
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Прослушивание коротких диалогов и объявлений. Нужно ...
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <a class="exam-card group" href="{% url 'tests:tests_rules' 'a2' 'schreiben' %}" style="animation-delay: 0ms;">
+                <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                            ✍️ Schreiben (Письмо)   
+                        </h3>
+                    </div>
+                    <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                        Текст пишется сразу в ответном бланке. Черновики не оцениваются.
+                    </p>
+                    <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                        Подробное
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+
+    <!-- SPEAKING -->
+    <a class="exam-card group mb-14" href="{% url 'tests:tests_rules' 'a2' 'sprechen' %}" style="animation-delay: 0ms;">
+        <div class="bg-white shadow rounded-2xl p-6 hover:shadow-xl transition">
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-xl font-semibold text-[var(--color-ink)] group-hover:text-[var(--color-gold-dark)] transition-colors">
+                    🗣 Устный экзамен (Sprechen) 
+                </h3>
+            </div>
+            <p class="text-[var(--color-ink-light)] mb-6 line-clamp-3 text-sm leading-relaxed">
+                Участники получают карточки с заданиями и выполняют три части:
+            </p>
+            <div class="flex items-center gap-2 mb-4">
+                <span class="">
+                    
+                </span>
+                <ul class="space-y-2 text-gray-700">
+                    <li>👋 Представление себя</li>
+                    <li>❓ Задавание вопросов партнёру</li>
+                    <li>🗓 Совместное планирование ситуации</li>
+                </ul>
+            </div>
+            <div class="flex items-center text-[var(--color-gold-dark)] font-semibold text-sm group-hover:text-[var(--color-terracotta)] transition-colors">
+                Подробное
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                </svg>
+            </div>
+        </div>
+    </a>
+
+    <!-- SCORING -->
+    <section class="mb-14 mt-6">
+        <h2 class="text-2xl font-semibold mb-6">
+            Оценивание и баллы
+        </h2>
+
+        <div class="bg-green-50 shadow rounded-2xl p-8">
+
+            <ul class="space-y-3 text-gray-700">
+                <li>📊 Максимум: 100 баллов</li>
+                <li>✍️ Письменная часть — 75 баллов</li>
+                <li>🗣 Устная часть — 25 баллов</li>
+                <li>✅ Минимум для сдачи: 60 баллов</li>
+            </ul>
+
+            <p class="text-sm text-gray-600 mt-4">
+                Также необходимо набрать минимум 45 баллов за письменную
+                часть и 15 баллов за устную. :contentReference[oaicite:0]{index=0}
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- IMPORTANT RULES -->
+    <section class="mb-14">
+        <div class="bg-yellow-50 shadow rounded-2xl p-8">
+            <h2 class="text-xl font-semibold mb-4">
+                ⚠️ Важные официальные правила
+            </h2>
+
+            <ul class="space-y-2 text-gray-700">
+                <li>• Письменный экзамен обычно проходит до устного</li>
+                <li>• Между частями письменного экзамена нет перерывов</li>
+                <li>• Устная часть должна пройти максимум через 14 дней</li>
+                <li>• Экзамен оценивается по единым международным критериям</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t pt-6 text-sm text-gray-500">
+        Основано на официальных Durchführungsbestimmungen
+        <a href="https://www.goethe.de/pro/relaunch/prf/de/Durchfuehrungsbestimmungen_A2.pdf" class="text-blue-600 hover:underline">
+            Goethe-Zertifikat A2 (Stand: 01.09.2025).
+        </a>
+    </footer>
+
+</article>
+
+{% endblock %}
