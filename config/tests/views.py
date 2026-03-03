@@ -181,8 +181,8 @@ class TestsListView(ListView):
         level = self.request.GET.get("level", "all")
         if level and level != 'all': qs = qs.filter(level__slug=level)
                
-        #part = self.request.GET.get("part", "all")
-        #if part and part != 'all': qs = qs.filter(part__slug=part)
+        part = self.request.GET.get("part", "all")
+        if part and part != 'all': qs = qs.filter(tests__part__sequence_number=part)
             
         user = self.request.user
 
