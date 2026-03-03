@@ -70,7 +70,7 @@
             <p class="text-red-800">
                 90% ошибок происходят из-за незнания формата экзамена.
                 Узнайте, как проходит тест и за что снимают баллы —
-                <a href="{% url 'tests:tests_rules' 'a1' 'all' %}" target="_blank"
+                <a href="{{rules_url}}" target="_blank"
                 class="font-semibold underline underline-offset-2 hover:text-red-600 transition">
                 ознакомиться с правилами →
                 </a>
@@ -106,17 +106,20 @@
                             <div class="relative p-4 rounded-lg border bg-white border-[var(--color-cream-dark)] hover:shadow-md hover:border-[var(--examtoefl-mid)] transition-all">
                                 <a href="{{i.absolute_url }}?teil={{part_info.part.sequence_number}}">
                                 <div class="flex items-start justify-between mb-2">
-                                    <span class="text-sm font-medium text-[var(--exam-toefl)]">
+                                    <h3 class="text-base font-semibold text-[var(--color-ink)] mb-1">
                                         {{ part_info.part.name }}
+                                    </h3>
+                                    <span class="text-sm font-medium text-[var(--exam-toefl)]">
+                                        
                                     </span>
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700">
                                         {{ part_info.count }}
                                     </span>
                                 </div>
-                                <h3 class="text-base font-semibold text-[var(--color-ink)] mb-1">
+                                
+                                <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">
                                     {{part_info.part.description}}
-                                </h3>
-                                <p class="text-sm text-[var(--color-ink-muted)] line-clamp-2">Complete missing letters in words within a paragraph using context clues</p>
+                                </p>
                                 <span class="mt-2 inline-block text-[var(--exam-toefl)] text-sm font-medium">
                                     Начать подготовку →</span>
                                 </a>
