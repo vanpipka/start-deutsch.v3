@@ -34,7 +34,7 @@ class TestCategory(models.Model):
             for i in testCategory: TestCategory.add_absolute_url(i, str_level)
                        
     def get_tests_count(self, level):     
-        return TestsCountByLevelTypePart.objects.filter(level = level, category = self)
+        return TestsCountByLevelTypePart.objects.filter(level = level, category = self).order_by('part__sequence_number')
                       
     @staticmethod
     def add_tests_count(testCategory, level):      
