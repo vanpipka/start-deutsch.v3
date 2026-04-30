@@ -88,5 +88,47 @@
         });
     </script>
 
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner shadow-lg" style="display: none;">
+        <div class="container-fluid py-3 px-4">
+            <div class="row align-items-center">
+                <div class="col-md-9 col-12 mb-3 mb-md-0">
+                    <p class="mb-0 small text-dark">
+                        Продолжая работу с сайтом <strong>start-deutsch.ru</strong>, вы подтверждаете использование 
+                        файлов cookie и сервисов веб-аналитики (Яндекс.Метрика). Мы используем эти данные для улучшения 
+                        работы сайта и вашего удобства. Подробнее в 
+                        <a href="/privacy/" class="text-primary text-decoration-underline">Политике конфиденциальности</a>.
+                    </p>
+                </div>
+                <div class="col-md-3 col-12 text-md-end text-center">
+                    <button id="accept-cookies" class="btn btn-primary btn-sm px-4 py-2 fw-bold">Принять</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const banner = document.getElementById("cookie-banner");
+            const acceptBtn = document.getElementById("accept-cookies");
+
+            // Проверяем, давал ли пользователь согласие ранее
+            if (!localStorage.getItem("cookies_accepted")) {
+                // Показываем баннер с небольшой задержкой для плавности
+                setTimeout(() => {
+                    banner.style.display = "block";
+                    banner.classList.add("animate__animated", "animate__fadeInUp"); // если используете Animate.css
+                }, 1000);
+            }
+
+            acceptBtn.addEventListener("click", function () {
+                // Сохраняем выбор пользователя в браузере
+                localStorage.setItem("cookies_accepted", "true");
+                // Скрываем баннер
+                banner.style.display = "none";
+            });
+        });
+    </script>
+
 </body>
 </html>
