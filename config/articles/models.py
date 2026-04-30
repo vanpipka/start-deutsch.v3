@@ -3,7 +3,26 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
+from django.core.cache import cache
 
+
+class SiteSettings(models.Model):
+    phone = models.CharField(max_length=50, default="", blank=True)
+    mobile_phone = models.CharField(max_length=50, default="", blank=True)
+    address = models.CharField(max_length=50, default="", blank=True)
+    email = models.EmailField(default="", blank=True)
+
+    def __str__(self):
+        return "Настройки сайта"
+
+    class Meta:
+        verbose_name = "Настройка сайта"
+        verbose_name_plural = "Настройки сайта"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete('site_settings_cache')
+        
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Название")

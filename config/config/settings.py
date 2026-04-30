@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'articles.context_processors.company_contacts',
             ],
         },
     },
@@ -214,3 +215,7 @@ LOGGING = {
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "tests:exam_list"
 LOGOUT_REDIRECT_URL = "accounts:login"
+
+# Contacts
+EMAIL = os.getenv('EMAIL')
+

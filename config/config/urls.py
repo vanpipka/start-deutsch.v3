@@ -42,6 +42,9 @@ urlpatterns = [
     
     # Apps
     path('', include('tests.urls')),
+    path('privacy/', view.privacy, name="privacy"),
+    path('terms/', view.terms, name="terms"),
+    path('profile/', include('accounts.urls')),
     path('profile/', include('accounts.urls')),
     path('articles/', include('articles.urls')),    
     path('ckeditor5/', include('django_ckeditor_5.urls')),

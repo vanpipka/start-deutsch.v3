@@ -7,10 +7,22 @@
     <meta name="description" content="{{ seo_description|default:'Подготовка к экзамену Deutsch A1, B1, B2.' }}">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="{{ seo_title }}">
+    
     <meta property="og:description" content="{{ seo_description }}">
     <meta property="og:type" content="article">
     
+    {% if seo_description %}
+        <meta name="og:title" content="{{ seo_description }}">
+    {% else %}
+        <meta name="og:title" content="Тесты уровня A1, A2, B1, B2 онлайн с результатами и примерами ответов — подготовка к экзаменам Goethe, telc и ÖSD.">
+    {% endif %}
+
+    {% if seo_title %}
+        <meta name="og:title" content="{{ seo_title }}">
+    {% else %}
+        <meta name="og:title" content="Немецкий A1, A2, B1, B2 тесты онлайн (Goethe, telc, ÖSD) — бесплатная подготовка">
+    {% endif %}
+
     {% if seo_keywords %}
         <meta name="keywords" content="{{ seo_keywords }}">
     {% else %}
@@ -60,8 +72,9 @@
             <p>©2026 Учебная платформа. Все права защищены.</p>
             <div class="flex space-x-4 mt-2 md:mt-0">
                 <a href="#" class="hover:text-blue-600">О нас</a>
-                <a href="#" class="hover:text-blue-600">Контакты</a>
-                <a href="#" class="hover:text-blue-600">Политика конфиденциальности</a>
+                <a href="mailto:{{company_email}}" class="hover:text-blue-600">{{company_email}}</a>
+                <a href="/privacy/" class="hover:text-blue-600">Политика конфиденциальности</a>
+                <a href="/terms/" class="hover:text-blue-600">Пользовательское соглашение</a>
             </div>
         </div>
     </footer>
